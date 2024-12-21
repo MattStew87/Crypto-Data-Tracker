@@ -2,13 +2,20 @@ import psycopg2
 from dotenv import load_dotenv
 import os
 from flipside import Flipside
+from update_registry import UpdateRegistry
 
 class TableManager:
-    def __init__(self):
+    """
+    Manages operations for creating tables, inserting data, and registering update queries.
+    """
+
+    def __init__(self, registry: UpdateRegistry):
         """
-        Initialize the TableManager and load database credentials.
+        Initializes the TableManager with database configuration and a registry reference.
+        :param registry: An instance of the UpdateRegistry.
         """
         load_dotenv()
+        self.registry = registry
         self.db_config = {
             "host": os.getenv("DATABASE_HOST"),
             "database": "CARROT_DB",
@@ -16,32 +23,32 @@ class TableManager:
             "password": os.getenv("DATABASE_PASSWORD"),
             "port": "5432"
         }
-        # Initialize metadata for the table
         self.table_name = None
         self.columns = None
         self.primary_key = None
 
     def connect(self):
         """
-        Create a connection to the PostgreSQL database.
+        Establishes a connection to the PostgreSQL database.
+        :return: A connection object or None if the connection fails.
         """
         try:
-            conn = psycopg2.connect(**self.db_config)
-            return conn
+            return psycopg2.connect(**self.db_config)
         except Exception as e:
             print(f"Error connecting to the database: {e}")
             return None
 
     def create_raw_table(self, table_name, columns, primary_key):
         """
-        Create a raw table in PostgreSQL.
+        Creates a raw table in the database.
+        :param table_name: Name of the table to create.
+        :param columns: Dictionary of column names and their data types.
+        :param primary_key: Name of the column to set as the primary key.
         """
-        # Update table metadata
         self.table_name = table_name
         self.columns = columns
         self.primary_key = primary_key
 
-        # Build the CREATE TABLE SQL command
         column_definitions = ", ".join([f"{col} {dtype}" for col, dtype in self.columns.items()])
         create_table_sql = f"""
         CREATE TABLE IF NOT EXISTS {self.table_name} (
@@ -64,7 +71,7 @@ class TableManager:
 
     def insert_data_from_flipside(self, sql_query):
         """
-        Fetch data from Flipside's API and insert it into the table.
+        Fetches data from Flipside's API and inserts it into the specified table.
         :param sql_query: SQL query to execute on Flipside.
         """
         if not self.table_name or not self.columns or not self.primary_key:
@@ -72,16 +79,13 @@ class TableManager:
             return
 
         flipside = Flipside(os.getenv("FLIPSIDE_API_KEY"), "https://api-v2.flipsidecrypto.xyz")
-
         try:
-            # Run the query against Flipside's query engine
             query_result_set = flipside.query(sql_query, page_number=1, page_size=1)
 
             all_rows = []
             current_page_number = 1
             total_pages = 2
 
-            # Fetch data page by page
             while current_page_number <= total_pages:
                 results = flipside.get_query_results(
                     query_result_set.query_id,
@@ -93,7 +97,6 @@ class TableManager:
                     all_rows.extend(results.records)
                 current_page_number += 1
 
-            # Insert data into the database
             conn = self.connect()
             if conn:
                 with conn.cursor() as cur:
@@ -113,3 +116,18 @@ class TableManager:
         finally:
             if conn:
                 conn.close()
+
+    def add_update_query(self, update_query):
+        """
+        Registers an update query with the centralized registry.
+        :param update_query: SQL query to use for updating the table.
+        """
+        
+        self.registry.register_table_update(
+            table_name=self.table_name,
+            update_query=update_query,
+            db_config=self.db_config,
+            columns=self.columns,
+            primary_key=self.primary_key
+        )
+        print(f"Update query for table '{self.table_name}' registered.")
