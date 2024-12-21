@@ -1,0 +1,85 @@
+Plan [CURRENT]: 
+- Add to github
+- Add in updater function logic from chatGPT
+
+
+Materialized view plan: 
+- Create materialized views, use seperate input system. 
+- Then send them to the registry (hold them in seperate data structure 
+  from the update functions) with the proper information (name of table to refresh)
+- Then create function in the registry to loop through them and refresh them
+- Call that function within the schedular after the normal update functions runs.
+
+Input Class: 
+- Create a class to handle different inputs (raw functions and materialized views) 
+- Call these the respective functions in main. 
+- Make it a choice system so you can choose if you want to interact
+  with the creating a raw table or a materilized view. 
+  
+
+
+---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+
+
+{'block_timestamp' : 'TIMESTAMP', 'net_holders' : 'int', 'price' : 'numeric'}
+
+with tab1 as (
+  SELECT 
+    tx_id,
+    mint_amount / power(10, 9) as amt
+  from solana.defi.fact_token_mint_actions
+  where mint LIKE 'CRTx1JouZhzSU6XytsE42UQraoGqiHgxabocVfARTy2s'
+  and block_timestamp > '2024-05-01'
+)
+
+, Carrot_Price as ( 
+SELECT 
+  date(block_timestamp) as day,
+  median(amount/amt) as median_price
+
+FROM solana.core.fact_transfers as a
+  left outer join tab1
+    on a.tx_id = tab1.tx_id  
+where tx_to like 'FfCRL34rkJiMiX5emNDrYp3MdWH2mES3FvDQyFppqgpJ'
+and mint like 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
+and block_timestamp > '2024-05-01'
+and block_timestamp > current_date - 2 
+GROUP BY 1 
+having not median_price = 0
+order by 1 
+) 
+
+, Carrot_Holders as (
+SELECT
+  date(block_timestamp) as day,
+  sum(
+    case when bal = 0 then -1 
+    when  change = bal then 1 
+    else 0 end
+  ) as net_holders
+
+FROM (
+SELECT
+  block_timestamp,
+  owner,
+  balance - pre_balance as change,
+  sum(balance - pre_balance) over (partition by owner ORDER by block_id) as bal
+
+FROM solana.core.fact_token_balances
+WHERE mint = 'CRTx1JouZhzSU6XytsE42UQraoGqiHgxabocVfARTy2s'
+  AND succeeded = TRUE
+  AND block_timestamp::date >= '2024-08-01'
+)
+Where block_timestamp > current_date - 2 
+group by 1 
+ORDER BY 1 
+) 
+
+select
+Carrot_Price.day as block_timestamp, 
+net_holders,
+median_price as price
+from Carrot_Price left outer join Carrot_Holders on 
+Carrot_Price.day = Carrot_Holders.day
+END
