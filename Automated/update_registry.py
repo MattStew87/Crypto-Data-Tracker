@@ -48,18 +48,16 @@ class UpdateRegistry:
         except Exception as e:
             print(f"Error saving JSON file {file_path}: {e}")
 
-    def register_table_update(self, table_name, update_query, db_config, columns, primary_key):
+    def register_table_update(self, table_name, update_query, columns, primary_key):
         """
         Register a table and its update query, then save it to the JSON file.
         :param table_name: Name of the table to update.
         :param update_query: SQL query for updating the table.
-        :param db_config: Database configuration.
         :param columns: Dictionary of column names and their data types.
         :param primary_key: Primary key of the table.
         """
         self.registry[table_name] = {
             "update_query": update_query,
-            "db_config": db_config,
             "columns": columns,
             "primary_key": primary_key
         }
@@ -80,57 +78,69 @@ class UpdateRegistry:
         """
         Execute the update query for each registered table and refresh all materialized views.
         """
-        for table_name, details in self.registry.items():
-            update_query = f"""{details["update_query"]}"""
-            db_config = details["db_config"]
-            columns = details["columns"]
-            primary_key = details["primary_key"]
+        # Load database configuration from .env once
+        load_dotenv()
+        db_config = {
+            "host": os.getenv("DATABASE_HOST"),
+            "database": "CARROT_DB",
+            "user": os.getenv("DATABASE_USER"),
+            "password": os.getenv("DATABASE_PASSWORD"),
+            "port": "5432"
+        }
 
-            flipside = Flipside(os.getenv("FLIPSIDE_API_KEY"), "https://api-v2.flipsidecrypto.xyz")
-            try:
-                query_result_set = flipside.query(update_query, page_number=1, page_size=1)
-                all_rows = []
-                current_page_number = 1
-                total_pages = 2
+        try:
+            # Establish a single database connection
+            with psycopg2.connect(**db_config) as conn:
+                with conn.cursor() as cur:
+                    # Loop through all registered tables and execute updates
+                    for table_name, details in self.registry.items():
+                        update_query = f"""{details["update_query"]}"""
+                        columns = details["columns"]
+                        primary_key = details["primary_key"]
 
-                while current_page_number <= total_pages:
-                    results = flipside.get_query_results(
-                        query_result_set.query_id,
-                        page_number=current_page_number,
-                        page_size=1000
-                    )
-                    total_pages = results.page.totalPages
-                    if results.records:
-                        all_rows.extend(results.records)
-                    current_page_number += 1
+                        flipside = Flipside(
+                            os.getenv("FLIPSIDE_API_KEY"), 
+                            "https://api-v2.flipsidecrypto.xyz"
+                        )
+                        try:
+                            query_result_set = flipside.query(update_query, page_number=1, page_size=1)
+                            all_rows = []
+                            current_page_number = 1
+                            total_pages = 2
 
-                conn = psycopg2.connect(**db_config)
-                if conn:
-                    with conn.cursor() as cur:
-                        col_names = ", ".join(columns.keys())
-                        placeholders = ", ".join(["%s"] * len(columns))
-                        insert_sql = f"""
-                        INSERT INTO {table_name} ({col_names})
-                        VALUES ({placeholders})
-                        ON CONFLICT ({primary_key}) DO NOTHING;
-                        """
-                        for row in all_rows:
-                            cur.execute(insert_sql, tuple(row[col] for col in columns.keys()))
+                            while current_page_number <= total_pages:
+                                results = flipside.get_query_results(
+                                    query_result_set.query_id,
+                                    page_number=current_page_number,
+                                    page_size=1000
+                                )
+                                total_pages = results.page.totalPages
+                                if results.records:
+                                    all_rows.extend(results.records)
+                                current_page_number += 1
+
+                            col_names = ", ".join(columns.keys())
+                            placeholders = ", ".join(["%s"] * len(columns))
+                            insert_sql = f"""
+                            INSERT INTO {table_name} ({col_names})
+                            VALUES ({placeholders})
+                            ON CONFLICT ({primary_key}) DO NOTHING;
+                            """
+                            for row in all_rows:
+                                cur.execute(insert_sql, tuple(row[col] for col in columns.keys()))
+                            conn.commit()
+                            print(f"Update for table '{table_name}' executed successfully!")
+
+                        except Exception as e:
+                            print(f"Error updating table '{table_name}': {e}")
+
+                    # Refresh all registered materialized views
+                    for mv_name in self.materialized_views:
+                        cur.execute(f"REFRESH MATERIALIZED VIEW {mv_name};")
                         conn.commit()
-                        print(f"Update for table '{table_name}' executed successfully!")
+                        print(f"Materialized view '{mv_name}' refreshed successfully!")
 
-            except Exception as e:
-                print(f"Error updating table '{table_name}': {e}")
-            finally:
-                if conn:
-                    conn.close()
+        except Exception as e:
+            print(f"Error executing updates: {e}")
 
-        # Reconnect for refreshing materialized views
-        db_config = self.registry[next(iter(self.registry))]["db_config"]  # Use any table's db_config
-        with psycopg2.connect(**db_config) as conn:
-            with conn.cursor() as cur:
-                for mv_name in self.materialized_views:
-                    cur.execute(f"REFRESH MATERIALIZED VIEW {mv_name};")
-                    conn.commit()
-                    print(f"Materialized view '{mv_name}' refreshed successfully!")
 

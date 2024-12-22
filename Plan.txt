@@ -1,6 +1,4 @@
 Execute function: 
-- Clean up execute function make it so it doesn't always
-  have to connect. it shoudl connect once at the beggning. 
 - Figure out if it actually works by setting the update time to a recent time
 
 ORGANZIATION: 

@@ -126,7 +126,6 @@ class TableManager:
         self.registry.register_table_update(
             table_name=self.table_name,
             update_query=update_query,
-            db_config=self.db_config,
             columns=self.columns,
             primary_key=self.primary_key
         )
