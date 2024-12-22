@@ -1,8 +1,6 @@
-ORGANZIATION: 
-- Organize files into folders based off what they do
-- Update all corresponding paths to files 
-- have a folder just for the json files 
-- Create diagram to show the flow of data here and how it all works together. 
+Plan: 
+- Create class to process Alerts 
+- ASK JACK what type of inputs we will be putting in
 
 
 KEEP IN MIND: 

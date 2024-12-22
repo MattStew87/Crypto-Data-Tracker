@@ -10,7 +10,7 @@ class UpdateRegistry:
     Manages the registration and execution of update queries for tables and materialized views.
     """
 
-    def __init__(self, registry_file="update_registry.json", mv_registry_file="materialized_views.json", alert_registry_file="alerts.json"):
+    def __init__(self, registry_file="../config/update_registry.json", mv_registry_file="../config/materialized_views.json", alert_registry_file="../config/alerts.json"):
         """
         Initializes the registries and loads existing updates from JSON files if available.
         :param registry_file: Path to the JSON file storing the update registry.
@@ -58,7 +58,7 @@ class UpdateRegistry:
         :param columns: Dictionary of column names and their data types.
         :param primary_key: Primary key of the table.
         """
-        
+
         self.registry[table_name] = {
             "update_query": update_query,
             "columns": columns,
@@ -161,7 +161,7 @@ class UpdateRegistry:
                             cur.execute(formatted_sql)
                             result = cur.fetchone()
                             if result and result[0]:  # Check if the alert condition is TRUE
-                                with open("alerts.log", "a") as log_file:
+                                with open("../logs/alerts.log", "a") as log_file:
                                     log_file.write(f"ALERT TRIGGERED: {alert_name}\n")
                                 print(f"ALERT TRIGGERED: {alert_name}")
                         except Exception as e:
