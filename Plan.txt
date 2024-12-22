@@ -2,23 +2,86 @@ Execute function:
 - Figure out if it actually works by setting the update time to a recent time
 
 ORGANZIATION: 
-- Organize files into folders based off what they do 
+- Organize files into folders based off what they do
+- Update all corresponding paths to files 
 - have a folder just for the json files 
 - Create diagram to show the flow of data here and how it all works together. 
 
+NEXT: 
+- Start on Alerts 
 
-  
+KEEP IN MIND: 
+- You can have up to 15 queries running at the same
+  time, so you may want to batch them in groups of 15 or
+  use a Thread Pool of size 15. 
 
 
----------------------------------------------------------------------------------------------
----------------------------------------------------------------------------------------------
-
--------------------------------------------------
+TEST INPUTS: 
+--------------------------------------------------------------------------------------------------
 
 {'block_timestamp' : 'TIMESTAMP', 'net_holders' : 'int', 'price' : 'numeric'}
 
+--------------------------------------------------------------------------------------------------
 
--------------------------------------------------
+with tab1 as (
+  SELECT 
+    tx_id,
+    mint_amount / power(10, 9) as amt
+  from solana.defi.fact_token_mint_actions
+  where mint LIKE 'CRTx1JouZhzSU6XytsE42UQraoGqiHgxabocVfARTy2s'
+  and block_timestamp > '2024-05-01'
+)
+
+, Carrot_Price as ( 
+SELECT 
+  date(block_timestamp) as day,
+  median(amount/amt) as median_price
+
+FROM solana.core.fact_transfers as a
+  left outer join tab1
+    on a.tx_id = tab1.tx_id  
+where tx_to like 'FfCRL34rkJiMiX5emNDrYp3MdWH2mES3FvDQyFppqgpJ'
+and mint like 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
+and block_timestamp > '2024-05-01'
+GROUP BY 1 
+having not median_price = 0
+order by 1 
+) 
+
+, Carrot_Holders as (
+SELECT
+  date(block_timestamp) as day,
+  sum(
+    case when bal = 0 then -1 
+    when  change = bal then 1 
+    else 0 end
+  ) as net_holders
+
+FROM (
+SELECT
+  block_timestamp,
+  owner,
+  balance - pre_balance as change,
+  sum(balance - pre_balance) over (partition by owner ORDER by block_id) as bal
+
+FROM solana.core.fact_token_balances
+WHERE mint = 'CRTx1JouZhzSU6XytsE42UQraoGqiHgxabocVfARTy2s'
+  AND succeeded = TRUE
+  AND block_timestamp::date >= '2024-08-01'
+)
+group by 1 
+ORDER BY 1 
+) 
+
+select
+Carrot_Price.day as block_timestamp, 
+net_holders,
+median_price as price
+from Carrot_Price left outer join Carrot_Holders on 
+Carrot_Price.day = Carrot_Holders.day
+END
+
+--------------------------------------------------------------------------------------------------
 
 with tab1 as (
   SELECT 
@@ -80,62 +143,4 @@ from Carrot_Price left outer join Carrot_Holders on
 Carrot_Price.day = Carrot_Holders.day
 END
 
--------------------------------------------------
-
-with tab1 as (
-  SELECT 
-    tx_id,
-    mint_amount / power(10, 9) as amt
-  from solana.defi.fact_token_mint_actions
-  where mint LIKE 'CRTx1JouZhzSU6XytsE42UQraoGqiHgxabocVfARTy2s'
-  and block_timestamp > '2024-05-01'
-)
-
-, Carrot_Price as ( 
-SELECT 
-  date(block_timestamp) as day,
-  median(amount/amt) as median_price
-
-FROM solana.core.fact_transfers as a
-  left outer join tab1
-    on a.tx_id = tab1.tx_id  
-where tx_to like 'FfCRL34rkJiMiX5emNDrYp3MdWH2mES3FvDQyFppqgpJ'
-and mint like 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
-and block_timestamp > '2024-05-01'
-GROUP BY 1 
-having not median_price = 0
-order by 1 
-) 
-
-, Carrot_Holders as (
-SELECT
-  date(block_timestamp) as day,
-  sum(
-    case when bal = 0 then -1 
-    when  change = bal then 1 
-    else 0 end
-  ) as net_holders
-
-FROM (
-SELECT
-  block_timestamp,
-  owner,
-  balance - pre_balance as change,
-  sum(balance - pre_balance) over (partition by owner ORDER by block_id) as bal
-
-FROM solana.core.fact_token_balances
-WHERE mint = 'CRTx1JouZhzSU6XytsE42UQraoGqiHgxabocVfARTy2s'
-  AND succeeded = TRUE
-  AND block_timestamp::date >= '2024-08-01'
-)
-group by 1 
-ORDER BY 1 
-) 
-
-select
-Carrot_Price.day as block_timestamp, 
-net_holders,
-median_price as price
-from Carrot_Price left outer join Carrot_Holders on 
-Carrot_Price.day = Carrot_Holders.day
-END
+--------------------------------------------------------------------------------------------------
