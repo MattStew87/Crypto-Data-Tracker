@@ -10,7 +10,7 @@ class UpdateRegistry:
     Manages the registration and execution of update queries for tables and materialized views.
     """
 
-    def __init__(self, registry_file="update_registry.json", mv_registry_file="materialized_views.json"):
+    def __init__(self, registry_file="update_registry.json", mv_registry_file="materialized_views.json", alert_registry_file="alerts.json"):
         """
         Initializes the registries and loads existing updates from JSON files if available.
         :param registry_file: Path to the JSON file storing the update registry.
@@ -19,8 +19,10 @@ class UpdateRegistry:
         load_dotenv()
         self.registry_file = registry_file
         self.mv_registry_file = mv_registry_file
+        self.alert_registry_file = alert_registry_file
         self.registry = self.load_json(self.registry_file)  # Registry for table updates
         self.materialized_views = self.load_json(self.mv_registry_file)  # List of materialized views
+        self.alerts = self.load_json(self.alert_registry_file)
 
     def load_json(self, file_path):
         """
@@ -34,7 +36,7 @@ class UpdateRegistry:
                     return json.load(file)
             except Exception as e:
                 print(f"Error loading JSON file {file_path}: {e}")
-        return {} if "registry" in file_path else []
+        return [] if "mv_registry_file" in file_path else {}
 
     def save_json(self, file_path, data):
         """
@@ -56,6 +58,7 @@ class UpdateRegistry:
         :param columns: Dictionary of column names and their data types.
         :param primary_key: Primary key of the table.
         """
+        
         self.registry[table_name] = {
             "update_query": update_query,
             "columns": columns,
@@ -73,6 +76,16 @@ class UpdateRegistry:
             self.materialized_views.append(mv_name)
             self.save_json(self.mv_registry_file, self.materialized_views)
             print(f"Materialized view '{mv_name}' registered.")
+
+    def register_alert(self, alert_name, alert_sql):
+        """
+        Register an alert with the SQL condition and save it to the JSON file.
+        :param alert_name: Name of the alert.
+        :param alert_sql: SQL query that evaluates to TRUE or FALSE.
+        """
+        self.alerts[alert_name] = alert_sql
+        self.save_json(self.alert_registry_file, self.alerts)
+        print(f"Alert '{alert_name}' registered.")
 
     def execute_updates(self):
         """
@@ -139,6 +152,21 @@ class UpdateRegistry:
                         cur.execute(f"REFRESH MATERIALIZED VIEW {mv_name};")
                         conn.commit()
                         print(f"Materialized view '{mv_name}' refreshed successfully!")
+                    
+                    # Evaluate alerts
+                    for alert_name, alert_sql in self.alerts.items():
+                        try:
+                            # Dynamically wrap the SQL in triple quotes for consistency
+                            formatted_sql = f"""{alert_sql}"""
+                            cur.execute(formatted_sql)
+                            result = cur.fetchone()
+                            if result and result[0]:  # Check if the alert condition is TRUE
+                                with open("alerts.log", "a") as log_file:
+                                    log_file.write(f"ALERT TRIGGERED: {alert_name}\n")
+                                print(f"ALERT TRIGGERED: {alert_name}")
+                        except Exception as e:
+                            print(f"Error checking alert '{alert_name}': {e}")
+
 
         except Exception as e:
             print(f"Error executing updates: {e}")

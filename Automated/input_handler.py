@@ -1,11 +1,12 @@
 class InputHandler:
-    def __init__(self, table_manager, mv_manager):
+    def __init__(self, table_manager, mv_manager, alert_manager):
         """
         Initialize the InputHandler with a reference to the TableManager instance.
         :param table_manager: An instance of the TableManager.
         """
         self.table_manager = table_manager
         self.mv_manager = mv_manager
+        self.alert_manager = alert_manager
 
     def raw_table_workflow(self):
         """
@@ -105,3 +106,29 @@ class InputHandler:
         # Step 3: Create the materialized view and add it to a list to be refreshed
         self.mv_manager.create_materialized_view(table_name, sql_query)
         self.mv_manager.add_mv_refresh() 
+
+    def alerts_workflow(self):
+        """
+        Handles the workflow for creating alerts.
+        """
+        print("Managing Alerts")
+
+        # Step 1: Alert name
+        alert_name = input("Enter the name of the alert: ").strip()
+
+        # Step 2: Alert SQL
+        print("Enter the SQL query for the alert (must evaluate to TRUE or FALSE):")
+        print("END your query with the word 'END'.")
+        print("\nSQL:")
+
+        sql_query_lines = []
+        while True:
+            line = input()
+            if line.strip().upper() == "END":
+                break
+            sql_query_lines.append(line)
+
+        alert_sql = ' '.join(sql_query_lines).strip()
+
+        # Step 3: Register the alert
+        self.alert_manager.create_alert(alert_name, alert_sql)

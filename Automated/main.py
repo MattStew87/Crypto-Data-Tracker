@@ -1,5 +1,6 @@
 from table_manager import TableManager
 from mv_manager import MvManager
+from alert_manager import AlertManager
 from update_registry import UpdateRegistry
 from input_handler import InputHandler
 
@@ -9,13 +10,15 @@ def main():
     registry = UpdateRegistry()
     table_manager = TableManager(registry)
     mv_manager = MvManager(registry)
-    input_handler = InputHandler(table_manager, mv_manager)
+    alert_manager = AlertManager(registry)
+    input_handler = InputHandler(table_manager, mv_manager, alert_manager)
 
     while True:
         print("\nChoose an operation:")
         print("1. Manage Raw Tables")
         print("2. Manage Materialized Views")
-        print("3. Exit")
+        print("3. Manage Alerts")
+        print("4. Exit")
 
         choice = input("\nEnter your choice: ").strip()
 
@@ -24,6 +27,8 @@ def main():
         elif choice == "2":
             input_handler.materialized_view_workflow()
         elif choice == "3":
+            input_handler.alerts_workflow()
+        elif choice == "4":
             print("Exiting program.")
             break
         else:

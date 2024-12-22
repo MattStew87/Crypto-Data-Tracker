@@ -1,14 +1,9 @@
-Execute function: 
-- Figure out if it actually works by setting the update time to a recent time
-
 ORGANZIATION: 
 - Organize files into folders based off what they do
 - Update all corresponding paths to files 
 - have a folder just for the json files 
 - Create diagram to show the flow of data here and how it all works together. 
 
-NEXT: 
-- Start on Alerts 
 
 KEEP IN MIND: 
 - You can have up to 15 queries running at the same

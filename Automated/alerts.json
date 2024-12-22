@@ -1,0 +1,3 @@
+{
+    "alert_example": "select net_holders < 1000 from tab1"
+}
