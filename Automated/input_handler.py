@@ -1,10 +1,11 @@
 class InputHandler:
-    def __init__(self, table_manager):
+    def __init__(self, table_manager, mv_manager):
         """
         Initialize the InputHandler with a reference to the TableManager instance.
         :param table_manager: An instance of the TableManager.
         """
         self.table_manager = table_manager
+        self.mv_manager = mv_manager
 
     def raw_table_workflow(self):
         """
@@ -79,6 +80,28 @@ class InputHandler:
 
     def materialized_view_workflow(self):
         """
-        Placeholder for handling materialized view creation logic.
+        Handles workflow for materialized view creation logic.
         """
-        print("Materialized View Workflow - Not yet implemented.")
+
+        # Step 1: Enter table name
+        table_name = input("Table name: ").strip()
+
+        # Step 2: Enter SQL Query for materialized view
+        print("Enter your SQL query for creating aggregate tables:")
+        print("For example:")
+        print("WITH tab1 AS (\n    SELECT ...\n)\nSELECT ...")
+        print("END")
+        print("\nSQL:")
+
+        sql_query_lines = []
+        while True:
+            line = input()
+            if line.strip().upper() == "END":
+                break
+            sql_query_lines.append(line)
+
+        sql_query = ' '.join(sql_query_lines).strip()
+
+        # Step 3: Create the materialized view and add it to a list to be refreshed
+        self.mv_manager.create_materialized_view(table_name, sql_query)
+        self.mv_manager.add_mv_refresh() 

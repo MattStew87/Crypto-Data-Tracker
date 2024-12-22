@@ -1,16 +1,12 @@
-Input Class: 
-- Create a class to handle different inputs (raw functions and materialized views) 
-- Call these the respective functions in main. 
-- Make it a choice system so you can choose if you want to interact
-  with the creating a raw table or a materilized view. 
+Execute function: 
+- Clean up execute function make it so it doesn't always
+  have to connect. it shoudl connect once at the beggning. 
+- Figure out if it actually works by setting the update time to a recent time
 
-
-Materialized view plan: 
-- Create materialized views, use seperate input system. 
-- Then send them to the registry (hold them in seperate data structure 
-  from the update functions) with the proper information (name of table to refresh)
-- Then create function in the registry to loop through them and refresh them
-- Call that function within the schedular after the normal update functions runs.
+ORGANZIATION: 
+- Organize files into folders based off what they do 
+- have a folder just for the json files 
+- Create diagram to show the flow of data here and how it all works together. 
 
 
   

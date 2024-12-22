@@ -4,47 +4,53 @@ from dotenv import load_dotenv
 import os
 import json
 
+
 class UpdateRegistry:
     """
-    Manages the registration and execution of update queries for tables.
+    Manages the registration and execution of update queries for tables and materialized views.
     """
 
-    def __init__(self, registry_file="update_registry.json"):
+    def __init__(self, registry_file="update_registry.json", mv_registry_file="materialized_views.json"):
         """
-        Initializes the registry and loads existing updates from a JSON file if available.
-        :param registry_file: Path to the JSON file storing the registry.
+        Initializes the registries and loads existing updates from JSON files if available.
+        :param registry_file: Path to the JSON file storing the update registry.
+        :param mv_registry_file: Path to the JSON file storing materialized view names.
         """
         load_dotenv()
         self.registry_file = registry_file
-        self.registry = self.load_updates()
+        self.mv_registry_file = mv_registry_file
+        self.registry = self.load_json(self.registry_file)  # Registry for table updates
+        self.materialized_views = self.load_json(self.mv_registry_file)  # List of materialized views
 
-    def load_updates(self):
+    def load_json(self, file_path):
         """
-        Load the update registry from the JSON file.
-        :return: A dictionary containing the loaded registry data.
+        Load a JSON file and return its contents.
+        :param file_path: Path to the JSON file.
+        :return: Dictionary containing the loaded data or empty list/dict if not found.
         """
-        if os.path.exists(self.registry_file):
+        if os.path.exists(file_path):
             try:
-                with open(self.registry_file, "r") as file:
+                with open(file_path, "r") as file:
                     return json.load(file)
             except Exception as e:
-                print(f"Error loading registry file: {e}")
-                return {}
-        return {}
+                print(f"Error loading JSON file {file_path}: {e}")
+        return {} if "registry" in file_path else []
 
-    def save_updates(self):
+    def save_json(self, file_path, data):
         """
-        Save the current registry to the JSON file.
+        Save a dictionary or list to a JSON file.
+        :param file_path: Path to the JSON file.
+        :param data: Data to save.
         """
         try:
-            with open(self.registry_file, "w") as file:
-                json.dump(self.registry, file, indent=4)
+            with open(file_path, "w") as file:
+                json.dump(data, file, indent=4)
         except Exception as e:
-            print(f"Error saving registry file: {e}")
+            print(f"Error saving JSON file {file_path}: {e}")
 
     def register_table_update(self, table_name, update_query, db_config, columns, primary_key):
         """
-        Register a table and its update query and save it to the JSON file.
+        Register a table and its update query, then save it to the JSON file.
         :param table_name: Name of the table to update.
         :param update_query: SQL query for updating the table.
         :param db_config: Database configuration.
@@ -57,12 +63,22 @@ class UpdateRegistry:
             "columns": columns,
             "primary_key": primary_key
         }
-        self.save_updates()
+        self.save_json(self.registry_file, self.registry)
         print(f"Table '{table_name}' update query registered.")
+
+    def register_materialized_view(self, mv_name):
+        """
+        Register a materialized view name and save it to the JSON file.
+        :param mv_name: Name of the materialized view.
+        """
+        if mv_name not in self.materialized_views:
+            self.materialized_views.append(mv_name)
+            self.save_json(self.mv_registry_file, self.materialized_views)
+            print(f"Materialized view '{mv_name}' registered.")
 
     def execute_updates(self):
         """
-        Execute the update query for each registered table.
+        Execute the update query for each registered table and refresh all materialized views.
         """
         for table_name, details in self.registry.items():
             update_query = f"""{details["update_query"]}"""
@@ -102,8 +118,19 @@ class UpdateRegistry:
                             cur.execute(insert_sql, tuple(row[col] for col in columns.keys()))
                         conn.commit()
                         print(f"Update for table '{table_name}' executed successfully!")
+
             except Exception as e:
                 print(f"Error updating table '{table_name}': {e}")
             finally:
                 if conn:
                     conn.close()
+
+        # Reconnect for refreshing materialized views
+        db_config = self.registry[next(iter(self.registry))]["db_config"]  # Use any table's db_config
+        with psycopg2.connect(**db_config) as conn:
+            with conn.cursor() as cur:
+                for mv_name in self.materialized_views:
+                    cur.execute(f"REFRESH MATERIALIZED VIEW {mv_name};")
+                    conn.commit()
+                    print(f"Materialized view '{mv_name}' refreshed successfully!")
+
