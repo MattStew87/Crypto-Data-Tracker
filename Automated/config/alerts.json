@@ -1,3 +1,13 @@
 {
-    "alert_example": "select net_holders < 1000 from tab1"
+    "alert_12": {
+        "alert_sql": "Select net_holders < 1000 from tab1",
+        "metadata": {
+            "twitter_info": "TWITTER STUFF",
+            "ai_prompt_info": "AI STUFF",
+            "additional_queries": [
+                "Select net_holders < 1000 from tab1",
+                "Select net_holders < 1000 from tab1"
+            ]
+        }
+    }
 }

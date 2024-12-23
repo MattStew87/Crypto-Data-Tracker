@@ -77,15 +77,28 @@ class UpdateRegistry:
             self.save_json(self.mv_registry_file, self.materialized_views)
             print(f"Materialized view '{mv_name}' registered.")
 
-    def register_alert(self, alert_name, alert_sql):
+    def register_alert(self, alert_name, alert_sql, metadata):
         """
-        Register an alert with the SQL condition and save it to the JSON file.
+        Registers an alert in the registry.
         :param alert_name: Name of the alert.
         :param alert_sql: SQL query that evaluates to TRUE or FALSE.
+        :param metadata: Metadata containing Twitter info, AI prompt, and additional SQL queries.
         """
-        self.alerts[alert_name] = alert_sql
+        if alert_name not in self.alerts:
+            self.alerts[alert_name] = {
+                "alert_sql": alert_sql,
+                "metadata": metadata
+            }
+        else:
+            print(f"Alert '{alert_name}' already exists. Updating existing alert.")
+            self.alerts[alert_name].update({
+                "alert_sql": alert_sql,
+                "metadata": metadata
+            })
+
+        # Save the updated registry to the JSON file
         self.save_json(self.alert_registry_file, self.alerts)
-        print(f"Alert '{alert_name}' registered.")
+
 
     def execute_updates(self):
         """
@@ -154,18 +167,31 @@ class UpdateRegistry:
                         print(f"Materialized view '{mv_name}' refreshed successfully!")
                     
                     # Evaluate alerts
-                    for alert_name, alert_sql in self.alerts.items():
+                    for alert_name, alert_data in self.alerts.items():
                         try:
+                            # Extract alert SQL and metadata
+                            alert_sql = alert_data.get("alert_sql", "")
+                            metadata = alert_data.get("metadata", {})
+
                             # Dynamically wrap the SQL in triple quotes for consistency
                             formatted_sql = f"""{alert_sql}"""
                             cur.execute(formatted_sql)
                             result = cur.fetchone()
+
                             if result and result[0]:  # Check if the alert condition is TRUE
+                                # Format metadata for logging
+                                metadata_str = f"Metadata: {metadata}"
+                                log_message = f"ALERT TRIGGERED: {alert_name} | {metadata_str}"
+
+                                # Log to file
                                 with open("../logs/alerts.log", "a") as log_file:
-                                    log_file.write(f"ALERT TRIGGERED: {alert_name}\n")
-                                print(f"ALERT TRIGGERED: {alert_name}")
+                                    log_file.write(f"{log_message}\n")
+
+                                # Print to console
+                                print(log_message)
                         except Exception as e:
                             print(f"Error checking alert '{alert_name}': {e}")
+
 
 
         except Exception as e:

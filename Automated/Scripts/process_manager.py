@@ -27,6 +27,7 @@ def start_process_manager():
     """
     Run updates immediately and keep the process running for testing.
     """
+
     # Get the local time equivalent of midnight UTC
     midnight_utc_local = get_utc_midnight_local()
     print(f"Scheduling updates for midnight UTC (local time: {midnight_utc_local})")
