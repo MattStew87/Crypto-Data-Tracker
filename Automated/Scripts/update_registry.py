@@ -167,6 +167,7 @@ class UpdateRegistry:
                         print(f"Materialized view '{mv_name}' refreshed successfully!")
                     
                     # Evaluate alerts
+                    # Evaluate alerts
                     for alert_name, alert_data in self.alerts.items():
                         try:
                             # Extract alert SQL and metadata
@@ -179,20 +180,24 @@ class UpdateRegistry:
                             result = cur.fetchone()
 
                             if result and result[0]:  # Check if the alert condition is TRUE
-                                # Format metadata for logging
-                                metadata_str = f"Metadata: {metadata}"
-                                log_message = f"ALERT TRIGGERED: {alert_name} | {metadata_str}"
+                                # Prepare the data to write into the JSON file
+                                triggered_alert = {alert_name: metadata}
 
-                                # Log to file
-                                with open("../logs/alerts.log", "a") as log_file:
-                                    log_file.write(f"{log_message}\n")
+                                # Write to JSON file
+                                json_file_path = "../config/triggered_alerts.json"
+                                try:
+                                    # Write the current alerts to the file
+                                    with open(json_file_path, "w") as json_file:
+                                        json.dump(triggered_alert, json_file, indent=4)
 
-                                # Print to console
-                                print(log_message)
+                                    # Print to console
+                                    print(f"ALERT TRIGGERED: {alert_name} written to JSON file.")
+
+                                except Exception as json_error:
+                                    print(f"Error writing alert '{alert_name}' to JSON file: {json_error}")
+
                         except Exception as e:
                             print(f"Error checking alert '{alert_name}': {e}")
-
-
 
         except Exception as e:
             print(f"Error executing updates: {e}")

@@ -1,0 +1,9 @@
+{
+    "Alert_2": {
+        "twitter_info": "NOTHING",
+        "ai_prompt_info": "Given the data below can you give me an interesting insight from it",
+        "additional_queries": [
+            "Select * from tab1"
+        ]
+    }
+}

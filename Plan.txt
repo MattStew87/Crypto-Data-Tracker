@@ -1,12 +1,33 @@
 Plan: 
-- Create class to process Alerts 
-- ASK JACK what type of inputs we will be putting in
+- Fix update_regitry triggered alerts (It isn't writing all the correct data) 
+  we want to just write the name of the alert and the metadata. 
+- Cleanup alert_processor 
+- Add in Task_Manager to assign each alert to a different core. 
+
+
+- I think what we need to do is loop through all the triggered 
+  alerts compile them and then dump all of them at once. 
 
 
 KEEP IN MIND: 
 - You can have up to 15 queries running at the same
   time, so you may want to batch them in groups of 15 or
-  use a Thread Pool of size 15. 
+  use a Thread Pool of size 15. This would be only needed
+  for updates
+
+
+AI OUTPUT: 
+Processing Alert_2...
+AI Response for Alert_2: [TextBlock(text="Let me analyze this data and provide an interesting
+insight:\n\nLooking at the data, I notice there's a significant spike in activity during 
+mid-December 2024, specifically:\n\n- December 18: 321 (units/transactions)\n- December 19:
+460 (units/transactions)\n- December 20: 289 (units/transactions)\n\nThis three-day period 
+shows unusually high activity compared to the rest of the dataset, where most daily values 
+range between -10 to +25. This could indicate:\n1. A major event or deadline\n2. End-of-year
+activity surge\n3. Possible seasonal pattern\n\nThis spike also coincides with the highest 
+price/value levels in the dataset (around 104.5-104.7), suggesting this period might be 
+particularly significant for whatever metric is being measured.\n\nWould you like me to 
+analyze any other aspects of this data?", type='text')]
 
 
 TEST INPUTS: 
