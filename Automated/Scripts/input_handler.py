@@ -12,135 +12,180 @@ class InputHandler:
         """
         Handles the workflow for creating raw tables and managing update queries.
         """
+        print("\n" + "=" * 40)
+        print("📊 Raw Table Creation Workflow")
+        print("=" * 40 + "\n")
+
         # Step 1: Table name
-        table_name = input("Table name: ").strip()
+        print("Step 1: Enter the Table Name")
+        table_name = input("🔹 Table Name: ").strip()
 
         # Step 2: Columns
-        print("Enter columns in dictionary format (e.g., {'item1': 'TIMESTAMP', 'item2': 'int'}):")
-        columns_input = input("Columns: ").strip()
+        print("\nStep 2: Define Table Columns")
+        print("💡 Enter columns in dictionary format:")
+        print("   Example: {'item1': 'TIMESTAMP', 'item2': 'int'}")
+        print("-" * 40)
+        columns_input = input("🔹 Columns: ").strip()
+        
         try:
             columns = eval(columns_input)  # Converts string input into dictionary
         except Exception:
-            print("Invalid column format. Please use a dictionary format.")
+            print("❌ Invalid column format. Please use a dictionary format.")
             return
 
         # Step 3: Primary key
-        primary_key = input("Primary key: ").strip()
+        print("\nStep 3: Specify Primary Key")
+        primary_key = input("🔹 Primary Key: ").strip()
+        
         if primary_key not in columns:
-            print(f"Primary key '{primary_key}' not found in columns.")
+            print(f"❌ Primary key '{primary_key}' not found in columns.")
             return
 
         # Step 4: Create the table
+        print("\n" + "=" * 40)
+        print("📝 Creating Table...")
         self.table_manager.create_raw_table(table_name, columns, primary_key)
-        print("------------------------------------------------------------")
-        print("------------------------------------------------------------")
-
-        # Step 5: Notify the user about the next step
-        print("Moving on to data insertion.")
-        print(f"Table '{table_name}' has the following columns:")
+        
+        # Step 5: Display table information
+        print("\n📋 Table Structure Summary")
+        print(f"Table Name: {table_name}")
+        print("Columns:")
         for col, dtype in columns.items():
-            print(f"  - {col}: {dtype}")
-
+            print(f"  ▪️ {col}: {dtype}")
+        
         # Step 6: Input SQL Query
-        print("\nEnter your SQL query for fetching data from Flipside (type 'END' to finish):")
-        print("For example:")
-        print("WITH tab1 AS (\n    SELECT ...\n)\nSELECT ...")
-        print("END")
-        print("\nSQL:")
-
+        print("\nStep 6: Enter Data Insertion Query")
+        print("💡 Enter your SQL query for fetching data from Flipside")
+        print("   Type 'END' on a new line when finished")
+        print("-" * 40)
+        
         sql_query_lines = []
         while True:
             line = input()
-            if line.strip().upper() == "END":
+            if line.upper().strip() == "END":
                 break
             sql_query_lines.append(line)
-
+        
         sql_query = f"""{' '.join(sql_query_lines).strip()}"""
-
-        # Step 7: Insert data into the table
+        
+        # Step 7: Insert data
+        print("\n" + "=" * 40)
+        print("📥 Inserting Data...")
         self.table_manager.insert_data_from_flipside(sql_query)
-        print("------------------------------------------------------------")
-        print("------------------------------------------------------------")
-
-        # Step 8: Prompt user for update query
-        print("Moving on to the update query.")
-        print("Same format as data insertion query.")
-        print("\nUpdate Query SQL:")
-
+        
+        # Step 8: Update query
+        print("\nStep 8: Define Update Query")
+        print("💡 Enter the SQL query for updates")
+        print("   Type 'END' on a new line when finished")
+        print("-" * 40)
+        
         sql_update_query_lines = []
         while True:
             line = input()
-            if line.strip().upper() == "END":
+            if line.upper().strip() == "END":
                 break
             sql_update_query_lines.append(line)
-
+        
         sql_update_query = f"""{' '.join(sql_update_query_lines).strip()}"""
-
-        # Step 9: Register the update query
+        
+        # Step 9: Register update query
+        print("\n" + "=" * 40)
+        print("📝 Registering Update Query...")
         self.table_manager.add_update_query(sql_update_query)
+        print("✅ Workflow completed successfully!")
+        print("=" * 40)
 
     def materialized_view_workflow(self):
         """
-        Handles workflow for materialized view creation logic.
+        Handles workflow for materialized view creation with a user-friendly interface.
         """
+        print("\n" + "=" * 40)
+        print("📊 Welcome to the Materialized View Workflow 📊")
+        print("=" * 40 + "\n")
 
-        # Step 1: Enter table name
-        table_name = input("Table name: ").strip()
+        # Step 1: Enter Table Name
+        print("Step 1: Enter the Name of the Table for the Materialized View")
+        table_name = input("🔹 Table Name: ").strip()
 
-        # Step 2: Enter SQL Query for materialized view
-        print("Enter your SQL query for creating aggregate tables:")
-        print("For example:")
-        print("WITH tab1 AS (\n    SELECT ...\n)\nSELECT ...")
-        print("END")
-        print("\nSQL:")
+        # Step 2: Enter SQL Query
+        print("\nStep 2: Define the SQL Query for the Materialized View")
+        print("💡 Use a valid SQL query to create aggregate tables or views.")
+        print("   Type your query line by line, and type 'END' to finish.")
+        print("   Example:\n")
+        print("   WITH tab1 AS (")
+        print("       SELECT ...")
+        print("   )")
+        print("   SELECT ...")
+        print("-" * 40)
 
         sql_query_lines = []
         while True:
-            line = input()
-            if line.strip().upper() == "END":
+            line = input() 
+            if line.upper().strip() == "END":
                 break
             sql_query_lines.append(line)
 
         sql_query = ' '.join(sql_query_lines).strip()
 
-        # Step 3: Create the materialized view and add it to a list to be refreshed
+        # Step 3: Create the Materialized View
+        print("\n" + "=" * 40)
+        print(f"📋 Creating the Materialized View for Table: {table_name}")
         self.mv_manager.create_materialized_view(table_name, sql_query)
-        self.mv_manager.add_mv_refresh() 
+        self.mv_manager.add_mv_refresh()
+        print(f"✅ Materialized View '{table_name}' created successfully!")
+        print("=" * 40)
+
 
     def alerts_workflow(self):
         """
-        Handles the workflow for creating alerts.
+        Handles the workflow for creating alerts with a user-friendly interface.
         """
-        print("Managing Alerts")
+        print("\n" + "=" * 40)
+        print("🚨 Welcome to the Alerts Workflow 🚨")
+        print("=" * 40 + "\n")
 
         # Step 1: Alert name
-        alert_name = input("Enter the name of the alert: ").strip()
+        print("Step 1: Enter the Name of Your Alert")
+        alert_name = input("🔹 Alert Name: ").strip()
 
         # Step 2: Alert SQL
-        print("Enter the SQL query for the alert (must evaluate to TRUE or FALSE):")
-        print("END your query with the word 'END'.")
-        print("\nSQL:")
+        print("\nStep 2: Define the Alert Condition (SQL Query)")
+        print("💡 The SQL query must evaluate to TRUE or FALSE.")
+        print("   Type your query line by line, and type 'END' to finish.")
+        print("-" * 40)
 
         sql_query_lines = []
         while True:
             line = input()
-            if line.strip().upper() == "END":
+            if line.upper().strip() == "END":
                 break
             sql_query_lines.append(line)
 
         alert_sql = ' '.join(sql_query_lines).strip()
 
-        # Step 4: AI Prompt Info
-        ai_prompt_info = input("Enter AI prompt (optional, leave blank if not applicable): ").strip()
+        # Step 3: AI Prompt Info
+        print("\nStep 3: (Optional) Add an AI Prompt")
+        print("💡 If this alert involves AI processing, provide a prompt.")
+        print("   Leave blank if not applicable.")
+        ai_prompt_info = input("🔹 AI Prompt: ").strip()
 
-        # Step 5: SQL Queries List
-        print("Enter additional SQL queries for the alert (one at a time, END to finish):")
+        # Step 4: Additional SQL Queries
+        print("\nStep 4: (Optional) Add Additional SQL Queries")
+        print("💡 Enter queries to fetch more data for this alert.")
+        print("   Type each query one at a time, and type 'END' to finish.")
+        print("-" * 40)
+
         additional_queries = []
         while True:
-            query = input("SQL Query: ").strip()
+            query = input("SQL Query> ").strip()
             if query.upper() == "END":
                 break
             additional_queries.append(query)
 
-        # Step 6: Register the alert with all parameters
+        # Step 5: Register the Alert
+        print("\n" + "=" * 40)
+        print("📋 Registering Your Alert...")
         self.alert_manager.create_alert(alert_name, alert_sql, ai_prompt_info, additional_queries)
+        print(f"✅ Alert '{alert_name}' registered successfully!")
+        print("=" * 40)
+

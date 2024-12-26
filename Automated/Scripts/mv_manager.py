@@ -52,7 +52,6 @@ class MvManager:
                 with conn.cursor() as cur:
                     cur.execute(create_mv_sql)
                     conn.commit()
-                    print(f"Materialized view '{self.table_name}' created successfully!")
         except Exception as e:
             print(f"Error creating materialized view '{self.table_name}': {e}")
         finally:
@@ -67,4 +66,3 @@ class MvManager:
         """
         
         self.registry.register_materialized_view(mv_name=self.table_name)
-        print(f"Materialized view '{self.table_name}' has been added to refresh registry.")

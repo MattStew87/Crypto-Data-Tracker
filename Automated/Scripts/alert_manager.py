@@ -28,5 +28,4 @@ class AlertManager:
 
         # Register the alert in the registry
         self.registry.register_alert(alert_name, alert_sql, metadata)
-        print(f"Alert '{alert_name}' registered successfully!")
 

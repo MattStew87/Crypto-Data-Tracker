@@ -62,7 +62,6 @@ class TableManager:
                 with conn.cursor() as cur:
                     cur.execute(create_table_sql)
                     conn.commit()
-                    print(f"Table {self.table_name} created successfully!")
         except Exception as e:
             print(f"Error creating table: {e}")
         finally:
@@ -110,7 +109,6 @@ class TableManager:
                     for row in all_rows:
                         cur.execute(insert_sql, tuple(row[col] for col in self.columns.keys()))
                     conn.commit()
-                    print(f"Data inserted successfully into {self.table_name}!")
         except Exception as e:
             print(f"Error fetching or inserting data: {e}")
         finally:
@@ -129,4 +127,3 @@ class TableManager:
             columns=self.columns,
             primary_key=self.primary_key
         )
-        print(f"Update query for table '{self.table_name}' registered.")

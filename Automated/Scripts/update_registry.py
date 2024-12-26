@@ -66,7 +66,6 @@ class UpdateRegistry:
             "primary_key": primary_key
         }
         self.save_json(self.registry_file, self.registry)
-        print(f"Table '{table_name}' update query registered.")
 
     def register_materialized_view(self, mv_name):
         """
@@ -76,7 +75,6 @@ class UpdateRegistry:
         if mv_name not in self.materialized_views:
             self.materialized_views.append(mv_name)
             self.save_json(self.mv_registry_file, self.materialized_views)
-            print(f"Materialized view '{mv_name}' registered.")
 
     def register_alert(self, alert_name, alert_sql, metadata):
         """
