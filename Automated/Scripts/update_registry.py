@@ -21,8 +21,8 @@ class UpdateRegistry:
         self.registry_file = registry_file
         self.mv_registry_file = mv_registry_file
         self.alert_registry_file = alert_registry_file
-        self.registry = self.load_json(self.registry_file)  # Registry for table updates
-        self.materialized_views = self.load_json(self.mv_registry_file)  # List of materialized views
+        self.registry = self.load_json(self.registry_file)  
+        self.materialized_views = self.load_json(self.mv_registry_file)  
         self.alerts = self.load_json(self.alert_registry_file)
 
     def load_json(self, file_path):

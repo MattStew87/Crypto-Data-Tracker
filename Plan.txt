@@ -1,11 +1,10 @@
 Plan: 
-- Add in Task_Manager to assign each alert to a different core.
-
-
-- CLEANUP input_handler to make easier to look at
-
-
-
+- Add in Task_Manager to assign cores to different alerts
+  - We are only going to be able to give two at a time so we will 
+    to wait for avaible cores when we do this
+  - We are going to have to open a new PostgresDB connection 
+    for each core so we have to update that functionality in
+    execute_updates() in our update_registry file. 
 
 
 KEEP IN MIND: 

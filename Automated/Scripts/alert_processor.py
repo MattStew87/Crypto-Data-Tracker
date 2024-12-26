@@ -96,6 +96,7 @@ class AlertProcessor:
             # Process AI prompt
             #ai_response = self.process_ai_prompt(ai_prompt, query_results)
             #print(f"AI Response for {alert_name}: {ai_response}")
+            
             print(f"Dummy result for {alert_name}")
         
         try:
