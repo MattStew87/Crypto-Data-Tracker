@@ -1,17 +1,14 @@
-import json
 import psycopg2
 from dotenv import load_dotenv
 import os
 import anthropic
 
 class AlertProcessor:
-    def __init__(self, json_file_path="../config/triggered_alerts.json"):
+    def __init__(self):
         """
         Initializes the AlertProcessor.
-        :param json_file_path: Path to the triggered_alerts.json file.
         """
         load_dotenv()  # Load environment variables
-        self.json_file_path = json_file_path
         self.db_config = {
             "host": os.getenv("DATABASE_HOST"),
             "database": "CARROT_DB", 
@@ -20,19 +17,6 @@ class AlertProcessor:
             "port": 5432
         }
         self.client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
-
-    def read_alerts(self):
-        """
-        Reads and returns the raw alerts from the JSON file.
-        :return: Dictionary of raw alert data.
-        """
-        try:
-            with open(self.json_file_path, "r") as json_file:
-                alerts = json.load(json_file)
-            return alerts
-        except Exception as e:
-            print(f"Error reading JSON file: {e}")
-            return {}
 
     def execute_queries(self, queries):
         """
@@ -83,40 +67,41 @@ class AlertProcessor:
             print(f"Error communicating with the Claude API: {e}")
             return None
 
-    def process_alerts(self):
+    def process_alert(self, triggered_alert):
         """
-        Main method to process alerts from the JSON file.
+        Processes a single alert.
+        :param triggered_alert: Dictionary with alert name and metadata.
         """
-        alerts = self.read_alerts()
-        for alert_name, metadata in alerts.items():
-            print(f"Processing {alert_name}...")
+        # Extract the alert name and metadata
+        alert_name, metadata = next(iter(triggered_alert.items()))
 
-            # Access the actual metadata dictionary
-            metadata = metadata["metadata"]
+        # Log start of processing
+        try:
+            with open("../config/alerts_processing.log", "a") as log_file:
+                log_file.write(f"{alert_name} has started processing.\n")
+        except Exception as e:
+            print(f"Error writing start log for {alert_name}: {e}")
 
-            # Step 1: Execute SQL queries
-            additional_queries = metadata.get("additional_queries", [])
-            query_results = self.execute_queries(additional_queries)
+        # Step 1: Execute SQL queries
+        additional_queries = metadata.get("additional_queries", [])
+        query_results = self.execute_queries(additional_queries)
 
-            if not query_results:
-                print(f"No data returned for {alert_name}, skipping AI prompt processing.")
-                continue
+        if not query_results:
+            print(f"No data returned for {alert_name}, skipping AI prompt processing.")
+            return
 
-            # Step 2: Process AI prompt
-            ai_prompt = metadata.get("ai_prompt_info", "")
-            if ai_prompt:
-                # Prepare and debug AI prompt
-                formatted_results = "\n".join(
-                    [f"{key}:\n{result}" for key, result in query_results.items()]
-                )
+        # Step 2: Process AI prompt
+        ai_prompt = metadata.get("ai_prompt_info", "")
+        if ai_prompt:
+            # Process AI prompt
+            #ai_response = self.process_ai_prompt(ai_prompt, query_results)
+            #print(f"AI Response for {alert_name}: {ai_response}")
+            print(f"Dummy result for {alert_name}")
+        
+        try:
+            with open("../config/alerts_processing.log", "a") as log_file:
+                log_file.write(f"{alert_name} has finished processing.\n")
+        except Exception as e:
+            print(f"Error writing finish log for {alert_name}: {e}")
 
-                # Process AI prompt
-                ai_response = self.process_ai_prompt(ai_prompt, query_results)
-                print(f"AI Response for {alert_name}: {ai_response}")
 
-
-
-# Example usage
-if __name__ == "__main__":
-    processor = AlertProcessor()
-    processor.process_alerts()

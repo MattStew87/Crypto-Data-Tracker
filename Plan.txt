@@ -1,12 +1,11 @@
 Plan: 
-- Fix update_regitry triggered alerts (It isn't writing all the correct data) 
-  we want to just write the name of the alert and the metadata. 
-- Cleanup alert_processor 
-- Add in Task_Manager to assign each alert to a different core. 
+- Add in Task_Manager to assign each alert to a different core.
 
 
-- I think what we need to do is loop through all the triggered 
-  alerts compile them and then dump all of them at once. 
+- CLEANUP input_handler to make easier to look at
+
+
+
 
 
 KEEP IN MIND: 

@@ -130,9 +130,6 @@ class InputHandler:
 
         alert_sql = ' '.join(sql_query_lines).strip()
 
-        # Step 3: Twitter Info
-        twitter_info = input("Enter Twitter script (optional, leave blank if not applicable): ").strip()
-
         # Step 4: AI Prompt Info
         ai_prompt_info = input("Enter AI prompt (optional, leave blank if not applicable): ").strip()
 
@@ -146,4 +143,4 @@ class InputHandler:
             additional_queries.append(query)
 
         # Step 6: Register the alert with all parameters
-        self.alert_manager.create_alert(alert_name, alert_sql, twitter_info, ai_prompt_info, additional_queries)
+        self.alert_manager.create_alert(alert_name, alert_sql, ai_prompt_info, additional_queries)

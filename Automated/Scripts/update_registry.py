@@ -3,6 +3,7 @@ from flipside import Flipside
 from dotenv import load_dotenv
 import os
 import json
+from alert_processor import AlertProcessor
 
 
 class UpdateRegistry:
@@ -82,7 +83,7 @@ class UpdateRegistry:
         Registers an alert in the registry.
         :param alert_name: Name of the alert.
         :param alert_sql: SQL query that evaluates to TRUE or FALSE.
-        :param metadata: Metadata containing Twitter info, AI prompt, and additional SQL queries.
+        :param metadata: Metadata containing AI prompt and additional SQL queries.
         """
         if alert_name not in self.alerts:
             self.alerts[alert_name] = {
@@ -166,7 +167,7 @@ class UpdateRegistry:
                         conn.commit()
                         print(f"Materialized view '{mv_name}' refreshed successfully!")
                     
-                    # Evaluate alerts
+
                     # Evaluate alerts
                     for alert_name, alert_data in self.alerts.items():
                         try:
@@ -180,21 +181,12 @@ class UpdateRegistry:
                             result = cur.fetchone()
 
                             if result and result[0]:  # Check if the alert condition is TRUE
-                                # Prepare the data to write into the JSON file
+                                # Prepare the triggered alert as a dictionary
                                 triggered_alert = {alert_name: metadata}
 
-                                # Write to JSON file
-                                json_file_path = "../config/triggered_alerts.json"
-                                try:
-                                    # Write the current alerts to the file
-                                    with open(json_file_path, "w") as json_file:
-                                        json.dump(triggered_alert, json_file, indent=4)
-
-                                    # Print to console
-                                    print(f"ALERT TRIGGERED: {alert_name} written to JSON file.")
-
-                                except Exception as json_error:
-                                    print(f"Error writing alert '{alert_name}' to JSON file: {json_error}")
+                                # Pass the triggered alert to the AlertProcessor
+                                processor = AlertProcessor()
+                                processor.process_alert(triggered_alert)
 
                         except Exception as e:
                             print(f"Error checking alert '{alert_name}': {e}")

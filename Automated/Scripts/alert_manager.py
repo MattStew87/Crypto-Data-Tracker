@@ -12,18 +12,16 @@ class AlertManager:
         """
         self.registry = registry
 
-    def create_alert(self, alert_name, alert_sql, twitter_info, ai_prompt_info, additional_queries):
+    def create_alert(self, alert_name, alert_sql, ai_prompt_info, additional_queries):
         """
         Registers an alert with the centralized registry.
         :param alert_name: Name of the alert.
         :param alert_sql: SQL query that evaluates to TRUE or FALSE.
-        :param twitter_info: Twitter script for the alert.
         :param ai_prompt_info: AI prompt for processing.
         :param additional_queries: List of additional SQL queries.
         """
         # Build the metadata structure
         metadata = {
-            "twitter_info": twitter_info,
             "ai_prompt_info": ai_prompt_info,
             "additional_queries": additional_queries
         }
