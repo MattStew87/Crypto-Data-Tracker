@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import json
 from alert_processor import AlertProcessor
+from core_task_manager import CoreTaskManager  
 
 
 class UpdateRegistry:
@@ -113,6 +114,10 @@ class UpdateRegistry:
             "port": "5432"
         }
 
+        # Initialize variables at the top
+        alerts_to_process = {}  # Dictionary to store alerts that are triggered
+        task_manager = CoreTaskManager(max_cores=2)  # Initialize CoreTaskManager
+
         try:
             # Establish a single database connection
             with psycopg2.connect(**db_config) as conn:
@@ -164,9 +169,8 @@ class UpdateRegistry:
                         cur.execute(f"REFRESH MATERIALIZED VIEW {mv_name};")
                         conn.commit()
                         print(f"Materialized view '{mv_name}' refreshed successfully!")
-                    
 
-                    # Evaluate alerts
+                    # Evaluate alerts while keeping the connection open
                     for alert_name, alert_data in self.alerts.items():
                         try:
                             # Extract alert SQL and metadata
@@ -179,17 +183,20 @@ class UpdateRegistry:
                             result = cur.fetchone()
 
                             if result and result[0]:  # Check if the alert condition is TRUE
-                                # Prepare the triggered alert as a dictionary
-                                triggered_alert = {alert_name: metadata}
-
-                                # Pass the triggered alert to the AlertProcessor
-                                processor = AlertProcessor()
-                                processor.process_alert(triggered_alert)
+                                alerts_to_process[alert_name] = metadata  # Add to processing queue
 
                         except Exception as e:
                             print(f"Error checking alert '{alert_name}': {e}")
 
+            # Run triggered alerts in parallel using CoreTaskManager
+            if alerts_to_process:
+                print("🔄 Starting alert processing...")
+                task_manager.run_alerts(alerts_to_process)
+            else:
+                print("✅ No alerts triggered.")
+
         except Exception as e:
             print(f"Error executing updates: {e}")
+
 
 

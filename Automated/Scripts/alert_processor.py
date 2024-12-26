@@ -75,13 +75,6 @@ class AlertProcessor:
         # Extract the alert name and metadata
         alert_name, metadata = next(iter(triggered_alert.items()))
 
-        # Log start of processing
-        try:
-            with open("../config/alerts_processing.log", "a") as log_file:
-                log_file.write(f"{alert_name} has started processing.\n")
-        except Exception as e:
-            print(f"Error writing start log for {alert_name}: {e}")
-
         # Step 1: Execute SQL queries
         additional_queries = metadata.get("additional_queries", [])
         query_results = self.execute_queries(additional_queries)
@@ -96,13 +89,8 @@ class AlertProcessor:
             # Process AI prompt
             #ai_response = self.process_ai_prompt(ai_prompt, query_results)
             #print(f"AI Response for {alert_name}: {ai_response}")
-            
+
             print(f"Dummy result for {alert_name}")
         
-        try:
-            with open("../config/alerts_processing.log", "a") as log_file:
-                log_file.write(f"{alert_name} has finished processing.\n")
-        except Exception as e:
-            print(f"Error writing finish log for {alert_name}: {e}")
 
 

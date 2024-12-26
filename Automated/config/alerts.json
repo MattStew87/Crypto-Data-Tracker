@@ -7,5 +7,23 @@
                 "Select * from tab1"
             ]
         }
+    },
+    "Alert_4": {
+        "alert_sql": "Select net_holders < 1000 from tab1",
+        "metadata": {
+            "ai_prompt_info": "DO AI STUFF",
+            "additional_queries": [
+                "Select * from tab1"
+            ]
+        }
+    },
+    "Alert_5": {
+        "alert_sql": "Select net_holders < 1000 from tab1",
+        "metadata": {
+            "ai_prompt_info": "DO AI STUFF",
+            "additional_queries": [
+                "Select * from tab1"
+            ]
+        }
     }
 }
