@@ -6,7 +6,7 @@ import json
 from alert_processor import AlertProcessor
 
 class CoreTaskManager:
-    def __init__(self, max_cores=2):
+    def __init__(self, max_cores=8):
         """
         Initializes the CoreTaskManager with core management logic.
         :param max_cores: Maximum number of cores to use.

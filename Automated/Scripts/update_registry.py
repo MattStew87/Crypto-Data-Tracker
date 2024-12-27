@@ -116,7 +116,7 @@ class UpdateRegistry:
 
         # Initialize variables at the top
         alerts_to_process = {}  # Dictionary to store alerts that are triggered
-        task_manager = CoreTaskManager(max_cores=2)  # Initialize CoreTaskManager
+        task_manager = CoreTaskManager(max_cores=8)  # Initialize CoreTaskManager
 
         try:
             # Establish a single database connection

@@ -1,8 +1,9 @@
 import psutil
 
-def check_core_usage():
-    for core_id, usage in enumerate(psutil.cpu_percent(percpu=True)):
-        print(f"Core {core_id}: {usage}% usage")
+def get_core_count():
+    total_cores = psutil.cpu_count(logical=True)  # Logical cores (includes hyperthreading)
+    physical_cores = psutil.cpu_count(logical=False)  # Physical cores
+    print(f"Logical cores: {total_cores}, Physical cores: {physical_cores}")
 
 if __name__ == "__main__":
-    check_core_usage()
+    get_core_count()
