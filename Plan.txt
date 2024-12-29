@@ -1,6 +1,4 @@
 Plan: 
-- Test out grouped by graph to make sure it works
-- make graphs look better (especially pie chart) 
 
 
 - If you want to see prints from process_manager.py you 

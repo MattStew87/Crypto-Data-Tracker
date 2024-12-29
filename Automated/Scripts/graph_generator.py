@@ -84,28 +84,30 @@ class GraphGenerator:
 
     def add_logo_to_figure(self, fig):
         """
-        Add a logo to the top-left corner of the figure without a circular border.
+        Add a logo to the top-left corner of the figure with sufficient spacing.
         :param fig: Matplotlib figure object.
         """
+
         try:
+            #fig.subplots_adjust(top=0.95, left=0.15, right=0.97, bottom=0.15)
+            
             # Load the logo image
             logo_img = Image.open(self.logo_path)
-            imagebox = OffsetImage(logo_img, zoom=0.11)  # Adjust zoom for appropriate size
+            imagebox = OffsetImage(logo_img, zoom=0.12)  # Adjust zoom for appropriate size
 
             # Create an AnnotationBbox to place the logo in the figure
             ab = AnnotationBbox(
                 imagebox,
-                (0.01, 0.77),  # Adjusted to fit entirely on the image
-                xycoords='figure fraction',  # Position relative to the whole figure
+                (0.01, 0.95),  # Adjusted to the top-left corner of the figure
+                xycoords='figure fraction',  # Relative to the whole figure
                 frameon=False,  # No border around the logo
-                box_alignment=(0, 1)  # Align the logo box to the top-left corner
+                box_alignment=(0, 1)  # Align the logo to the top-left corner
             )
             fig.add_artist(ab)
-
-            # Adjust the figure's layout to ensure the logo doesn't get cropped
-            fig.subplots_adjust(top=0.75)
+            
         except Exception as e:
             print(f"Error adding logo: {e}")
+
 
     def create_line_graph(self, data, x_label, y_label, title, filename):
         """
@@ -212,20 +214,37 @@ class GraphGenerator:
         :param title: Title of the pie chart.
         :param filename: Name of the output file.
         """
-        labels = [point[0] for point in data]  # Categories.
-        sizes = [float(point[1]) for point in data]  # Values.
+        labels = [point[0] for point in data]  # Categories
+        sizes = [float(point[1]) for point in data]  # Values
 
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(8, 6))  # Adjust size as needed
         ax.set_facecolor('#f2efe9')
 
         ax.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=self.calmColors[:len(sizes)])
         ax.set_title(title)
         ax.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
-        # Add logo
-        self.add_logo_to_figure(fig)
+        # Adjust figure margins to prevent cropping
+        fig.subplots_adjust(top=0.85, left=0.1, right=0.9, bottom=0.1)
+
+        # Add logo to the figure
+        try:
+            logo_img = Image.open(self.logo_path)
+            imagebox = OffsetImage(logo_img, zoom=0.12)
+            ab = AnnotationBbox(
+                imagebox,
+                (0.01, 0.8),  # Position in the top-left corner of the figure
+                xycoords='figure fraction',
+                frameon=False,
+                box_alignment=(0, 1)
+            )
+            fig.add_artist(ab)
+        except Exception as e:
+            print(f"Error adding logo: {e}")
 
         return self.save_graph(fig, filename)
+
+
 
     def generate_graphs(self, additional_queries):
         """
@@ -243,7 +262,7 @@ class GraphGenerator:
         for query_result in query_results:
             data, graph_type, final_columns, graph_title = query_result
 
-            rand = f"{random.randint(100000, 999999)}"
+            rand = random.randint(100000, 999999)
 
             # Generate the appropriate graph and store the file path
             if graph_type == "BASIC_LINE":
@@ -295,6 +314,7 @@ if __name__ == "__main__":
 
     
     # Mock additional queries input
+
     additional_queries = [
         {
             "sql_query": "select * from tab1 order by block_timestamp desc",
@@ -314,7 +334,27 @@ if __name__ == "__main__":
             "graph_type": "PIECHART",
             "graph_title" : "title 3" 
         },
+        {
+            "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
+            "final_columns": ["date", "event_tpye", "Amount"],
+            "graph_type": "GROUPED_LINE",
+            "graph_title" : "title 5 " 
+        }
+        
     ]
+    
+    
+    """
+    additional_queries = [
+         {
+            "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
+            "final_columns": ["date", "event_tpye", "Amount"],
+            "graph_type": "GROUPED_LINE",
+            "graph_title" : "title 5 " 
+        }
+    ]
+    """
+ 
 
     # Run the function and print results
     results = graph_gen.generate_graphs(additional_queries)
