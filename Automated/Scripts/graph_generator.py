@@ -434,21 +434,21 @@ if __name__ == "__main__":
     additional_queries = [
           {
             "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
-            "final_columns": ["date", "event_type", "Amount"],
+            "final_columns": ["Date", "event_type", "Amount"],
             "graph_type": "STACKED_BAR",
-            "graph_title" : "title 5 " 
+            "graph_title" : "Daily Carrot minted and Burned" 
          },
          {
             "sql_query": "select block_timestamp, net_holders from tab1 where block_timestamp > current_date - 50 order by block_timestamp desc",
-            "final_columns": ["dater", "net_holders"],
+            "final_columns": ["Date", "Net Holders"],
             "graph_type": "BASIC_BAR",
-            "graph_title" : "title 2" 
+            "graph_title" : "Daily Carrot Net Holders" 
         },
         {
-            "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
-            "final_columns": ["date", "event_type", "Amount"],
-            "graph_type": "GROUPED_LINE",
-            "graph_title" : "title 5 " 
+            "sql_query": "select * from tab1 order by block_timestamp desc",
+            "final_columns": ["Date", "Net Holders", "Carrot Price (USD)"],
+            "graph_type": "MULTI_LINE",
+            "graph_title" : "Daily Carrot Price and Net Holders" 
         }
     ]
  
