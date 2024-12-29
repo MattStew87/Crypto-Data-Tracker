@@ -5,7 +5,9 @@ from PIL import Image
 from decimal import Decimal
 from datetime import datetime
 import os
-
+from dotenv import load_dotenv
+import psycopg2
+import random
 
 class GraphGenerator:
     def __init__(self, output_dir="graphs", logo_path="pine_watermark.png"):
@@ -13,6 +15,9 @@ class GraphGenerator:
         Initialize the GraphGenerator.
         :param output_dir: Directory to save generated graph images.
         """
+
+        load_dotenv() 
+
         os.makedirs(output_dir, exist_ok=True)
         self.output_dir = output_dir
         self.logo_path = logo_path
@@ -23,6 +28,48 @@ class GraphGenerator:
         # Set the default background color to off-white
         plt.rcParams['figure.facecolor'] = '#f2efe9'
 
+        self.db_config = {
+            "host": os.getenv("DATABASE_HOST"),
+            "database": "CARROT_DB", 
+            "user": os.getenv("DATABASE_USER"),
+            "password": os.getenv("DATABASE_PASSWORD"),
+            "port": 5432
+        }
+    
+    def execute_and_prepare_queries(self, additional_queries):
+        """
+        Executes SQL queries from additional_queries, cleans data, and returns results.
+        :param additional_queries: List of dictionaries containing SQL queries, graph types, and final columns.
+        :return: List of tuples (cleaned_data, graph_type, final_columns).
+        """
+        query_results = []
+
+        try:
+            # Connect to the PostgreSQL database
+            with psycopg2.connect(**self.db_config) as conn:
+                with conn.cursor() as cursor:
+                    for query_info in additional_queries:
+                        try:
+                            sql_query = query_info["sql_query"]
+                            graph_type = query_info["graph_type"]
+                            final_columns = query_info["final_columns"]
+                            graph_title = query_info["graph_title"]
+
+                            formatted_sql = f"""{sql_query}"""
+                            cursor.execute(formatted_sql)
+                            raw_data = cursor.fetchall()
+                            
+                            # Append results as a tuple (cleaned_data, graph_type, final_columns)
+                            query_results.append((raw_data, graph_type, final_columns, graph_title))
+                            
+                        except Exception as query_error:
+                            print(f"Error executing query: {sql_query}. Error: {query_error}")
+        except Exception as db_error:
+            print(f"Database connection error: {db_error}")
+
+        return query_results
+
+
     def save_graph(self, fig, filename):
         """
         Save the graph as an image file.
@@ -30,6 +77,7 @@ class GraphGenerator:
         :param filename: Name of the output file (without extension).
         """
         filepath = os.path.join(self.output_dir, f"{filename}.png")
+        filepath = os.path.normpath(filepath)
         fig.savefig(filepath, format="png", bbox_inches="tight")
         plt.close(fig)
         return filepath
@@ -179,26 +227,97 @@ class GraphGenerator:
 
         return self.save_graph(fig, filename)
 
+    def generate_graphs(self, additional_queries):
+        """
+        Executes queries via `execute_and_prepare_queries` and generates graphs based on graph types.
+        :param additional_queries: List of dictionaries containing SQL queries, graph types, and final columns.
+        :return: List of file paths to the generated graphs.
+        """
+        # Step 1: Fetch query results
+        query_results = self.execute_and_prepare_queries(additional_queries)
+
+        # Step 2: Initialize a list to store file paths of generated graphs
+        graph_file_paths = []
+
+        # Step 3: Process the results and generate graphs
+        for query_result in query_results:
+            data, graph_type, final_columns, graph_title = query_result
+
+            rand = f"{random.randint(100000, 999999)}"
+
+            # Generate the appropriate graph and store the file path
+            if graph_type == "BASIC_LINE":
+                graph_path = self.create_line_graph(
+                    data=data,
+                    x_label=final_columns[0],
+                    y_label=final_columns[1],
+                    title=graph_title,
+                    filename=f"basic_line_{rand}"
+                )
+            elif graph_type == "MULTI_LINE":
+                graph_path = self.create_multi_line_graph(
+                    data=data,
+                    x_label=final_columns[0],
+                    y_labels=final_columns[1:],
+                    title=graph_title,
+                    filename=f"multi_line_{rand}"
+                )
+            elif graph_type == "GROUPED_LINE":
+                graph_path = self.create_grouped_line_graph(
+                    data=data,
+                    x_label=final_columns[0],
+                    y_label=final_columns[2],
+                    title=graph_title,
+                    filename=f"grouped_line_{rand}"
+                )
+            elif graph_type == "PIECHART":
+                graph_path = self.create_pie_chart(
+                    data=data,
+                    title=graph_title,
+                    filename=f"pie_chart_{rand}"
+                )
+            else:
+                print(f"Unsupported graph type: {graph_type}")
+                graph_path = None
+
+            if graph_path:
+                graph_file_paths.append(graph_path)
+
+        # Step 4: Return the list of file paths
+        return graph_file_paths
+
+
 
 if __name__ == "__main__":
     graph_gen = GraphGenerator()
 
-    data = [
-        (datetime(2024, 8, 15, 0, 0), 2, Decimal('100.163265722')),
-        (datetime(2024, 8, 16, 0, 0), 5, Decimal('100.1623662')),
-        (datetime(2024, 8, 17, 0, 0), 8, Decimal('100.289026958')),
-        (datetime(2024, 8, 18, 0, 0), 4, Decimal('100.357780737')),
-        (datetime(2024, 8, 19, 0, 0), 10, Decimal('100.1623662')),
-        (datetime(2024, 8, 20, 0, 0), 47, Decimal('100.289026958')),
-        (datetime(2024, 8, 21, 0, 0), 60, Decimal('100.357780737')),
+    
+
+    
+    # Mock additional queries input
+    additional_queries = [
+        {
+            "sql_query": "select * from tab1 order by block_timestamp desc",
+            "final_columns": ["date", "net_holders", "price"],
+            "graph_type": "MULTI_LINE",
+            "graph_title" : "title 1" 
+        },
+        {
+            "sql_query": "select block_timestamp, net_holders from tab1 order by block_timestamp desc",
+            "final_columns": ["dater", "net_holders"],
+            "graph_type": "BASIC_LINE",
+            "graph_title" : "title 2" 
+        },
+        {
+            "sql_query": "select block_timestamp, price from tab1 where block_timestamp > current_date - 3  order by block_timestamp desc",
+            "final_columns": ["block_timestamp", "price"],
+            "graph_type": "PIECHART",
+            "graph_title" : "title 3" 
+        },
     ]
 
-    file_path = graph_gen.create_multi_line_graph(
-        data=data,
-        x_label="Date",
-        y_labels=["Net Holders", "Price"],
-        title="Net Holders and Price Over Time",
-        filename="test_multi_line_graph"
-    )
-
-    print(f"Graph saved at: {file_path}")
+    # Run the function and print results
+    results = graph_gen.generate_graphs(additional_queries)
+    print(results) 
+ 
+    

@@ -182,11 +182,38 @@ class InputHandler:
         print("-" * 40)
 
         additional_queries = []
+
         while True:
+            print("\nDefine an Alert Condition:")
+            print("💡 Type 'END' for SQL Query to stop adding conditions.")
+
+            # Input SQL Query
             query = input("SQL Query> ").strip()
             if query.upper() == "END":
                 break
-            additional_queries.append(query)
+
+            # Input Final Columns
+            print("💡 Enter the final columns (e.g., date, net_holders, price). Separate by commas.")
+            columns = input("Final Columns> ").strip().split(",")
+            columns = [col.strip() for col in columns if col.strip()]  # Clean and validate
+
+            graph_title = input("Graph Title> ").strip()
+
+            # Input Graph Type
+            print("💡 Choose the graph type: BASIC_LINE, MULTI_LINE, GROUPED_LINE, PIECHART.")
+            while True:
+                graph_type = input("Graph Type> ").strip().upper()
+                if graph_type in ["BASIC_LINE", "MULTI_LINE", "GROUPED_LINE", "PIECHART"]:
+                    break
+                print("❌ Invalid graph type. Please choose one of: BASIC_LINE, MULTI_LINE, GROUPED_LINE, PIECHART.")
+
+            # Append to the list of additional queries
+            additional_queries.append({
+                "sql_query": query,
+                "final_columns": columns,
+                "graph_type": graph_type, 
+                "graph_title": graph_title
+            })
 
         # Step 5: Register the Alert
         print("\n" + "=" * 40)

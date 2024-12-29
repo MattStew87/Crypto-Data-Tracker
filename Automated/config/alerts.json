@@ -1,11 +1,38 @@
 {
-    "alert_example": {
-        "alert_sql": "select net_holders < 1000 from tab1",
+    "MAIN_alert": {
+        "alert_sql": "select net_holders < 10000 from tab1",
         "metadata": {
             "ai_prompt_info": "AI PROMPT",
             "twitter_prompt_info": "TWITTER PROMPT",
             "additional_queries": [
-                "select * from tab1"
+                {
+                    "sql_query": "select * from tab1 order by block_timestamp desc",
+                    "final_columns": [
+                        "Date",
+                        "net_holders",
+                        "price"
+                    ],
+                    "graph_type": "MULTI_LINE",
+                    "graph_title": "Graph 1"
+                },
+                {
+                    "sql_query": "select block_timestamp, price from tab1 order by block_timestamp desc",
+                    "final_columns": [
+                        "date",
+                        "price"
+                    ],
+                    "graph_type": "BASIC_LINE",
+                    "graph_title": "graph 2"
+                },
+                {
+                    "sql_query": "select block_timestamp, price from tab1 where block_timestamp > current_date - 4 order by block_timestamp desc",
+                    "final_columns": [
+                        "date",
+                        "price"
+                    ],
+                    "graph_type": "PIECHART",
+                    "graph_title": "Graph 3"
+                }
             ]
         }
     }

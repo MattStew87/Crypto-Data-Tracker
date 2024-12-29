@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import anthropic
 import tweepy
+from graph_generator import GraphGenerator
 
 class AlertProcessor:
     def __init__(self):
@@ -12,44 +13,9 @@ class AlertProcessor:
 
         # Load environment variables
         load_dotenv()  
-        
-        # Database configuration
-        self.db_config = {
-            "host": os.getenv("DATABASE_HOST"),
-            "database": "CARROT_DB", 
-            "user": os.getenv("DATABASE_USER"),
-            "password": os.getenv("DATABASE_PASSWORD"),
-            "port": 5432
-        }
 
         # Anthropics (Claude) API setup
         self.client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))    
-
-
-    def execute_queries(self, queries):
-        """
-        Executes a list of SQL queries and returns the results labeled as query1, query2, etc.
-        :param queries: List of SQL queries to execute.
-        :return: Dictionary with labeled query results.
-        """
-        results = {}
-        try:
-            # Connect to the PostgreSQL database
-            with psycopg2.connect(**self.db_config) as conn:
-                with conn.cursor() as cursor:
-                    for idx, query in enumerate(queries, start=1):
-                        try:
-                            # Wrap the query in triple quotes for consistency
-                            formatted_sql = f"""{query}"""
-                            cursor.execute(formatted_sql)
-                            query_results = cursor.fetchall()
-                            results[f"query{idx}"] = query_results
-                            print(results["query1"])
-                        except Exception as query_error:
-                            print(f"Error executing query {idx}: {query_error}")
-        except Exception as e:
-            print(f"Database connection error: {e}")
-        return results
     
 
     def process_ai_prompt(self, ai_prompt, query_results):
@@ -88,11 +54,10 @@ class AlertProcessor:
 
         # Step 1: Execute SQL queries
         additional_queries = metadata.get("additional_queries", [])
-        query_results = self.execute_queries(additional_queries)
+        graph_handler = GraphGenerator() 
+        results = graph_handler.generate_graphs(additional_queries)
+        print(results) 
 
-        if not query_results:
-            print(f"No data returned for {alert_name}, skipping AI prompt processing.")
-            return
 
         # Step 2: Process AI prompt
         ai_prompt = metadata.get("ai_prompt_info", "")
