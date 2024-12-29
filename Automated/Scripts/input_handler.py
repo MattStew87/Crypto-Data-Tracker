@@ -200,12 +200,12 @@ class InputHandler:
             graph_title = input("Graph Title> ").strip()
 
             # Input Graph Type
-            print("💡 Choose the graph type: BASIC_LINE, MULTI_LINE, GROUPED_LINE, PIECHART.")
+            print("💡 Choose the graph type: BASIC_LINE, MULTI_LINE, GROUPED_LINE, PIECHART, BASIC_BAR, STACKED_BAR.")
             while True:
                 graph_type = input("Graph Type> ").strip().upper()
-                if graph_type in ["BASIC_LINE", "MULTI_LINE", "GROUPED_LINE", "PIECHART"]:
+                if graph_type in ["BASIC_LINE", "MULTI_LINE", "GROUPED_LINE", "PIECHART", "BASIC_BAR", "STACKED_BAR" ]:
                     break
-                print("❌ Invalid graph type. Please choose one of: BASIC_LINE, MULTI_LINE, GROUPED_LINE, PIECHART.")
+                print("❌ Invalid graph type. Please choose one of: BASIC_LINE, MULTI_LINE, GROUPED_LINE, PIECHART, BASIC_BAR, STACKED_BAR.")
 
             # Append to the list of additional queries
             additional_queries.append({

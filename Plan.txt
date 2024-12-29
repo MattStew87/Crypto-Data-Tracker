@@ -1,10 +1,22 @@
 Plan: 
 
 
+INPUT: 
+- Maybe have a preset first image for first tweet, 
+  store that in the metadata as well. 
+
+
+
+
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+
+THINGS TO KEEP IN MIND: 
 - If you want to see prints from process_manager.py you 
   have to use python.exe instead of python2.exe
-
-- INPUTTED DATA has to be in order 
+- INPUTTED DATA has to be in order
 
 
 AI OUTPUT: 
@@ -19,12 +31,11 @@ activity surge\n3. Possible seasonal pattern\n\nThis spike also coincides with t
 price/value levels in the dataset (around 104.5-104.7), suggesting this period might be 
 particularly significant for whatever metric is being measured.\n\nWould you like me to 
 analyze any other aspects of this data?", type='text')]
-
-
-INPUT: 
-- Maybe have a preset first image for first tweet. 
-
  
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 TEST INPUTS: 
 --------------------------------------------------------------------------------------------------

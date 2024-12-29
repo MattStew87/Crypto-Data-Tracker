@@ -21,7 +21,7 @@ class GraphGenerator:
         os.makedirs(output_dir, exist_ok=True)
         self.output_dir = output_dir
         self.logo_path = logo_path
-        self.calmColors = ["#115f9a", "#1984c5", "#22a7f0", "#48b5c4", "#76c68f", "#a6d75b", "#c9e52f", "#d0ee11", "#d0f400"]
+        self.calmColors = ["#2A503A", "#8BC9A3", "#3E9F73", "#3AB0AA", "#EEDC82", "#F4A261", "#F4D3D6", "#6D8AA7"]
 
         # Set default font to Times New Roman
         plt.rcParams['font.family'] = 'Times New Roman'
@@ -243,6 +243,75 @@ class GraphGenerator:
             print(f"Error adding logo: {e}")
 
         return self.save_graph(fig, filename)
+    
+
+    def create_bar_chart(self, data, x_label, y_label, title, filename):
+        """
+        Create a simple bar chart.
+        :param data: List of tuples, where the first element is X (e.g., category or date) 
+                    and the second element is Y (e.g., value).
+        :param x_label: Label for the X-axis.
+        :param y_label: Label for the Y-axis.
+        :param title: Title of the graph.
+        :param filename: Name of the output file.
+        """
+        x = [point[0] for point in data]  # Assuming first column is X (category or date).
+        y = [float(point[1]) for point in data]  # Assuming second column is Y (value).
+
+        fig, ax = plt.subplots()
+        ax.set_facecolor('#f2efe9')
+
+        ax.bar(x, y, color=self.calmColors[0], zorder=3)
+        ax.set_xlabel(x_label)
+        ax.set_ylabel(y_label)
+        ax.set_title(title)
+        ax.grid(axis='y', zorder=1)  # Add horizontal grid lines for readability
+        fig.autofmt_xdate()
+
+        # Add logo
+        self.add_logo_to_figure(fig)
+
+        return self.save_graph(fig, filename)
+    
+
+    def create_stacked_bar_chart(self, data, x_label, y_label, title, filename):
+        """
+        Create a stacked bar chart.
+        :param data: List of tuples, where the first element is X (e.g., category or date),
+                    the second element is a group/category, and the third element is Y (metric).
+        :param x_label: Label for the X-axis.
+        :param y_label: Label for the Y-axis.
+        :param title: Title of the graph.
+        :param filename: Name of the output file.
+        """
+        grouped_data = {}
+        for point in data:
+            x, group, y = point[0], point[1], point[2]
+            if group not in grouped_data:
+                grouped_data[group] = []
+            grouped_data[group].append((x, y))
+
+        x_labels = sorted(set(point[0] for point in data))  # Unique X labels in order
+        fig, ax = plt.subplots()
+        ax.set_facecolor('#f2efe9')
+
+        bottom_values = [0] * len(x_labels)  # To keep track of the cumulative Y values for stacking
+        for idx, (group, points) in enumerate(grouped_data.items()):
+            group_y = [float(dict(points).get(x, 0)) for x in x_labels]  # Get Y values for the group
+            ax.bar(x_labels, group_y, bottom=bottom_values, label=group, color=self.calmColors[idx % len(self.calmColors)], edgecolor='black', zorder=3)
+            bottom_values = [sum(x) for x in zip(bottom_values, group_y)]  # Update bottom for next group
+
+        ax.set_xlabel(x_label)
+        ax.set_ylabel(y_label)
+        ax.set_title(title)
+        ax.legend()
+        ax.grid(axis='y', zorder=1)
+        fig.autofmt_xdate()
+
+        # Add logo
+        self.add_logo_to_figure(fig)
+
+        return self.save_graph(fig, filename)
 
 
 
@@ -295,6 +364,22 @@ class GraphGenerator:
                     title=graph_title,
                     filename=f"pie_chart_{rand}"
                 )
+            elif graph_type == "BASIC_BAR":
+                graph_path = self.create_bar_chart(
+                    data=data,
+                    x_label=final_columns[0],
+                    y_label=final_columns[1],
+                    title=graph_title,
+                    filename=f"basic_bar_{rand}"
+                )
+            elif graph_type == "STACKED_BAR":
+                graph_path = self.create_stacked_bar_chart(
+                    data=data,
+                    x_label=final_columns[0],
+                    y_label=final_columns[2],
+                    title=graph_title,
+                    filename=f"stacked_bar_{rand}"
+                )
             else:
                 print(f"Unsupported graph type: {graph_type}")
                 graph_path = None
@@ -315,6 +400,7 @@ if __name__ == "__main__":
     
     # Mock additional queries input
 
+    """
     additional_queries = [
         {
             "sql_query": "select * from tab1 order by block_timestamp desc",
@@ -337,23 +423,35 @@ if __name__ == "__main__":
         {
             "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
             "final_columns": ["date", "event_tpye", "Amount"],
-            "graph_type": "GROUPED_LINE",
+            "graph_type": "STACKED_BAR",
             "graph_title" : "title 5 " 
         }
         
     ]
-    
-    
     """
+    
+    
     additional_queries = [
-         {
+          {
             "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
-            "final_columns": ["date", "event_tpye", "Amount"],
+            "final_columns": ["date", "event_type", "Amount"],
+            "graph_type": "STACKED_BAR",
+            "graph_title" : "title 5 " 
+         },
+         {
+            "sql_query": "select block_timestamp, net_holders from tab1 where block_timestamp > current_date - 50 order by block_timestamp desc",
+            "final_columns": ["dater", "net_holders"],
+            "graph_type": "BASIC_BAR",
+            "graph_title" : "title 2" 
+        },
+        {
+            "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
+            "final_columns": ["date", "event_type", "Amount"],
             "graph_type": "GROUPED_LINE",
             "graph_title" : "title 5 " 
         }
     ]
-    """
+ 
  
 
     # Run the function and print results
