@@ -2,13 +2,18 @@ import psycopg2
 from dotenv import load_dotenv
 import os
 import anthropic
+import tweepy
 
 class AlertProcessor:
     def __init__(self):
         """
         Initializes the AlertProcessor.
         """
-        load_dotenv()  # Load environment variables
+
+        # Load environment variables
+        load_dotenv()  
+        
+        # Database configuration
         self.db_config = {
             "host": os.getenv("DATABASE_HOST"),
             "database": "CARROT_DB", 
@@ -16,7 +21,10 @@ class AlertProcessor:
             "password": os.getenv("DATABASE_PASSWORD"),
             "port": 5432
         }
-        self.client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
+
+        # Anthropics (Claude) API setup
+        self.client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))    
+
 
     def execute_queries(self, queries):
         """
@@ -36,11 +44,13 @@ class AlertProcessor:
                             cursor.execute(formatted_sql)
                             query_results = cursor.fetchall()
                             results[f"query{idx}"] = query_results
+                            print(results["query1"])
                         except Exception as query_error:
                             print(f"Error executing query {idx}: {query_error}")
         except Exception as e:
             print(f"Database connection error: {e}")
         return results
+    
 
     def process_ai_prompt(self, ai_prompt, query_results):
         """
@@ -66,6 +76,7 @@ class AlertProcessor:
         except Exception as e:
             print(f"Error communicating with the Claude API: {e}")
             return None
+        
 
     def process_alert(self, triggered_alert):
         """

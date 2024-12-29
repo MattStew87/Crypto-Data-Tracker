@@ -1,15 +1,13 @@
 Plan: 
-- 
+- Figure out Twitter API
+- Figure out creating graphs
+- Add twitter data back to metadata 
 
-
-KEEP IN MIND: 
-- You can have up to 15 queries running at the same
-  time, so you may want to batch them in groups of 15 or
-  use a Thread Pool of size 15. This would be only needed
-  for updates
 
 - If you want to see prints from process_manager.py you 
   have to use python.exe instead of python2.exe
+
+- INPUTTED DATA has to be in order 
 
 
 AI OUTPUT: 
@@ -25,6 +23,24 @@ price/value levels in the dataset (around 104.5-104.7), suggesting this period m
 particularly significant for whatever metric is being measured.\n\nWould you like me to 
 analyze any other aspects of this data?", type='text')]
 
+GRAPH THINGS: 
+- likely need to strip the first datetime in datetime.datetiem(date) format
+  of our data
+- Going to need to pull data table category names with data for labeling
+- Need to test with real data to see if it works
+
+
+INPUT: 
+- Going to need to add a list of graph types to alert metadata
+- Maybe have a preset first image for first tweet. 
+
+
+
+IDEAS: 
+ - create a process graphs function this function will call execute queries
+   one it calls execute queries it will parse the data and create a graph for
+   each based off the type of graph the data corresponds to and the type of graph 
+   will be listed in the metadata in a list in the same order as the queries are listed. 
 
 TEST INPUTS: 
 --------------------------------------------------------------------------------------------------

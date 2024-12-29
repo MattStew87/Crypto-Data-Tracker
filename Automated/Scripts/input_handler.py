@@ -169,8 +169,14 @@ class InputHandler:
         print("   Leave blank if not applicable.")
         ai_prompt_info = input("🔹 AI Prompt: ").strip()
 
+        # Step 3: Twitter Prompt Info
+        print("\nStep 4: (Optional) Add an Twitter Prompt")
+        print("💡 If this alert involves Twitter processing, provide a prompt.")
+        print("   Leave blank if not applicable.")
+        twitter_prompt_info = input("🔹 Twitter Prompt: ").strip()
+
         # Step 4: Additional SQL Queries
-        print("\nStep 4: (Optional) Add Additional SQL Queries")
+        print("\nStep 5: (Optional) Add Additional SQL Queries")
         print("💡 Enter queries to fetch more data for this alert.")
         print("   Type each query one at a time, and type 'END' to finish.")
         print("-" * 40)
@@ -185,7 +191,7 @@ class InputHandler:
         # Step 5: Register the Alert
         print("\n" + "=" * 40)
         print("📋 Registering Your Alert...")
-        self.alert_manager.create_alert(alert_name, alert_sql, ai_prompt_info, additional_queries)
+        self.alert_manager.create_alert(alert_name, alert_sql, ai_prompt_info, additional_queries, twitter_prompt_info)
         print(f"✅ Alert '{alert_name}' registered successfully!")
         print("=" * 40)
 

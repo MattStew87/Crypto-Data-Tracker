@@ -1,10 +1,11 @@
 {
-    "Alert_3": {
-        "alert_sql": "Select net_holders < 1000 from tab1",
+    "alert_example": {
+        "alert_sql": "select net_holders < 1000 from tab1",
         "metadata": {
-            "ai_prompt_info": "DO AI STUFF",
+            "ai_prompt_info": "AI PROMPT",
+            "twitter_prompt_info": "TWITTER PROMPT",
             "additional_queries": [
-                "Select * from tab1"
+                "select * from tab1"
             ]
         }
     }
