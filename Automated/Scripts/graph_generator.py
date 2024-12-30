@@ -395,42 +395,7 @@ class GraphGenerator:
 if __name__ == "__main__":
     graph_gen = GraphGenerator()
 
-    
-
-    
     # Mock additional queries input
-
-    """
-    additional_queries = [
-        {
-            "sql_query": "select * from tab1 order by block_timestamp desc",
-            "final_columns": ["date", "net_holders", "price"],
-            "graph_type": "MULTI_LINE",
-            "graph_title" : "title 1" 
-        },
-        {
-            "sql_query": "select block_timestamp, net_holders from tab1 order by block_timestamp desc",
-            "final_columns": ["dater", "net_holders"],
-            "graph_type": "BASIC_LINE",
-            "graph_title" : "title 2" 
-        },
-        {
-            "sql_query": "select block_timestamp, price from tab1 where block_timestamp > current_date - 3  order by block_timestamp desc",
-            "final_columns": ["block_timestamp", "price"],
-            "graph_type": "PIECHART",
-            "graph_title" : "title 3" 
-        },
-        {
-            "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
-            "final_columns": ["date", "event_tpye", "Amount"],
-            "graph_type": "STACKED_BAR",
-            "graph_title" : "title 5 " 
-        }
-        
-    ]
-    """
-    
-    
     additional_queries = [
           {
             "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
@@ -451,7 +416,6 @@ if __name__ == "__main__":
             "graph_title" : "Daily Carrot Price and Net Holders" 
         }
     ]
- 
  
 
     # Run the function and print results
