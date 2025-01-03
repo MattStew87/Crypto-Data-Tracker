@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import anthropic
 import psycopg2
 import os
+from twitter_handler import TwitterHandler
 
 class GovernanceHandler: 
     
@@ -23,6 +24,14 @@ class GovernanceHandler:
         self.new_proposals = self.get_new_proposals()  
 
         self.client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")) 
+
+        self.twitter_client = TwitterHandler() 
+
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        spaces_json_path = os.path.join(script_dir, "Image_bank", "spaces.json")
+
+        with open(spaces_json_path, "r") as file:
+            self.spaces_data = json.load(file)
     
     def get_new_proposals(self): 
         proposals = []
@@ -30,7 +39,7 @@ class GovernanceHandler:
             # Connect to the PostgreSQL database
             with psycopg2.connect(**self.db_config) as conn:
                 with conn.cursor() as cursor:
-                    sql_query = """SELECT * FROM new_proposals LIMIT 1"""
+                    sql_query = """SELECT * FROM new_proposals WHERE space_id IN ( 'arbitrumfoundation.eth', 'aave.eth', 'ens.eth', 'apecoin.eth', 'balancer.eth', 'lido-snapshot.eth', 'cvx.eth', 'starknet.eth', 'safe.eth', 'stgdao.eth', 'uniswapgovernance.eth', 'gitcoindao.eth', 'gmx.eth', 'speraxdao.eth', 'shellprotocol.eth', 'sushigov.eth', 'radiantcapital.eth', 'beets.eth', 'hop.eth', 'frax.eth', 'shapeshiftdao.eth', 'acrossprotocol.eth', 'rocketpool-dao.eth', 'comp-vote.eth', 'devdao.eth', 'abracadabrabymerlinthemagician.eth', 'morpho.eth', 'ymbiosisdao.eth', 'vote.vitadao.eth', 'stakewise.eth', 'prismafinance.eth' ) LIMIT 1"""
                     cursor.execute(sql_query)
                     raw_data = cursor.fetchall()
 
@@ -58,7 +67,8 @@ class GovernanceHandler:
         return proposals
 
     def proposal_announcement_messages(self): 
-        messages = []
+        all_messages = []
+        
         for proposal in self.new_proposals:
             # Extract proposal data
             proposal_id = proposal['proposal_id']
@@ -68,17 +78,20 @@ class GovernanceHandler:
             proposal_start_time = proposal['proposal_start_time']
             proposal_end_time = proposal['proposal_end_time']
             space_id = proposal['space_id']
-            network = proposal['network'] 
             link_to_vote = f"https://snapshot.box/#/s:{space_id}/proposal/{proposal_id}"
+
+            twitter_handle = self.spaces_data[space_id]["twitter"]
+           
+            # Messages for the current proposal
+            messages = []
 
             # Generate first part
             part_1_prompt = (
                 f"Write a professional and concise tweet to announce a new governance proposal. "
-                f"The tweet must highlight the proposal's title ({proposal_title}), the space ID ({space_id}), "
+                f"The tweet must highlight the proposal's title ({proposal_title}), the twitter handle ({twitter_handle}), "
                 f"and the proposal's live period (from {proposal_start_time} to {proposal_end_time}). "
-                f"Do not include hashtags or emojis."
-                f"this should start with 1/"
-                f"this should not call to action just infom"
+                f"Do not include hashtags or emojis. "
+                f"This should start with 1/. This should not call to action, just inform."
             )
             part_1_message = self._generate_claude_response(part_1_prompt)
             messages.append(part_1_message)
@@ -87,26 +100,50 @@ class GovernanceHandler:
             part_2_prompt = (
                 f"Write a professional and concise tweet summarizing the details of the proposal. Use the following text to explain "
                 f"what the proposal is about: {proposal_text}. Briefly mention the choices available: {choices}. "
-                f"Do not include hashtags or emojis."
-                f"this should start with 2/"
+                f"Split it into two halves seperated by a newline charater"
+                f"Do not include hashtags or emojis. "
+                f"This should start with 2/."
             )
             part_2_message = self._generate_claude_response(part_2_prompt)
             messages.append(part_2_message)
 
             # Generate third part
             part_3_prompt = (
-                f"Write a professional and concise tweet to provide readers a link to vote if the want to participate. Include the link to vote: {link_to_vote}. "
-                f"Do not include hashtags or emojis."
-                f"this should start with 3/"
+                f"Write a professional and concise tweet to provide readers a link to vote if they want to participate. Include the link to vote: {link_to_vote}. "
+                f"Do not include hashtags or emojis. "
+                f"This should start with 3/."
             )
             part_3_message = self._generate_claude_response(part_3_prompt)
             messages.append(part_3_message)
 
-        return messages
+            # Append space_id and messages to the result list
+            all_messages.append({
+                "space_id": space_id,
+                "messages": messages
+            })
+
+        return all_messages
+
     
     def create_proposal_announcement(self):
         
-        messages = self.proposal_announcement_messages()
+        proposal_messages = self.proposal_announcement_messages()
+        for proposal in proposal_messages: 
+            space_id = proposal.get("space_id", "")
+            messages = proposal.get("messages", "")
+            
+
+            #print(f"Space id: {space_id}") 
+            #print(f"messages:\n {messages[0]}\n{messages[1]}\n{messages[2]}")
+            
+            cover_image = self.generate_space_image(space_id, 1)
+           
+            orginal_post_id = self.twitter_client.post_with_media(messages[0], cover_image)
+
+            thread1_id = self.twitter_client.post_thread_reply(messages[1], orginal_post_id)
+
+            self.twitter_client.post_thread_reply(messages[2], thread1_id)
+
 
 
 
@@ -135,19 +172,13 @@ class GovernanceHandler:
         script_dir = os.path.dirname(os.path.abspath(__file__))
 
         # Paths relative to the script directory
-        spaces_json_path = os.path.join(script_dir, "Image_bank", "spaces.json")
         output_image_path = os.path.join(script_dir, "Image_bank", "final_output_image.png")
 
-        # Load the spaces.json file
-        with open(spaces_json_path, "r") as file:
-            spaces_data = json.load(file)
-
         # Validate space_id
-        if space_id not in spaces_data:
-            raise ValueError(f"Space ID '{space_id}' not found in spaces.json")
+        if space_id not in self.spaces_data:
+            raise ValueError(...)
+        space_data = self.spaces_data[space_id]
 
-        # Get space details
-        space_data = spaces_data[space_id]
         base_image_path = os.path.join(script_dir, "Image_bank", os.path.basename(space_data["base_image"]))
         logo_image_path = os.path.join(script_dir, "Image_bank", os.path.basename(space_data["space_image"]))
         title_text = space_data["part1_text"] if part == 1 else space_data["part2_text"]
@@ -179,7 +210,7 @@ class GovernanceHandler:
 
         # Calculate position for wrapped text
         title_x = logo_position[0] + logo_size[0] + 50
-        title_y = logo_position[1] + (logo_image.height // 4) - 50
+        title_y = logo_position[1] + (logo_image.height // 4) - 85
         current_y = title_y
 
         # Draw each line of the wrapped text
@@ -193,10 +224,11 @@ class GovernanceHandler:
         current_date = datetime.now().strftime("%d %b, %Y").upper()
 
         # Date text (move into the pill-shaped element, adjust left and up slightly)
-        pill_x1, pill_y1, pill_x2, pill_y2 = base_image.width - 440, base_image.height - 190, base_image.width - 50, base_image.height - 100
+        pill_x1, pill_y1, pill_x2, pill_y2 = base_image.width - 440, base_image.height - 200, base_image.width - 50, base_image.height - 100
         date_position = (pill_x1 + (pill_x2 - pill_x1) // 2 - draw.textbbox((0, 0), current_date, font=date_font)[2] // 2,
                         pill_y1 + (pill_y2 - pill_y1) // 2 - draw.textbbox((0, 0), current_date, font=date_font)[3] // 2)
         draw.text(date_position, current_date, fill="black", font=date_font)
+
 
         # Save the final output
         base_image.save(output_image_path)
@@ -205,9 +237,10 @@ class GovernanceHandler:
 if __name__ == "__main__": 
     governance_data = GovernanceHandler() 
     
-    path = governance_data.generate_space_image("arbitrumfoundation.eth", 1)
-    print(path) 
+    governance_data.create_proposal_announcement()
+     
+    #path = governance_data.generate_space_image("aave.eth", 1)
+    #print(path) 
 
-    
     #announcement_messages = governance_data.proposal_announcement_messages()
     #print(announcement_messages)

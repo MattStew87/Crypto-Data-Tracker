@@ -2,21 +2,20 @@
 
 
 Order of things: 
-- Create a dummy function to post without tags (for the time being) 
-- Create a function to post a reply (as part of a thread) without media
-- Fill up image bank with images
-- Fix up generate_space_image() to look better
 - Create a create_proposal_announcement() function to handle posting
-- MOVE ONTO DEALING WITH VOTING METRICS PART 
 
+
+- Fix up generate_space_image() to look better
+- Fix Graph Genertor class (logo placement) 
+
+- MOVE ONTO DEALING WITH VOTING METRICS PART 
 --------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------
 
 THINGS TO KEEP IN MIND: 
-- Maybe have a preset first image for first tweet, 
-  store that in the metadata as well. 
+- Need to fix logo placement in graph_generator.py 
 - If you want to see prints from process_manager.py you 
   have to use python.exe instead of python2.exe
 - INPUTTED DATA has to be in order

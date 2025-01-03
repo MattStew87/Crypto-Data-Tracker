@@ -45,13 +45,13 @@ class TwitterHandler:
         except Exception as e:
             print(f"Error uploading media: {e}")
             return None
-
-    def post_with_media_and_tags(self, text, media_path, tagged_user_ids):
+        
+    
+    def post_with_media(self, text, media_path):
         """
         Creates a tweet with media and tags users on the media.
         :param text: Text of the tweet.
         :param media_path: Path to the media file.
-        :param tagged_user_ids: List of user IDs to tag in the media.
         :return: Tweet ID (str) if successful, None otherwise.
         """
         media_id = self.upload_media(media_path)
@@ -60,11 +60,10 @@ class TwitterHandler:
             return None
 
         try:
-            print(f"Creating tweet with media and tags: {text}")
+            print(f"Creating tweet with media: {text}")
             response = self.api_v2.create_tweet(
                 text=text,
                 media_ids=[media_id],
-                media_tagged_user_ids=tagged_user_ids,
                 user_auth=True
             )
             tweet_id = response.data["id"]
@@ -73,9 +72,31 @@ class TwitterHandler:
         except Exception as e:
             print(f"Error creating tweet: {e}")
             return None
+    
+    def post_thread_reply(self, text, reply_to_tweet_id):
+        """
+        Creates a reply in a thread 
+        :param text: Text of the tweet.
+        :param reply_to_tweet_id: Tweet ID of the tweet being replied to.
+        :return: Tweet ID (str) if successful, None otherwise.
+        """
+
+        try:
+            print(f"Creating thread reply to {reply_to_tweet_id}: {text}")
+            response = self.api_v2.create_tweet(
+                text=text,
+                in_reply_to_tweet_id=reply_to_tweet_id,
+                user_auth=True
+            )
+            tweet_id = response.data["id"]
+            print(f"Thread reply created successfully: {tweet_id}")
+            return tweet_id
+        except Exception as e:
+            print(f"Error creating thread reply: {e}")
+            return None
 
 
-    def post_thread_reply(self, text, media_path, reply_to_tweet_id):
+    def post_thread_reply_with_media(self, text, media_path, reply_to_tweet_id):
         """
         Creates a reply in a thread with media.
         :param text: Text of the tweet.
