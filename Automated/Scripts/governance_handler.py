@@ -87,11 +87,12 @@ class GovernanceHandler:
 
             # Generate first part
             part_1_prompt = (
-                f"Write a professional and concise tweet to announce a new governance proposal. "
+                f"Write a professional and concise tweet to announce a new governance proposal. This should start with 1/"
                 f"The tweet must highlight the proposal's title ({proposal_title}), the twitter handle ({twitter_handle}), "
-                f"and the proposal's live period (from {proposal_start_time} to {proposal_end_time}). "
-                f"Do not include hashtags or emojis. "
-                f"This should start with 1/. This should not call to action, just inform."
+                f"and display the proposal's live period in a short date range format, like 'Jan 2nd - 7th'. "
+                f"Use the actual date/time from {proposal_start_time} to {proposal_end_time} for context, but do not show hours, minutes, seconds, or the year in the final tweet. "
+                f"DO NOT include hashtags or emojis. "
+                f"This should not call to action, just inform."
             )
             part_1_message = self._generate_claude_response(part_1_prompt)
             messages.append(part_1_message)
@@ -99,10 +100,10 @@ class GovernanceHandler:
             # Generate second part
             part_2_prompt = (
                 f"Write a professional and concise tweet summarizing the details of the proposal. Use the following text to explain "
-                f"what the proposal is about: {proposal_text}. Briefly mention the choices available: {choices}. "
-                f"Split it into two halves seperated by a newline charater"
+                f"what the proposal is about: {proposal_text}"
+                f"Please split the following text into exactly two lines. Do **not** include any numbering or extra labels like 1/2 or 2/2. Output only the text in two lines, separated by **two** newline characters. No other characters, punctuation, or headers"
                 f"Do not include hashtags or emojis. "
-                f"This should start with 2/."
+                f"The post should start with 2/."
             )
             part_2_message = self._generate_claude_response(part_2_prompt)
             messages.append(part_2_message)
@@ -131,21 +132,12 @@ class GovernanceHandler:
         for proposal in proposal_messages: 
             space_id = proposal.get("space_id", "")
             messages = proposal.get("messages", "")
-            
-
-            #print(f"Space id: {space_id}") 
-            #print(f"messages:\n {messages[0]}\n{messages[1]}\n{messages[2]}")
-            
+                        
             cover_image = self.generate_space_image(space_id, 1)
-           
+
             orginal_post_id = self.twitter_client.post_with_media(messages[0], cover_image)
-
             thread1_id = self.twitter_client.post_thread_reply(messages[1], orginal_post_id)
-
             self.twitter_client.post_thread_reply(messages[2], thread1_id)
-
-
-
 
 
     def _generate_claude_response(self, prompt):
@@ -237,10 +229,10 @@ class GovernanceHandler:
 if __name__ == "__main__": 
     governance_data = GovernanceHandler() 
     
-    governance_data.create_proposal_announcement()
+    #governance_data.create_proposal_announcement()
      
-    #path = governance_data.generate_space_image("aave.eth", 1)
-    #print(path) 
+    path = governance_data.generate_space_image("arbitrumfoundation.eth", 1)
+    print(path) 
 
     #announcement_messages = governance_data.proposal_announcement_messages()
     #print(announcement_messages)
