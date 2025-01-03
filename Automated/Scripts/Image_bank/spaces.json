@@ -1,0 +1,220 @@
+{
+    "arbitrumfoundation.eth": {
+      "base_image": "./base.png",
+      "space_image": "./arbitrum_img.png",
+      "tag_bank": [],
+      "part1_text": "Arbitrum Proposal",
+      "part2_text": "Arbitrum Voting Metrics"
+    },
+    "aave.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "ens.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "apecoin.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "balancer.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "lido-snapshot.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "cvx.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "starknet.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "safe.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "stgdao.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "uniswapgovernance.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "gitcoindao.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "gmx.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "speraxdao.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "shellprotocol.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "sushigov.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "radiantcapital.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "beets.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "hop.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "frax.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "shapeshiftdao.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "acrossprotocol.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "rocketpool-dao.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "comp-vote.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "devdao.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "abracadabrabymerlinthemagician.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "morpho.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "ymbiosisdao.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "vote.vitadao.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "stakewise.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    },
+    "prismafinance.eth": {
+      "base_image": "./base.png",
+      "space_image": "placeholder_space_image_url",
+      "tag_bank": [],
+      "part1_text": "",
+      "part2_text": ""
+    }
+}
+  

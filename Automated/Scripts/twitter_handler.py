@@ -74,6 +74,7 @@ class TwitterHandler:
             print(f"Error creating tweet: {e}")
             return None
 
+
     def post_thread_reply(self, text, media_path, reply_to_tweet_id):
         """
         Creates a reply in a thread with media.

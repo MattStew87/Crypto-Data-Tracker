@@ -7,5 +7,21 @@
             "price": "numeric"
         },
         "primary_key": "block_timestamp"
+    },
+    "governance_proposals": {
+        "update_query": "Select  PROPOSAL_ID,  PROPOSAL_TITLE, PROPOSAL_TEXT, CHOICES, CREATED_AT, PROPOSAL_START_TIME, PROPOSAL_END_TIME, NETWORK,  SPACE_ID,  Current_date as DATE_ADDED from external.snapshot.fact_proposals where PROPOSAL_START_TIME > current_date - 2 ORDER BY CREATED_AT DESC",
+        "columns": {
+            "proposal_id": "text",
+            "proposal_title": "text",
+            "proposal_text": "text",
+            "choices": "text",
+            "created_at": "TIMESTAMP",
+            "proposal_start_time": "TIMESTAMP",
+            "proposal_end_time": "TIMESTAMP",
+            "network": "text",
+            "space_id": "text",
+            "date_added": "TIMESTAMP"
+        },
+        "primary_key": "proposal_id"
     }
 }
