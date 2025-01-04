@@ -312,7 +312,46 @@ class GraphGenerator:
         self.add_logo_to_figure(fig)
 
         return self.save_graph(fig, filename)
+    
 
+    def create_grouped_scatter_graph(self, data, x_label, y_label, title, filename):
+        """
+        Create a grouped scatter plot where the Y-axis is grouped by a key.
+        :param data: List of tuples, where the first element is X (e.g., date),
+                    the second element is a group/category, and the third element is Y (metric).
+        :param x_label: Label for the X-axis.
+        :param y_label: Label for the Y-axis.
+        :param title: Title of the graph.
+        :param filename: Name of the output file.
+        """
+        # Group data by 'group'
+        grouped_data = {}
+        for point in data:
+            x, group, y = point[0], point[1], point[2]
+            if group not in grouped_data:
+                grouped_data[group] = []
+            grouped_data[group].append((x, y))
+
+        fig, ax = plt.subplots()
+        ax.set_facecolor('#f2efe9')
+
+        # Create a scatter plot for each group
+        for idx, (group, points) in enumerate(grouped_data.items()):
+            x_vals = [pt[0] for pt in points]  # Extract X values
+            y_vals = [float(pt[1]) for pt in points]  # Extract Y values
+            ax.scatter(x_vals, y_vals, label=group, color=self.calmColors[idx % len(self.calmColors)], marker="o", zorder=3)
+
+        ax.set_xlabel(x_label)
+        ax.set_ylabel(y_label)
+        ax.set_title(title)
+        ax.legend()
+        ax.grid(True, zorder=1)
+        fig.autofmt_xdate()
+
+        # Add logo
+        self.add_logo_to_figure(fig)
+
+        return self.save_graph(fig, filename)
 
 
     def generate_graphs(self, additional_queries):
@@ -358,6 +397,14 @@ class GraphGenerator:
                     title=graph_title,
                     filename=f"grouped_line_{rand}"
                 )
+            elif graph_type == "GROUPED_SCATTER":
+                graph_path = self.create_grouped_scatter_graph(
+                    data=data,
+                    x_label=final_columns[0],
+                    y_label=final_columns[2],
+                    title=graph_title,
+                    filename=f"grouped_scatter_1"
+                )
             elif graph_type == "PIECHART":
                 graph_path = self.create_pie_chart(
                     data=data,
@@ -400,6 +447,22 @@ if __name__ == "__main__":
           {
             "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
             "final_columns": ["Date", "event_type", "Amount"],
+            "graph_type": "GROUPED_SCATTER",
+            "graph_title" : "Daily Carrot minted and Burned" 
+         }
+    ]
+ 
+
+    # Run the function and print results
+    results = graph_gen.generate_graphs(additional_queries)
+    print(results) 
+ 
+    
+"""
+additional_queries = [
+          {
+            "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
+            "final_columns": ["Date", "event_type", "Amount"],
             "graph_type": "STACKED_BAR",
             "graph_title" : "Daily Carrot minted and Burned" 
          },
@@ -416,10 +479,4 @@ if __name__ == "__main__":
             "graph_title" : "Daily Carrot Price and Net Holders" 
         }
     ]
- 
-
-    # Run the function and print results
-    results = graph_gen.generate_graphs(additional_queries)
-    print(results) 
- 
-    
+"""
