@@ -5,19 +5,21 @@
 
 Order of things: 
 
-1. Create functions in the flipside class to grab the data needed for prompts
-
 - NEED to create a table that holds only proposals in annoucements, and proposals that are halfway done. 
-- Then we will grab proposals one at a time and feed them through the flipside stuff.
-
+  - Then we will grab proposals one at a time and feed them through the flipside stuff.
   - Maybe the way to do it is after we tweet an announcement we add that proposal to a table. 
   Then we can just check proposals in that table that are halfway over and execute there second half. 
+
+
 
 - Fix Graph Genertor class (logo placement), FOR SCATTER ATM
 
 
-READ FIRST: At this point we just need to change the functions so at the end they return the location of there file.
-Next we need to batch the rest of the information and then we can create prompts
+
+
+
+
+
 
 
 

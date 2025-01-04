@@ -96,24 +96,30 @@ class TwitterHandler:
             return None
 
 
-    def post_thread_reply_with_media(self, text, media_path, reply_to_tweet_id):
+    def post_thread_reply_with_media(self, text, media_paths, reply_to_tweet_id):
         """
-        Creates a reply in a thread with media.
+        Creates a reply in a thread with one or more media attachments.
         :param text: Text of the tweet.
-        :param media_path: Path to the media file.
+        :param media_paths: A list of file paths (strings) to the media you want to attach.
         :param reply_to_tweet_id: Tweet ID of the tweet being replied to.
         :return: Tweet ID (str) if successful, None otherwise.
         """
-        media_id = self.upload_media(media_path)
-        if not media_id:
-            print("Failed to upload media. Aborting thread reply.")
-            return None
+        media_ids = []
+
+        # Upload each media file and collect media_ids
+        for path in media_paths:
+            m_id = self.upload_media(path)
+            if m_id:
+                media_ids.append(m_id)
+            else:
+                print(f"Failed to upload media: {path}. Aborting thread reply.")
+                return None
 
         try:
-            print(f"Creating thread reply to {reply_to_tweet_id}: {text}")
+            print(f"Creating thread reply to {reply_to_tweet_id} with text: {text}")
             response = self.api_v2.create_tweet(
                 text=text,
-                media_ids=[media_id],
+                media_ids=media_ids,  # pass the entire list
                 in_reply_to_tweet_id=reply_to_tweet_id,
                 user_auth=True
             )
@@ -123,3 +129,4 @@ class TwitterHandler:
         except Exception as e:
             print(f"Error creating thread reply: {e}")
             return None
+

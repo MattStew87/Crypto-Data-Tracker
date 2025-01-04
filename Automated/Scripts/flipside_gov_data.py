@@ -138,12 +138,11 @@ class FlipsideGovData:
         voter_power_columns = ["Hour", "Selected Choice", "Total Voting Power"]
         
 
-        self.graph_generator.create_grouped_line_graph(voters_data, voter_columns[0], voter_columns[2], 'Hourly Total Voters by Choice', 'test')
-        self.graph_generator.create_grouped_line_graph(voting_power_data, voter_power_columns[0], voter_power_columns[2], 'Hourly Total Voting Power by Choice', 'test2')
+        voter_file_path = self.graph_generator.create_grouped_line_graph(voters_data, voter_columns[0], voter_columns[2], 'Hourly Total Voters by Choice', 'hourly_total_voters_by_choice')
+        voting_power_file_path = self.graph_generator.create_grouped_line_graph(voting_power_data, voter_power_columns[0], voter_power_columns[2], 'Hourly Total Voting Power by Choice', 'hourly_total_voting_power_by_choice')
         # Return or process them further as you like
        
-        Tweet2_data = {"voter" : {"data": voters_data, "x_label": "Hour", "y_label" : "Total Voters", "title" : "Hourly Total Voters by Choice"}, 
-                 "voting_power" : {"data": voting_power_data, "x_label": "Hour", "y_label" : "Total Voting Power", "title" : "Hourly Total Voting Power by Choice"} }
+        Tweet2_data = [voter_file_path, voting_power_file_path] 
         
         return Tweet2_data
     
@@ -250,12 +249,12 @@ class FlipsideGovData:
         #    def create_bar_chart(self, data, x_label, y_label, title, filename):
         
 
-        self.graph_generator.create_bar_chart(voters_data, "Voting Power Group", "Wallets", 'Voters by Wallet Voting Power Group', 'test')
-        self.graph_generator.create_bar_chart(voting_power_data, "Voting Power Group", "Voting Power", 'Voting Power by Wallet Voting Power Group', 'test2')
+        
+        voter_file_path = self.graph_generator.create_bar_chart(voters_data, "Voting Power Group", "Wallets", 'Voters by Wallet Voting Power Group', 'voters_by_wallet_voting_power_group')
+        voting_power_file_path = self.graph_generator.create_bar_chart(voting_power_data, "Voting Power Group", "Voting Power", 'Voting Power by Wallet Voting Power Group', 'voting_power_by_wallet_voting_power_group')
         # Return or process them further as you like
     
-        Tweet3_data = {"voter" : {"data": voters_data, "x_label": "Voting Power Group", "y_label" : "Wallets", "title" : "Voters by Wallet Voting Power Group"}, 
-                    "voting_power" : {"data": voters_data, "x_label": "Voting Power Group", "y_label" : "Voting Power", "title" : "Voting Power by Wallet Voting Power Group"} }
+        Tweet3_data = [voter_file_path, voting_power_file_path] 
         
         return Tweet3_data
     
@@ -337,7 +336,7 @@ class FlipsideGovData:
         voting_power_data = []
 
         for row in all_rows:
-            
+
             start_time_str = row["start_time"]
             start_time = datetime.strptime(start_time_str, "%Y-%m-%dT%H:%M:%S.%fZ")
 
@@ -349,19 +348,310 @@ class FlipsideGovData:
             voters_data.append([start_time, proposal_type, total_voters])
             voting_power_data.append([start_time, proposal_type, total_voting_power])
 
-        #    def create_bar_chart(self, data, x_label, y_label, title, filename):
-        
 
-        self.graph_generator.create_grouped_scatter_graph(voters_data, "Start Time", "Total Voters", 'Space Proposals by Voters', 'test')
-        self.graph_generator.create_grouped_scatter_graph(voting_power_data, "Start Time", "Total Voting Power", 'Space Proposals by Voting Power', 'test2')
-        # Return or process them further as you like
+        voter_file_path = self.graph_generator.create_grouped_scatter_graph(voters_data, "Start Time", "Total Voters", 'Space Proposals by Voters', 'space_proposals_by_voters')
+        voting_power_file_path = self.graph_generator.create_grouped_scatter_graph(voting_power_data, "Start Time", "Total Voting Power", 'Space Proposals by Voting Power', 'space_proposals_by_voting_power')
 
-        Tweet4_data = {"voter" : {"data": voters_data, "x_label": "Start Time", "y_label" : "Total Voters", "title" : "Space Proposals by Voters"}, 
-                    "voting_power" : {"data": voters_data, "x_label": "Start Time", "y_label" : "Total Voting Power", "title" : "Space Proposals by Voting Power"} }
+        Tweet4_data = [voter_file_path, voting_power_file_path] 
         
         return Tweet4_data
+
+    def prompt_stats(self, proposal_id): 
+        prompt_data = {}
+
+        # Part1
+        ###########################################################
+
+        sql1 = f"""
+            WITH tab1 AS (
+                SELECT 
+                    VOTER,
+                    TO_NUMBER(
+                    REPLACE(
+                        REPLACE(
+                        REPLACE(ARRAY_TO_STRING(vote_option, ''), '[', ''), 
+                        ']', ''), 
+                        '"', ''
+                    )
+                    ) AS numeric_vote_option,
+                    PARSE_JSON(ARRAY_TO_STRING(CHOICES, ',')) AS c,
+                    c[(TO_NUMBER(
+                    REPLACE(
+                        REPLACE(
+                        REPLACE(ARRAY_TO_STRING(vote_option, ''), '[', ''), 
+                        ']', ''), 
+                        '"', ''
+                    )
+                    ) - 1)] AS selected_choice,
+                    VOTING_POWER,
+                    DATE_TRUNC('hour', VOTE_TIMESTAMP) AS hour,
+                    VOTE_TIMESTAMP,
+                    ROW_NUMBER() OVER (PARTITION BY VOTER ORDER BY VOTE_TIMESTAMP DESC) AS rn
+                FROM external.snapshot.ez_snapshot
+                WHERE PROPOSAL_ID LIKE '{proposal_id}'
+                    AND VOTING_POWER > 0
+            ) 
+            SELECT
+                selected_choice,
+                COUNT(DISTINCT voter) AS voters,
+                SUM(vp) AS voting_power
+            FROM (
+                SELECT 
+                    VOTER,
+                    numeric_vote_option,
+                    c,
+                    selected_choice,
+                    VOTING_POWER AS vp,
+                    hour,
+                    VOTE_TIMESTAMP
+                FROM tab1
+                WHERE rn = 1
+            )
+            GROUP BY 1
+            ORDER BY voting_power DESC
+        """
+
+        # Submit the query and await the results in one step.
+        result1 = self.flipside.query(sql1)
+
+        records1 = result1.records
+        if not records1:
+            return prompt_data  # No data returned
+
+        # Calculate totals across *all* choices
+        total_voting_power = sum(row["voting_power"] for row in records1)
+        total_voters = sum(row["voters"] for row in records1)
+
+        # Because we ORDER BY voting_power DESC, the first row is the #1 choice
+        first_choice  = records1[0]
+        second_choice = records1[1] if len(records1) > 1 else None
+
+        # Compute leading_percent based on the first choice’s voting power
+        leading_percent = 0
+        if total_voting_power > 0:
+            leading_percent = (first_choice["voting_power"] / total_voting_power) * 100
+
+        # Populate prompt_data
+        prompt_data["1st_choice_voting_power"] = first_choice["voting_power"]
+        prompt_data["1st_choice_name"] = first_choice["selected_choice"]
+
+        if second_choice:
+            prompt_data["2nd_choice_voting_power"] = second_choice["voting_power"]
+            prompt_data["2nd_choice_name"] = second_choice["selected_choice"]
+        else:
+            prompt_data["2nd_choice_voting_power"] = 0
+            prompt_data["2nd_choice_name"] = "N/A"
+
+        prompt_data["leading_percent"] = leading_percent
+        prompt_data["total_voting_power"] = total_voting_power
+        prompt_data["total_voters"] = total_voters
+
+        # Part2
+        ###########################################################
+
+        sql2 = f"""
+            WITH tab1 AS (
+                SELECT space_id
+                FROM external.snapshot.fact_proposals
+                WHERE proposal_id LIKE '{proposal_id}'
+            ),
+            tab2 AS (
+                SELECT 
+                    proposal_id,
+                    proposal_start_time,
+                    proposal_end_time,
+                    PROPOSAL_TITLE
+                FROM external.snapshot.fact_proposals
+                WHERE space_id IN (SELECT space_id FROM tab1)
+            ),
+            halfway_time AS (
+                SELECT 
+                    proposal_id,
+                    PROPOSAL_TITLE,
+                    proposal_start_time,
+                    proposal_end_time,
+                    TIMESTAMPADD(
+                    SECOND, 
+                    DATEDIFF(SECOND, proposal_start_time, proposal_end_time) / 2, 
+                    proposal_start_time
+                    ) AS halfway_point
+                FROM tab2
+            ),
+            proposal_data AS (
+                SELECT 
+                    ez.proposal_id,
+                    ht.PROPOSAL_TITLE,
+                    CASE WHEN ez.proposal_id LIKE '{proposal_id}' THEN 'Selected Proposal' ELSE 'Other Proposal' END AS proposal_type,
+                    MIN(ez.vote_timestamp) AS start_time,
+                    COUNT(DISTINCT ez.voter) AS voters,
+                    SUM(ez.voting_power) AS total_voting_power
+                FROM external.snapshot.ez_snapshot AS ez
+                JOIN halfway_time AS ht
+                    ON ez.proposal_id = ht.proposal_id
+                WHERE ez.vote_timestamp <= ht.halfway_point
+                GROUP BY 1, 2, 3
+            ),
+            ranked_proposals AS (
+            SELECT 
+                proposal_id,
+                proposal_type,
+                PROPOSAL_TITLE,
+                voters,
+                start_time,
+                total_voting_power,
+                RANK() OVER (ORDER BY total_voting_power DESC) AS voting_power_rank,
+                RANK() OVER (ORDER BY voters DESC) AS voters_rank,
+                COUNT(*) OVER () AS total_proposals,
+                PERCENT_RANK() OVER (ORDER BY voters DESC) AS voters_percentile,
+                PERCENT_RANK() OVER (ORDER BY total_voting_power DESC) AS voting_power_percentile
+            FROM proposal_data
+            )
+
+            SELECT
+            voting_power_rank,
+            100 - ROUND(voting_power_percentile * 100, 2) AS voting_power_percentile_rank,
+            voters_rank,
+            100 - ROUND(voters_percentile * 100, 2) AS voters_percentile_rank
+            FROM ranked_proposals
+            Where PROPOSAL_ID LIKE '{proposal_id}'
+        """
+
+        result2 = self.flipside.query(sql2)
+        records2 = result2.records
+
+        # We expect exactly one row from this query.
+        if records2:
+            row = records2[0]
+            # row2 keys will be lowercase, e.g. "voting_power_rank", etc.
+            prompt_data["voting_power_rank"] = row["voting_power_rank"]
+            prompt_data["voter_turnout_rank"] = row["voters_rank"]
+            prompt_data["voting_power_percentile"] = row["voting_power_percentile_rank"]
+            prompt_data["voter_percentile"] = row["voters_percentile_rank"]
+
+    
+        # Part3
+        ###########################################################
+
+        sql3 = f""" 
+            WITH tab1 AS (
+                SELECT 
+                    VOTER,
+                    TO_NUMBER(
+                    REPLACE(
+                        REPLACE(
+                        REPLACE(ARRAY_TO_STRING(vote_option, ''), '[', ''), 
+                        ']', ''), 
+                        '"', ''
+                    )
+                    ) AS numeric_vote_option,
+                    PARSE_JSON(ARRAY_TO_STRING(CHOICES, ',')) AS c,
+                    c[(TO_NUMBER(
+                    REPLACE(
+                        REPLACE(
+                        REPLACE(ARRAY_TO_STRING(vote_option, ''), '[', ''), 
+                        ']', ''), 
+                        '"', ''
+                    )
+                    ) - 1)] AS selected_choice,
+                    VOTING_POWER,
+                    DATE_TRUNC('hour', VOTE_TIMESTAMP) AS hour,
+                    VOTE_TIMESTAMP,
+                    ROW_NUMBER() OVER (PARTITION BY VOTER ORDER BY VOTE_TIMESTAMP DESC) AS rn
+                FROM external.snapshot.ez_snapshot
+                WHERE PROPOSAL_ID LIKE '{proposal_id}'
+                    AND VOTING_POWER > 0
+                ),
+                ranked_wallets AS (
+                SELECT 
+                    VOTER,
+                    VOTING_POWER,
+                    ROW_NUMBER() OVER (ORDER BY VOTING_POWER DESC) AS rank,
+                    SUM(VOTING_POWER) OVER () AS total_voting_power,
+                    SUM(VOTING_POWER) OVER (ORDER BY VOTING_POWER DESC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cumulative_voting_power
+                FROM (
+                    SELECT 
+                    VOTER,
+                    VOTING_POWER
+                    FROM tab1
+                    WHERE rn = 1
+                )
+                ),
+                percentile_calculations AS (
+                SELECT 
+                    rank,
+                    VOTER,
+                    VOTING_POWER,
+                    cumulative_voting_power,
+                    total_voting_power,
+                    cumulative_voting_power / total_voting_power AS voting_power_percentage
+                FROM ranked_wallets
+                )
+
+                SELECT 
+                CASE 
+                    WHEN voting_power_percentage <= 0.10 THEN 'Top 10%'
+                    WHEN voting_power_percentage <= 0.25 THEN 'Top 25%'
+                    WHEN voting_power_percentage <= 0.50 THEN 'Top 50%'
+                    ELSE 'Others'
+                END AS voting_power_group,
+                COUNT(*) AS wallet_count,
+                SUM(VOTING_POWER) AS total_voting_power
+                FROM percentile_calculations
+                GROUP BY 1
+                ORDER BY CASE 
+                WHEN voting_power_group = 'Top 10%' THEN 1
+                WHEN voting_power_group = 'Top 25%' THEN 2
+                WHEN voting_power_group = 'Top 50%' THEN 3
+                ELSE 4
+                END;
+        """
+        
+        result3 = self.flipside.query(sql3)
+        records3 = result3.records
+
+        # Initialize defaults in case some groups are missing:
+        prompt_data["top_10%_voting_power_wallets"] = 'N/A'
+        prompt_data["top_25%_voting_power_wallets"] = 'N/A'
+        prompt_data["top_50%_voting_power_wallets"] = 'N/A'
+        prompt_data["top_10%_voting_power_power"]   = 'N/A'
+        prompt_data["top_25%_voting_power_power"]   = 'N/A'
+        prompt_data["top_50%_voting_power_power"]   = 'N/A'
+
+        # Populate based on query results
+        for row in records3:
+            group_name = row["voting_power_group"]          # e.g. "Top 25%"
+            wallet_count = row["wallet_count"]              # e.g. 2
+            total_vp = row["total_voting_power"]            # e.g. 9107017
+
+            if group_name == "Top 10%":
+                prompt_data["top_10%_voting_power_wallets"] = wallet_count
+                prompt_data["top_10%_voting_power_power"]   = total_vp
+            elif group_name == "Top 25%":
+                prompt_data["top_25%_voting_power_wallets"] = wallet_count
+                prompt_data["top_25%_voting_power_power"]   = total_vp
+            elif group_name == "Top 50%":
+                prompt_data["top_50%_voting_power_wallets"] = wallet_count
+                prompt_data["top_50%_voting_power_power"]   = total_vp
+
+
+        return prompt_data
+
+
 
        
 if __name__ == "__main__":
     flipside = FlipsideGovData()
-    flipside.space_proposals_by_voting_power("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+    
+    '''
+    tweet2_path = flipside.hourly_total_voting_power_by_choice("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+    print(tweet2_path) 
+    tweet3_path = flipside.voting_power_by_wallet("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+    print(tweet3_path) 
+    tweet4_path = flipside.space_proposals_by_voting_power("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+    print(tweet4_path)
+    '''
+
+    data = flipside.prompt_stats("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+    print(data) 
+
+ 
