@@ -147,7 +147,7 @@ class GovernanceHandler:
             
             # proposal_id_str = f"{proposal_id}" MIGHT NOT NEED
 
-            prompt_data = self.flipside_gov_data.prompt_stats("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+            prompt_data = self.flipside_gov_data.prompt_stats("0x04c5984e2e2b8270a793bfb1bbe35c2c8a360429e2e1a5e72a3917215c51144d")
            
             # Messages for the current proposal
             messages = []
@@ -351,13 +351,11 @@ class GovernanceHandler:
             # Tweet 5
             ################################################################
 
-            part_5_message = f"""
-            5/ If you want to learn more about this {twitter_handle} proposal check out our @flipsidecrypto Dashboard:
-            
-            https://flipsidecrypto.xyz/pine/snapshot-proposal-lookup-nFH10H 
-            
-            To participate in the vote go here: {link_to_vote}
-            """
+            part_5_message = (
+                f"5/ If you want to learn more about this {twitter_handle} proposal check out our @flipsidecrypto Dashboard:\n\n"
+                "https://flipsidecrypto.xyz/pine/snapshot-proposal-lookup-nFH10H\n\n"
+                f"To participate in the vote go here: {link_to_vote}"
+            )
 
             messages.append(part_5_message)
 
@@ -394,13 +392,13 @@ class GovernanceHandler:
             cover_image = self.generate_space_image(space_id, 2)
             orginal_post_id = self.twitter_client.post_with_media(messages[0], cover_image)
 
-            Tweet2_media = self.flipside_gov_data.hourly_total_voting_power_by_choice("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+            Tweet2_media = self.flipside_gov_data.hourly_total_voting_power_by_choice("0x04c5984e2e2b8270a793bfb1bbe35c2c8a360429e2e1a5e72a3917215c51144d")
             thread1_id = self.twitter_client.post_thread_reply_with_media(messages[1], Tweet2_media, orginal_post_id)
 
-            Tweet3_media = self.flipside_gov_data.voting_power_by_wallet("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+            Tweet3_media = self.flipside_gov_data.voting_power_by_wallet("0x04c5984e2e2b8270a793bfb1bbe35c2c8a360429e2e1a5e72a3917215c51144d")
             thread2_id = self.twitter_client.post_thread_reply_with_media(messages[2], Tweet3_media, thread1_id)
 
-            Tweet4_media = self.flipside_gov_data.space_proposals_by_voting_power("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+            Tweet4_media = self.flipside_gov_data.space_proposals_by_voting_power("0x04c5984e2e2b8270a793bfb1bbe35c2c8a360429e2e1a5e72a3917215c51144d")
             thread3_id = self.twitter_client.post_thread_reply_with_media(messages[3], Tweet4_media, thread2_id)
 
             self.twitter_client.post_thread_reply(messages[4], thread3_id)

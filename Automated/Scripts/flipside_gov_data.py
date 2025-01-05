@@ -651,7 +651,9 @@ if __name__ == "__main__":
     print(tweet4_path)
     '''
 
-    data = flipside.prompt_stats("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
-    print(data) 
+    #data = flipside.prompt_stats("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+    #print(data) 
 
- 
+
+    results = flipside.space_proposals_by_voting_power("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+    print(results)

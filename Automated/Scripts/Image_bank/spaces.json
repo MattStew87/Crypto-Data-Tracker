@@ -16,8 +16,8 @@
   "ens.eth": {
       "base_image": "./base_blue.png",
       "space_image": "./ens.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "ENS Proposal Live",
+      "part2_text": "ENS Proposal Metrics",
       "twitter": "@ensdomains"
   },
   "apecoin.eth": {
@@ -30,190 +30,190 @@
   "balancer.eth": {
       "base_image": "./base_yellow.png",
       "space_image": "./balancer.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Balancer Proposal Live",
+      "part2_text": "Balancer Proposal Metrics",
       "twitter": "@Balancer"
   },
   "lido-snapshot.eth": {
       "base_image": "./base_pink.png",
       "space_image": "./lido-snapshot.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Lido Proposal Live",
+      "part2_text": "Lido Proposal Metrics",
       "twitter": "@LidoFinance"
   },
   "cvx.eth": {
       "base_image": "./base.png",
       "space_image": "placeholder_space_image_url",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Convex Proposal Live",
+      "part2_text": "Convex Proposal Metrics",
       "twitter": "@ConvexFinance"
   },
   "starknet.eth": {
       "base_image": "./base_pink.png",
       "space_image": "./starknet.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Starknet Proposal Live",
+      "part2_text": "Starknet Proposal Metrics",
       "twitter": "@StarknetFndn"
   },
   "safe.eth": {
       "base_image": "./base_green.png",
       "space_image": "./safe.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Safe Proposal Live",
+      "part2_text": "Safe Proposal Metrics",
       "twitter": "@safe"
   },
   "stgdao.eth": {
       "base_image": "./base_yellow.png",
       "space_image": "./stgdao.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Stargate Proposal Live",
+      "part2_text": "Stargate Proposal Metrics",
       "twitter": "@StargateFinance"
   },
   "uniswapgovernance.eth": {
       "base_image": "./base_pink.png",
       "space_image": "./uniswapgovernance.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Uniswap Proposal Live",
+      "part2_text": "Uniswap Proposal Metrics",
       "twitter": "@UniswapFND"
   },
   "gitcoindao.eth": {
       "base_image": "./base_blue.png",
       "space_image": "./gitcoindao.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Gitcoin Proposal Live",
+      "part2_text": "Gitcoin Proposal Metrics",
       "twitter": "@gitcoin"
   },
   "gmx.eth": {
       "base_image": "./base_blue.png",
       "space_image": "./gmx.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "GMX Proposal Live",
+      "part2_text": "GMX Proposal Metrics",
       "twitter": "@GMX_IO"
   },
   "speraxdao.eth": {
       "base_image": "./base_green.png",
       "space_image": "./speraxdao.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Sperax Proposal Live",
+      "part2_text": "Sperax Proposal Metrics",
       "twitter": "@SperaxUSD"
   },
   "shellprotocol.eth": {
       "base_image": "./base_blue.png",
       "space_image": "shellprotocol.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Shell Proposal Live",
+      "part2_text": "Shell Proposal Metrics",
       "twitter": "@ShellProtocol"
   },
   "sushigov.eth": {
       "base_image": "./base_pink.png",
       "space_image": "./sushigov.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Sushi Proposal Live",
+      "part2_text": "Sushi Proposal Metrics",
       "twitter": "@SushiSwap"
   },
   "radiantcapital.eth": {
       "base_image": "./base_green.png",
       "space_image": "./radiantcapital.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Radiant Proposal Live",
+      "part2_text": "Radiant Proposal Metrics",
       "twitter": "@RDNTCapital"
   },
   "beets.eth": {
       "base_image": "./base_green.png",
       "space_image": "./beets.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Beets Proposal Live",
+      "part2_text": "Beets Proposal Metrics",
       "twitter": "@beets_fi"
   },
   "hop.eth": {
       "base_image": "./base_pink.png",
       "space_image": "./hop.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Hop Proposal Live",
+      "part2_text": "Hop Proposal Metrics",
       "twitter": "@HopProtocol"
   },
   "frax.eth": {
       "base_image": "./base_yellow.png",
       "space_image": "./frax.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Frax Proposal Live",
+      "part2_text": "Frax Proposal Metrics",
       "twitter": "@fraxfinance"
   },
   "shapeshiftdao.eth": {
       "base_image": "./base_blue.png",
       "space_image": "./shapeshiftdao.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "ShapeShift Proposal Live",
+      "part2_text": "ShapeShift Proposal Metrics",
       "twitter": "@ShapeShift"
   },
   "acrossprotocol.eth": {
       "base_image": "./base_green.png",
       "space_image": "./acrossprotocol.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Across Proposal Live",
+      "part2_text": "Across Proposal Metrics",
       "twitter": "@AcrossProtocol"
   },
   "rocketpool-dao.eth": {
       "base_image": "./base_orange.png",
       "space_image": "./rocketpool-dao.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Rocketpool Proposal Live",
+      "part2_text": "Rocketpool Proposal Metrics",
       "twitter": "@Rocket_Pool"
   },
   "comp-vote.eth": {
       "base_image": "./base_green.png",
       "space_image": "./comp-vote.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Comp Proposal Live",
+      "part2_text": "Comp Proposal Metrics",
       "twitter": "@compgovernance"
   },
   "devdao.eth": {
       "base_image": "./base_yellow.png",
       "space_image": "./devdao.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Devdao Proposal Live",
+      "part2_text": "Devdao Proposal Metrics",
       "twitter": "@developer_dao"
   },
   "abracadabrabymerlinthemagician.eth": {
       "base_image": "./base.png",
       "space_image": "placeholder_space_image_url",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Abracadabra Proposal Live",
+      "part2_text": "Abracadabra Proposal Metrics",
       "twitter": "@MIM_Spell"
   },
   "morpho.eth": {
       "base_image": "./base_yellow.png",
       "space_image": "./morpho.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Morpho Proposal Live",
+      "part2_text": "Morpho Proposal Metrics",
       "twitter": "@MorphoLabs"
   },
   "ymbiosisdao.eth": {
       "base_image": "./base.png",
       "space_image": "placeholder_space_image_url",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Symbiosis Proposal Live",
+      "part2_text": "Symbiosis Proposal Metrics",
       "twitter": "@symbiosis_fi"
   },
   "vote.vitadao.eth": {
       "base_image": "./base_yellow.png",
       "space_image": "./vote.vitadao.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "VitaDAO Proposal Live",
+      "part2_text": "VitaDAO Proposal Metrics",
       "twitter": "@vita_dao"
   },
   "stakewise.eth": {
       "base_image": "./base_yellow.png",
       "space_image": "./stakewise.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "Stakewise Proposal Live",
+      "part2_text": "Stakewise Proposal Metrics",
       "twitter": "@stakewise"
   },
   "prismafinance.eth": {
       "base_image": "./base_yellow.png",
       "space_image": "./prismafinance.png",
-      "part1_text": "",
-      "part2_text": "",
+      "part1_text": "PrismaFinance Proposal Live",
+      "part2_text": "PrismaFinance Propsal Metrics",
       "twitter": "@PrismaFi"
   }
 }

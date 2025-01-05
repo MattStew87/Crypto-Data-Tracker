@@ -90,7 +90,7 @@ class GraphGenerator:
 
         try:
             #fig.subplots_adjust(top=0.95, left=0.15, right=0.97, bottom=0.15)
-            
+            fig.subplots_adjust(top=0.85)
             # Load the logo image
             logo_img = Image.open(self.logo_path)
             imagebox = OffsetImage(logo_img, zoom=0.12)  # Adjust zoom for appropriate size
@@ -332,7 +332,7 @@ class GraphGenerator:
                 grouped_data[group] = []
             grouped_data[group].append((x, y))
 
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(8, 6))
         ax.set_facecolor('#f2efe9')
 
         # Create a scatter plot for each group
@@ -348,8 +348,23 @@ class GraphGenerator:
         ax.grid(True, zorder=1)
         fig.autofmt_xdate()
 
-        # Add logo
-        self.add_logo_to_figure(fig)
+        fig.subplots_adjust(top=0.9)
+        logo_img = Image.open(self.logo_path)
+        imagebox = OffsetImage(logo_img, zoom=0.12)  # Adjust zoom to resize
+
+        # 2) Adjust 'xy' and 'xycoords' to move the logo
+        #    - (0.01, 0.95) means x=0.01, y=0.95 in figure fraction coordinates.
+        #    - Increase x to move logo to the right, decrease x to move logo left.
+        #    - Increase y to move logo higher, decrease y to move it lower.
+        ab = AnnotationBbox(
+            imagebox,
+            (0.01, 0.86),           # <--- Change these numbers to move logo around
+            xycoords='figure fraction',
+            frameon=False,
+            box_alignment=(0, 1)    # (0,1) aligns left edge & top edge of the image
+        )
+        fig.add_artist(ab)
+
 
         return self.save_graph(fig, filename)
 
