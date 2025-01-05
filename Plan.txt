@@ -1,23 +1,21 @@
 
-- As we parse through the flipside data we will likely want 
-  to just add things as we go to a instance variable so by the 
-  end it has all of the data in it to be injected into the tweets
-
-Order of things: 
-
 - NEED to create a table that holds only proposals in annoucements, and proposals that are halfway done. 
-  - Then we will grab proposals one at a time and feed them through the flipside stuff.
-  - Maybe the way to do it is after we tweet an announcement we add that proposal to a table. 
-  Then we can just check proposals in that table that are halfway over and execute there second half. 
+  - After a proposal announcement add proposal to table, then pull from that table for updates (WHEN IT IS HALFWAY DONE). 
+  - Need to think about selection for proposal annoucement. 
+
+- NEED the system to be based on proposal_ids. Find a way to blacklist proposals that don't follow the format
+  - create_proposal_halftime() needs to be passed proposal_id from proposal_halftime_messages()
+  - proposal_halftime_messages needs to be able to take in a proposal_id directly
+
+THINGS TO DO: 
+
+- Fix up claude prompt (need better more consistent responses) [JACK] 
 
 
-
-- Fix Graph Genertor class (logo placement), FOR SCATTER ATM
-
+- Add in images for every single space_id in spaces.json
 
 
-
-
+OLD GIT COMMIT: 41c5e71062273ab64169023ee95146e62cdbad08
 
 
 

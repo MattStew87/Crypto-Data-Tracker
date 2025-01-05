@@ -10,7 +10,7 @@ import psycopg2
 import random
 
 class GraphGenerator:
-    def __init__(self, output_dir="graphs", logo_path="pine_watermark.png"):
+    def __init__(self, output_dir="graphs", logo_path="Image_bank/pine_watermark.png"):
         """
         Initialize the GraphGenerator.
         :param output_dir: Directory to save generated graph images.
@@ -358,7 +358,7 @@ class GraphGenerator:
         #    - Increase y to move logo higher, decrease y to move it lower.
         ab = AnnotationBbox(
             imagebox,
-            (0.01, 0.86),           # <--- Change these numbers to move logo around
+            (0.005, 0.87),           # <--- Change these numbers to move logo around
             xycoords='figure fraction',
             frameon=False,
             box_alignment=(0, 1)    # (0,1) aligns left edge & top edge of the image

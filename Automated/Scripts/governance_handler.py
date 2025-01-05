@@ -195,6 +195,7 @@ class GovernanceHandler:
 
                 - DO **NOT** include hashtags or emojis.
                 - DO **NOT** add any additional text besides the tweet itself. 
+                - Format the tweet so that each sentence **after the first tweet** is separated by **two** newline characters
             """
 
             part_1_message = self._generate_claude_response(prompt_for_first_tweet)
@@ -242,6 +243,7 @@ class GovernanceHandler:
 
             - DO **NOT** include hashtags or emojis.
             - DO **NOT** add any additional text besides the tweet itself. 
+            - Format the tweet so that each sentence **after the first tweet** is separated by **two** newline characters 
             """
 
             part_2_message = self._generate_claude_response(prompt_for_second_tweet)
@@ -286,13 +288,14 @@ class GovernanceHandler:
 
             - **Typical Pareto Distribution:** If the distribution follows a common pattern where a small group holds a large share of voting power, note this expected outcome.
             - **Extreme Concentration at the Top:** If a very small number of wallets control a significant portion of the voting power, highlight this notable concentration.
-            - **Mid-Tier Wallet Influence:** If the top 25%-50% of wallets hold a significant share of voting power, emphasize their impact.
+            - **Mid-Tier Wallet Influence:** If the top 25%-50% is held by many wallets, emphasize their distributed impact.
             - **Balanced Distribution:** If voting power is more evenly distributed than usual, highlight this as a positive sign for governance health.
             
             ### **Additional Instructions**
 
             - DO **NOT** include hashtags or emojis.
             - DO **NOT** add any additional text besides the tweet itself. 
+            - Format the tweet so that each sentence **after the first tweet** is separated by **two** newline characters 
 
             """
 
@@ -342,6 +345,7 @@ class GovernanceHandler:
 
             - DO **NOT** include hashtags or emojis.
             - DO **NOT** add any additional text besides the tweet itself. 
+            - Format the tweet so that each sentence **after the first tweet** is separated by **two** newline characters 
 
             """
 
@@ -422,7 +426,7 @@ class GovernanceHandler:
         try:
             response = self.client.messages.create(
                 model="claude-3-5-sonnet-20241022",
-                max_tokens=280,
+                max_tokens=100,
                 messages=[{"role": "user", "content": prompt}]
             )
             if response and hasattr(response, 'content'):

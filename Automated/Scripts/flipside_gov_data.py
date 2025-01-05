@@ -651,7 +651,7 @@ if __name__ == "__main__":
     print(tweet4_path)
     '''
 
-    #data = flipside.prompt_stats("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+    #data = flipside.prompt_stats("0x04c5984e2e2b8270a793bfb1bbe35c2c8a360429e2e1a5e72a3917215c51144d")
     #print(data) 
 
 
