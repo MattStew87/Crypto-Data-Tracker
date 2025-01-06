@@ -8,6 +8,7 @@ import psycopg2
 import os
 from twitter_handler import TwitterHandler
 from flipside_gov_data import FlipsideGovData
+import time
 
 class GovernanceHandler: 
     
@@ -42,8 +43,7 @@ class GovernanceHandler:
             # Connect to the PostgreSQL database
             with psycopg2.connect(**self.db_config) as conn:
                 with conn.cursor() as cursor:
-                    #sql_query = """SELECT * FROM new_proposals WHERE space_id IN ( 'arbitrumfoundation.eth', 'aave.eth', 'ens.eth', 'apecoin.eth', 'balancer.eth', 'lido-snapshot.eth', 'cvx.eth', 'starknet.eth', 'safe.eth', 'stgdao.eth', 'uniswapgovernance.eth', 'gitcoindao.eth', 'gmx.eth', 'speraxdao.eth', 'shellprotocol.eth', 'sushigov.eth', 'radiantcapital.eth', 'beets.eth', 'hop.eth', 'frax.eth', 'shapeshiftdao.eth', 'acrossprotocol.eth', 'rocketpool-dao.eth', 'comp-vote.eth', 'devdao.eth', 'abracadabrabymerlinthemagician.eth', 'morpho.eth', 'ymbiosisdao.eth', 'vote.vitadao.eth', 'stakewise.eth', 'prismafinance.eth' ) LIMIT 1"""
-                    sql_query = """ SELECT * FROM governance_proposals WHERE PROPOSAL_ID like '0x6cc9d7377b027de1a8b66a592a3ce55f2201b75d256e8626514f1ead768fd316'"""
+                    sql_query = """SELECT * FROM snapshot_new_proposals WHERE space_id IN ('arbitrumfoundation.eth', 'aave.eth', 'ens.eth', 'apecoin.eth', 'balancer.eth', 'lido-snapshot.eth', 'cvx.eth', 'starknet.eth', 'safe.eth', 'stgdao.eth', 'uniswapgovernance.eth', 'gitcoindao.eth', 'gmx.eth', 'speraxdao.eth', 'shellprotocol.eth', 'sushigov.eth', 'radiantcapital.eth', 'beets.eth', 'hop.eth', 'frax.eth', 'shapeshiftdao.eth', 'acrossprotocol.eth', 'rocketpool-dao.eth', 'comp-vote.eth', 'devdao.eth', 'abracadabrabymerlinthemagician.eth', 'morpho.eth', 'ymbiosisdao.eth', 'vote.vitadao.eth', 'stakewise.eth', 'prismafinance.eth') """
                     cursor.execute(sql_query)
                     raw_data = cursor.fetchall()
 
@@ -145,10 +145,8 @@ class GovernanceHandler:
             link_to_vote = f"https://snapshot.box/#/s:{space_id}/proposal/{proposal_id}"
             twitter_handle = self.spaces_data[space_id]["twitter"]
             
-            # proposal_id_str = f"{proposal_id}" MIGHT NOT NEED
+            prompt_data = self.flipside_gov_data.prompt_stats(proposal_id)
 
-            prompt_data = self.flipside_gov_data.prompt_stats("0x04c5984e2e2b8270a793bfb1bbe35c2c8a360429e2e1a5e72a3917215c51144d")
-           
             # Messages for the current proposal
             messages = []
 
@@ -195,7 +193,7 @@ class GovernanceHandler:
 
                 - DO **NOT** include hashtags or emojis.
                 - DO **NOT** add any additional text besides the tweet itself. 
-                - Format the tweet so that each sentence **after the first tweet** is separated by **two** newline characters
+                - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
             """
 
             part_1_message = self._generate_claude_response(prompt_for_first_tweet)
@@ -243,7 +241,7 @@ class GovernanceHandler:
 
             - DO **NOT** include hashtags or emojis.
             - DO **NOT** add any additional text besides the tweet itself. 
-            - Format the tweet so that each sentence **after the first tweet** is separated by **two** newline characters 
+            - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
             """
 
             part_2_message = self._generate_claude_response(prompt_for_second_tweet)
@@ -295,7 +293,7 @@ class GovernanceHandler:
 
             - DO **NOT** include hashtags or emojis.
             - DO **NOT** add any additional text besides the tweet itself. 
-            - Format the tweet so that each sentence **after the first tweet** is separated by **two** newline characters 
+            - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
 
             """
 
@@ -345,7 +343,7 @@ class GovernanceHandler:
 
             - DO **NOT** include hashtags or emojis.
             - DO **NOT** add any additional text besides the tweet itself. 
-            - Format the tweet so that each sentence **after the first tweet** is separated by **two** newline characters 
+            - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters  
 
             """
 
@@ -366,11 +364,12 @@ class GovernanceHandler:
             # Append space_id and messages to the result list
             all_messages.append({
                 "space_id": space_id,
-                "messages": messages
+                "messages": messages,
+                "proposal_id": proposal_id
             })
         
         # Output the messages to a file
-        '''
+        
         output_filename = "proposal_messages.txt"
         with open(output_filename, "w", encoding="utf-8") as file:
             for proposal_data in all_messages:
@@ -381,7 +380,7 @@ class GovernanceHandler:
                 for msg in msgs:
                     file.write(msg + "\n\n")            
                 file.write("-----\n\n")
-        '''
+        
 
         return all_messages
     
@@ -392,17 +391,18 @@ class GovernanceHandler:
         for proposal in halftime_messages: 
             space_id = proposal.get("space_id", "")
             messages = proposal.get("messages", "")
+            proposal_id = proposal.get("proposal_id", "")
                         
             cover_image = self.generate_space_image(space_id, 2)
             orginal_post_id = self.twitter_client.post_with_media(messages[0], cover_image)
 
-            Tweet2_media = self.flipside_gov_data.hourly_total_voting_power_by_choice("0x04c5984e2e2b8270a793bfb1bbe35c2c8a360429e2e1a5e72a3917215c51144d")
+            Tweet2_media = self.flipside_gov_data.hourly_total_voting_power_by_choice(proposal_id)
             thread1_id = self.twitter_client.post_thread_reply_with_media(messages[1], Tweet2_media, orginal_post_id)
 
-            Tweet3_media = self.flipside_gov_data.voting_power_by_wallet("0x04c5984e2e2b8270a793bfb1bbe35c2c8a360429e2e1a5e72a3917215c51144d")
+            Tweet3_media = self.flipside_gov_data.voting_power_by_wallet(proposal_id)
             thread2_id = self.twitter_client.post_thread_reply_with_media(messages[2], Tweet3_media, thread1_id)
 
-            Tweet4_media = self.flipside_gov_data.space_proposals_by_voting_power("0x04c5984e2e2b8270a793bfb1bbe35c2c8a360429e2e1a5e72a3917215c51144d")
+            Tweet4_media = self.flipside_gov_data.space_proposals_by_voting_power(proposal_id)
             thread3_id = self.twitter_client.post_thread_reply_with_media(messages[3], Tweet4_media, thread2_id)
 
             self.twitter_client.post_thread_reply(messages[4], thread3_id)
@@ -511,7 +511,7 @@ class GovernanceHandler:
 if __name__ == "__main__": 
     governance_data = GovernanceHandler() 
 
-    governance_data.create_proposal_halftime() 
+    governance_data.proposal_halftime_messages() 
     #print(result) 
     
     #governance_data.create_proposal_announcement()

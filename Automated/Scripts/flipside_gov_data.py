@@ -1,10 +1,8 @@
 import os
 from dotenv import load_dotenv
-import psycopg2
 from flipside import Flipside
 from graph_generator import GraphGenerator
 from datetime import datetime
-import time
 
 
 class FlipsideGovData:

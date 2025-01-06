@@ -1,15 +1,6 @@
 {
-    "tab1": {
-        "update_query": "with tab1 as (   SELECT      tx_id,     mint_amount / power(10, 9) as amt   from solana.defi.fact_token_mint_actions   where mint LIKE 'CRTx1JouZhzSU6XytsE42UQraoGqiHgxabocVfARTy2s'   and block_timestamp > '2024-05-01' )  , Carrot_Price as (  SELECT    date(block_timestamp) as day,   median(amount/amt) as median_price  FROM solana.core.fact_transfers as a   left outer join tab1     on a.tx_id = tab1.tx_id   where tx_to like 'FfCRL34rkJiMiX5emNDrYp3MdWH2mES3FvDQyFppqgpJ' and mint like 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v' and block_timestamp > '2024-05-01' and block_timestamp > current_date - 2  GROUP BY 1  having not median_price = 0 order by 1  )   , Carrot_Holders as ( SELECT   date(block_timestamp) as day,   sum(     case when bal = 0 then -1      when  change = bal then 1      else 0 end   ) as net_holders  FROM ( SELECT   block_timestamp,   owner,   balance - pre_balance as change,   sum(balance - pre_balance) over (partition by owner ORDER by block_id) as bal  FROM solana.core.fact_token_balances WHERE mint = 'CRTx1JouZhzSU6XytsE42UQraoGqiHgxabocVfARTy2s'   AND succeeded = TRUE   AND block_timestamp::date >= '2024-08-01' ) Where block_timestamp > current_date - 2  group by 1  ORDER BY 1  )   select Carrot_Price.day as block_timestamp,  net_holders, median_price as price from Carrot_Price left outer join Carrot_Holders on  Carrot_Price.day = Carrot_Holders.day",
-        "columns": {
-            "block_timestamp": "TIMESTAMP",
-            "net_holders": "int",
-            "price": "numeric"
-        },
-        "primary_key": "block_timestamp"
-    },
-    "governance_proposals": {
-        "update_query": "Select  PROPOSAL_ID,  PROPOSAL_TITLE, PROPOSAL_TEXT, CHOICES, CREATED_AT, PROPOSAL_START_TIME, PROPOSAL_END_TIME, NETWORK,  SPACE_ID,  Current_date as DATE_ADDED from external.snapshot.fact_proposals where PROPOSAL_START_TIME > current_date - 2 ORDER BY CREATED_AT DESC",
+    "snapshot_gov_proposals": {
+        "update_query": "WITH filter_tab as (   SELECT    DISTINCT PROPOSAL_ID    FROM external.snapshot.ez_snapshot   WHERE vote_option::STRING IN ('[\"1\"]', '[\"2\"]', '[\"3\"]', '[\"4\"]', '[\"5\"]', '[\"6\"]', '[\"7\"]', '[\"8\"]', '[\"9\"]', '[\"10\"]') )  SELECT   PROPOSAL_ID,   PROPOSAL_TITLE,  PROPOSAL_TEXT,  CHOICES,  CREATED_AT,  PROPOSAL_START_TIME,  PROPOSAL_END_TIME,  NETWORK,   SPACE_ID,   Current_date as DATE_ADDED  FROM external.snapshot.fact_proposals  WHERE CREATED_AT > current_date - 2  AND PROPOSAL_ID in (SELECT * FROM filter_tab) ORDER BY CREATED_AT DESC",
         "columns": {
             "proposal_id": "text",
             "proposal_title": "text",

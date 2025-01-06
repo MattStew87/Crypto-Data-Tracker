@@ -8,16 +8,22 @@
   - proposal_halftime_messages needs to be able to take in a proposal_id directly
 
 THINGS TO DO: 
-
 - Fix up claude prompt (need better more consistent responses) [JACK] 
-
 
 - Add in images for every single space_id in spaces.json
 
 
-OLD GIT COMMIT: 41c5e71062273ab64169023ee95146e62cdbad08
+ 
 
 
+
+Plan: 
+- Add in final message 
+- Organize file names (make stuff like snapshot_handler instead of governance handler) 
+
+
+
+OLD GIT COMMIT: b4056c66d4f0eafb589e72f5e828a30d0484fe7b
 
 
 
@@ -51,6 +57,23 @@ TEST INPUTS:
     'space_id': 'text',
     'date_added': 'TIMESTAMP'
 }
+
+
+SELECT 
+proposal_id,
+proposal_title,
+proposal_text,
+choices,
+created_at,
+proposal_start_time,
+proposal_end_time,
+network,
+space_id,
+date_added
+FROM snapshot_gov_proposals
+WHERE date_added = CURRENT_DATE
+ORDER BY created_at DESC
+
 --------------------------------------------------------------------------------------------------
 
 with tab1 as (
