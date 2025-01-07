@@ -666,12 +666,12 @@ class FlipsideGovData:
         records4 = result4.records
 
         # Initialize defaults in case some groups are missing:
-        prompt_data["top_10%_voting_power_wallets"] = 'N/A'
-        prompt_data["top_25%_voting_power_wallets"] = 'N/A'
-        prompt_data["top_50%_voting_power_wallets"] = 'N/A'
-        prompt_data["top_10%_voting_power_power"]   = 'N/A'
-        prompt_data["top_25%_voting_power_power"]   = 'N/A'
-        prompt_data["top_50%_voting_power_power"]   = 'N/A'
+        prompt_data["top_10%_voting_power_wallets"] = 1
+        prompt_data["top_25%_voting_power_wallets"] = 1
+        prompt_data["top_50%_voting_power_wallets"] = 1
+        prompt_data["top_10%_voting_power_power"]   = 1
+        prompt_data["top_25%_voting_power_power"]   = 1
+        prompt_data["top_50%_voting_power_power"]   = 1
 
         # Populate based on query results
         for row in records4:
@@ -680,14 +680,14 @@ class FlipsideGovData:
             total_vp = row["total_voting_power"]            # e.g. 9107017
 
             if group_name == "Top 10%":
-                prompt_data["top_10%_voting_power_wallets"] = wallet_count
+                prompt_data["top_10%_voting_power_wallets"] = wallet_count + 1 
                 prompt_data["top_10%_voting_power_power"]   = total_vp
             elif group_name == "Top 25%":
-                prompt_data["top_25%_voting_power_wallets"] = wallet_count
-                prompt_data["top_25%_voting_power_power"]   = total_vp
+                prompt_data["top_25%_voting_power_wallets"] = wallet_count + 1 
+                prompt_data["top_25%_voting_power_power"]   = total_vp 
             elif group_name == "Top 50%":
-                prompt_data["top_50%_voting_power_wallets"] = wallet_count
-                prompt_data["top_50%_voting_power_power"]   = total_vp
+                prompt_data["top_50%_voting_power_wallets"] = wallet_count + 1 
+                prompt_data["top_50%_voting_power_power"]   = total_vp  
 
 
         return prompt_data
@@ -699,11 +699,11 @@ if __name__ == "__main__":
     flipside = FlipsideGovData()
     
     
-    tweet2_path = flipside.hourly_total_voting_power_by_choice("0x708e9b02a7c5c173aeefa353fc78cd5d2d1e6ea05163481276be2f580355b9e1")
+    tweet2_path = flipside.hourly_total_voting_power_by_choice("0xe4ea71ad1e49384952cf6bfd8c02e3a0669fe8f2d3fe39f88d614bba358d0263")
     #print(tweet2_path) 
-    tweet3_path = flipside.voting_power_by_wallet("0x708e9b02a7c5c173aeefa353fc78cd5d2d1e6ea05163481276be2f580355b9e1")
+    tweet3_path = flipside.voting_power_by_wallet("0xe4ea71ad1e49384952cf6bfd8c02e3a0669fe8f2d3fe39f88d614bba358d0263")
     #print(tweet3_path) 
-    tweet4_path = flipside.space_proposals_by_voting_power("0x708e9b02a7c5c173aeefa353fc78cd5d2d1e6ea05163481276be2f580355b9e1")
+    tweet4_path = flipside.space_proposals_by_voting_power("0xe4ea71ad1e49384952cf6bfd8c02e3a0669fe8f2d3fe39f88d614bba358d0263")
     #print(tweet4_path)
     
 

@@ -1,19 +1,25 @@
 Space ID: gmx.eth
 
-1/ The governance proposal "GMX-Solana: Mainnet Test and Second Round of Audit" by @GMX_IO has concluded.  
-Winning Option: Yes. Earmark 6.90M to GTC Citizens with 99.97%.  
-Votes: 3.12M for Yes, 733 for No.
+1/ The governance proposal "GMX-Solana: Mainnet Test and Second Round of Audit" from @GMX_IO has concluded.  
+Results: "Yes Earmark 6.9M to GTC Citizens" received 3.12M votes and won with 99.97%.  
+The "No" option received 733 votes.
 
-2/ The proposal "GMX-Solana: Mainnet Test and Second Round of Audit" saw participation from 942 voters.  
-"Yes Earmark 6.9M to GTC Citizens" gathered 3.12M votes.  
-"No. Do Not Earmark 6.9M" received 733 votes.
+2/ Check out the final voter breakdown for the GMX-Solana proposal.  
+  
+Total voters: 942.  
+  
+Yes Earmark 6.9M to GTC Citizens received 3.12M votes.  
+  
+No. Do Not Earmark 6.9M received 733 votes.  
+  
+Yes Earmark dominated the voting.
 
-3/ Voting for the GMX-Solana proposal featured 942 participants.  
-Remarkably, 1 wallet commands 50% of the voting power.  
-This highlights a notable concentration of influence.
+3/ In the GMX-Solana proposal, out of 942 total voters, the top 10%, 25%, and 50% of voting power are each controlled by just 1-2 wallets. This reveals an extreme concentration of influence.
 
-4/ Voting activity for the "GMX-Solana: Mainnet Test and Second Round of Audit" proposal ranks at voting power rank 112 and voter turnout rank 85.  
-This places both in the low-mid range, reflecting below average engagement for this proposal.
+4/ Proposal on "GMX-Solana: Mainnet Test and Second Round of Audit" received varied engagement.  
+Voter turnout ranked 85th, landing in the 47.5 percentile.  
+Voting power ranked 112th at 30.62 percentile.  
+Overall, engagement was balanced, mid-range within @GMX_IO.
 
 5/ If you want to learn more about this @GMX_IO proposal check out our @flipsidecrypto Dashboard:
 

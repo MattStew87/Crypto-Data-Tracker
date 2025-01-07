@@ -1,22 +1,23 @@
 Space ID: gmx.eth
 
-1/ The governance proposal titled "GMX-Solana: Mainnet Test and Second Round of Audit" from @GMX_IO has concluded. We are now reviewing the results and the community's response. Zenith won decisively with 86.98% of the vote, showcasing strong community support.
+1/ The governance proposal "GMX-Solana: Mainnet Test and Second Round of Audit" from @GMX_IO is halfway through.  
+   
+Zenith is in the lead with 78.02K votes (86.99%).  
+   
+Sherlock follows with 11.64K votes.
 
-2/ The graph shows the final voter breakdown for the GMX-Solana proposal.  
+2/ Check out the hourly voting activity for the proposal "GMX-Solana: Mainnet Test and Second Round of Audit" by @GMX_IO.  
+Total voters: 31.  
+Zenith leads with 78.01K votes.  
+Sherlock trails at 11.64K.  
+Zenith shows clear dominance in voting.
 
-Total voters: 27.  
+3/ Only 31 voters for the "GMX-Solana: Mainnet Test and Second Round of Audit" proposal.  
+Remarkably concentrated influence: the top 10%, 25%, and 50% of voting power are all held by just a single wallet. This indicates an extreme concentration of voting power.
 
-Votes: Zenith - 78,000, Sherlock - 11,641.  
-
-Zenith's dominance is clear with significantly more support.
-
-3/ Key insights on the proposal for GMX-Solana: With a total of 27 voters, voting power distribution data is currently unavailable. This analysis would provide valuable insights into the community dynamics and governance health as we move forward.
-
-4/ Comparing voting activity for the 'GMX-Solana: Mainnet Test and Second Round of Audit' proposal: Voting power rank is 45, while voter turnout rank is 50.
-
-Voter and voting power percentiles are 16.98% and 7.55% respectively.
-
-Noteworthy is the low voter participation, suggesting a lack of engagement.
+4/ The proposal "GMX-Solana: Mainnet Test and Second Round of Audit" ranks 40th in voting power and 48th in voter turnout.  
+This places it in the 26.42 percentile for voting power and 11.32 percentile for voter turnout.  
+Engagement is notably low for this proposal.
 
 5/ If you want to learn more about this @GMX_IO proposal check out our @flipsidecrypto Dashboard:
 

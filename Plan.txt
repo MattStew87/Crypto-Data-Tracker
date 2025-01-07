@@ -17,8 +17,7 @@ THINGS TO DO:
 
 
 
-Plan: 
-- Add in final message 
+Plan:
 - Organize file names (make stuff like snapshot_handler instead of governance handler) 
 
 
