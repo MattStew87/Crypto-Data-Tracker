@@ -3,12 +3,12 @@ import textwrap
 import json
 from datetime import datetime
 from dotenv import load_dotenv
-import anthropic
 import psycopg2
 import os
 from twitter_handler import TwitterHandler
 from flipside_gov_data import FlipsideGovData
-import time
+from openai import OpenAI
+
 
 class GovernanceHandler: 
     
@@ -25,7 +25,7 @@ class GovernanceHandler:
         
         self.new_proposals = self.get_new_proposals()  
 
-        self.client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")) 
+        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
         self.twitter_client = TwitterHandler() 
 
@@ -99,7 +99,7 @@ class GovernanceHandler:
                 f"DO NOT include hashtags or emojis. "
                 f"This should not call to action, just inform."
             )
-            part_1_message = self._generate_claude_response(part_1_prompt)
+            part_1_message = self._generate_chatGPT_response(part_1_prompt)
             messages.append(part_1_message)
 
             # Generate second part
@@ -110,7 +110,7 @@ class GovernanceHandler:
                 f"Do not include hashtags or emojis. "
                 f"The post should start with 2/."
             )
-            part_2_message = self._generate_claude_response(part_2_prompt)
+            part_2_message = self._generate_chatGPT_response(part_2_prompt)
             messages.append(part_2_message)
 
             # Generate third part
@@ -119,7 +119,7 @@ class GovernanceHandler:
                 f"Do not include hashtags or emojis. "
                 f"This should start with 3/."
             )
-            part_3_message = self._generate_claude_response(part_3_prompt)
+            part_3_message = self._generate_chatGPT_response(part_3_prompt)
             messages.append(part_3_message)
 
             # Append space_id and messages to the result list
@@ -179,16 +179,6 @@ class GovernanceHandler:
 
                 ---
 
-                ### **Dynamic Conditions**
-
-                Add context or comments based on specific voting or proposal dynamics. Only include one (most relevant):
-
-                - **Close Vote:** If the top choice and the second choice voting power percentages are close, add a comment noting that it is a contentious vote.
-                - **Overwhelming Lead:** If one choice is significantly ahead of the others, add a comment naming the choice and its dominance.
-                - **Option Winning Without Majority:** If the leading option has less than 50% of the total voting power, add a comment noting the lack of a majority and the divided community.
-                - **Discrepancy Between Popular Vote and Voting Power:** If the winner of the vote differs between the popular vote and voting power, note this discrepancy.
-                - **High or Low Turnout Compared to Space Average:** If the halftime voter or voting power turnout percentile is unusually high or low for the voting space, add a comment on this.
-                
                 ### **Additional Instructions**
 
                 - DO **NOT** include hashtags or emojis.
@@ -196,7 +186,7 @@ class GovernanceHandler:
                 - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
             """
 
-            part_1_message = self._generate_claude_response(prompt_for_first_tweet)
+            part_1_message = self._generate_chatGPT_response(prompt_for_first_tweet)
             messages.append(part_1_message)
 
             # Tweet 2
@@ -223,14 +213,13 @@ class GovernanceHandler:
 
             Begin the tweet with **`2/`**. Reference the attached graph showing hourly voting activity and total votes by choice.
 
-            Mention the total number of voters and votes for each choice using placeholders.
             Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Do not include emojis.
 
             ---
 
             ### **Dynamic Comments Based on Voting Activity**
 
-            Add a comment based on the most relevant dynamic from the graph:
+            Add a comment based on the most relevant dynamic from the graph. Only include one (most relevant):
 
             - **Steady Voting Activity:** If the voting activity shows a consistent trend over time, highlight the steady engagement.
             - **Spikes in Voting Activity:** If there are noticeable spikes in voting at specific hours, comment on these trends.
@@ -244,7 +233,7 @@ class GovernanceHandler:
             - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
             """
 
-            part_2_message = self._generate_claude_response(prompt_for_second_tweet)
+            part_2_message = self._generate_chatGPT_response(prompt_for_second_tweet)
             messages.append(part_2_message)
 
             # Tweet 3
@@ -282,7 +271,7 @@ class GovernanceHandler:
 
             ### **Dynamic Comments Based on Voting Power Distribution**
 
-            Add a comment based on the most relevant dynamic from the voting power breakdown:
+            Add a comment based on the most relevant dynamic from the voting power breakdown. Only include one (most relevant):
 
             - **Typical Pareto Distribution:** If the distribution follows a common pattern where a small group holds a large share of voting power, note this expected outcome.
             - **Extreme Concentration at the Top:** If a very small number of wallets control a significant portion of the voting power, highlight this notable concentration.
@@ -297,7 +286,7 @@ class GovernanceHandler:
 
             """
 
-            part_3_message = self._generate_claude_response(prompt_for_third_tweet)
+            part_3_message = self._generate_chatGPT_response(prompt_for_third_tweet)
             messages.append(part_3_message)
 
             # Tweet 4
@@ -314,7 +303,7 @@ class GovernanceHandler:
             - `voter_turnout_rank` = {prompt_data["voter_turnout_rank"]}
             - `voting_power_percentile` = {prompt_data["voting_power_percentile"]}
             - `voter_percentile` = {prompt_data["voter_percentile"]}
-            - `proposal_title` = {[proposal_title]}
+            - `proposal_title` = {proposal_title}
             - `space_twitter_id` = {twitter_handle}
             - `proposal_description` = {proposal_text}
 
@@ -331,7 +320,7 @@ class GovernanceHandler:
 
             ### **Dynamic Comments Based on Voting Activity Comparison**
 
-            Add a comment based on the most relevant insight from the comparison of turnout data:
+            Add a comment based on the most relevant insight from the comparison of turnout data. Only include one (most relevant):
 
             - **High Turnout (Above 75th Percentile):** If both voter participation and voting power turnout are high, emphasize strong engagement.
             - **Low Turnout (Below 25th Percentile):** If both voter participation and voting power turnout are low, highlight the lack of engagement.
@@ -344,10 +333,10 @@ class GovernanceHandler:
             - DO **NOT** include hashtags or emojis.
             - DO **NOT** add any additional text besides the tweet itself. 
             - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters  
-
+            - The rank and percentile data are in reference to other proposals in the same governance space.
             """
 
-            part_4_message = self._generate_claude_response(prompt_for_fourth_tweet)
+            part_4_message = self._generate_chatGPT_response(prompt_for_fourth_tweet)
             messages.append(part_4_message)
 
             # Tweet 5
@@ -370,7 +359,7 @@ class GovernanceHandler:
         
         # Output the messages to a file
         
-        output_filename = "proposal_messages.txt"
+        output_filename = "proposal_messages_1.txt"
         with open(output_filename, "w", encoding="utf-8") as file:
             for proposal_data in all_messages:
                 space_id = proposal_data["space_id"]
@@ -383,6 +372,275 @@ class GovernanceHandler:
         
 
         return all_messages
+    
+    def proposal_final_messages(self): 
+        all_messages = []
+        
+        for proposal in self.new_proposals:
+            # Extract proposal data
+            proposal_id = proposal['proposal_id']
+            proposal_title = proposal['proposal_title']
+            proposal_text = proposal['proposal_text']
+            choices = proposal['choices']
+            proposal_start_time = proposal['proposal_start_time']
+            proposal_end_time = proposal['proposal_end_time']
+            space_id = proposal['space_id']
+            link_to_vote = f"https://snapshot.box/#/s:{space_id}/proposal/{proposal_id}"
+            twitter_handle = self.spaces_data[space_id]["twitter"]
+
+            #prompt_data = self.flipside_gov_data.prompt_stats(proposal_id)
+            
+            prompt_data = self.flipside_gov_data.prompt_stats("0xe4ea71ad1e49384952cf6bfd8c02e3a0669fe8f2d3fe39f88d614bba358d0263")
+           
+            # Messages for the current proposal
+            messages = []
+
+            # Tweet 1
+            ################################################################
+
+            prompt_for_first_tweet = f"""
+                **Prompt Template for First Tweet of a Thread (Proposal Concluded)**
+
+                ---
+
+                ### **Required Inputs:**
+
+                - `{{ proposal_title }}` = {proposal_title}
+                - `{{ space_twitter_id }}` = {twitter_handle}
+                - `{{ 1st choice votes }}` = {prompt_data["1st_choice_voting_power"]}
+                - `{{ 2nd choice votes }}` = {prompt_data["2nd_choice_voting_power"]}
+                - `{{ 1st choice name }}` = {prompt_data["1st_choice_name"]}
+                - `{{ 2nd choice name }}` = {prompt_data["2nd_choice_name"]}
+                - `{{ winning_option }}` = {prompt_data["1st_choice_name"]}
+                - `{{ winning_percent }}` = {prompt_data["leading_percent"]}
+
+                ### **Intro**
+
+                Start the first tweet of the thread with **`1/`**. Mention that the governance proposal with the title **`{{ proposal_title }}`** from **`{{ space_twitter_id }}`** has concluded and mension the results.
+
+                Ensure the tweet is under 245 characters. Do not include emojis. keep breif and infomative put a pagebreak between sentences.
+
+                ---
+
+                
+                ### **Additional Instructions**
+
+                - DO **NOT** include hashtags or emojis.
+                - DO **NOT** add any additional text besides the tweet itself. 
+                - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters
+
+                """
+
+            part_1_message = self._generate_chatGPT_response(prompt_for_first_tweet)
+            messages.append(part_1_message)
+
+            # Tweet 2
+            ################################################################
+
+            prompt_for_second_tweet = f"""
+                **Prompt Template for Second Tweet of a Thread (Final Voter and Activity Breakdown)**
+
+                ---
+
+                ### **Required Inputs:**
+
+                - `{{ total_voters }}` = {prompt_data["total_voters"]}
+                - `{{ choice_1_name }}` = {prompt_data["1st_choice_name"]}
+                - `{{ choice_1_votes }}` = {prompt_data["1st_choice_voting_power"]}
+                - `{{ choice_2_name }}` =  {prompt_data["2nd_choice_name"]}
+                - `{{ choice_2_votes }}` = {prompt_data["2nd_choice_voting_power"]}
+                - `{{ proposal_title }}` = {proposal_title}
+                - `{{ space_twitter_id }}` = {twitter_handle}
+                - `{{ proposal_description }}` = {proposal_text}
+
+                ---
+
+                ### **Intro**
+
+                Begin the tweet with **`2/`**. Reference the attached graph showing the final voting activity breakdown and total votes by choice.
+
+                Mention the total number of voters and votes for each choice of top 2 using placeholders. Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Do not include emojis. keep breif and infomative put a pagebreak between sentences.
+
+                ---
+
+                ### **Dynamic Comments Based on Voting Activity**
+
+                Add a comment based on the most relevant dynamic from the graph. Only include one (most relevant):
+
+                - **Choice Dominance:** If one choice received significantly more votes than the other, mention this dominance.
+                - **Close Race:** If the final votes between choices are close, note the competitive nature of the proposal.
+
+                ### **Additional Instructions**
+
+                - DO **NOT** include hashtags or emojis.
+                - DO **NOT** add any additional text besides the tweet itself. 
+                - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters
+            """
+
+            part_2_message = self._generate_chatGPT_response(prompt_for_second_tweet)
+            messages.append(part_2_message)
+
+            # Tweet 3
+            ################################################################
+
+            prompt_for_third_tweet = f"""
+                **Prompt Template for Third Tweet of a Thread (Final Voting Power Distribution)**
+
+                ---
+
+                ### **Required Inputs:**
+
+                - `{{ total_voters }}` = {prompt_data["total_voters"]}
+                - `{{ top_10_percent_voting_power_wallets }}` = {prompt_data["top_10%_voting_power_wallets"]}
+                - `{{ top_25_percent_voting_power_wallets }}` = {prompt_data["top_25%_voting_power_wallets"]}
+                - `{{ top_50_percent_voting_power_wallets }}`= {prompt_data["top_50%_voting_power_wallets"]}
+                - `{{ top_10_percent_voting_power }}` = {prompt_data["top_10%_voting_power_power"]}
+                - `{{ top_25_percent_voting_power }}` = {prompt_data["top_25%_voting_power_power"]}
+                - `{{ top_50_percent_voting_power }}` = {prompt_data["top_50%_voting_power_power"]}
+                - `{{ proposal_title }}` = {proposal_title}
+                - `{{ space_twitter_id }}` = {twitter_handle}
+                - `{{ proposal_description }}` = {proposal_text}
+
+                ---
+
+                ### **Intro**
+
+                Begin the tweet with **`3/`**. Highlight the key insights about how voting power was distributed among participants in the concluded proposal.
+
+                Mention relevant data points using placeholders. Choose to emphasize concentration at the top, mid-tier wallet influence, or balanced distribution, depending on the data. 
+                Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Keep brief and infomative put a pagebreak between sentences.
+
+                ---
+
+                ### **Dynamic Comments Based on Voting Power Distribution**
+
+                Add a comment based on the most relevant dynamic from the voting power breakdown. Only include one (most relevant):
+
+                -Extreme Concentration Among a Handful: If only a small number of wallets (e.g., <10) make up the top 50% of voting power, note the concentration of power among a select few.
+
+                Example: "The top 50% of voting power is controlled by just 8 wallets, highlighting a significant concentration of influence."
+                Distributed Power Among Many Wallets: If the top 50% of voting power is shared among a large number of wallets (e.g., >50 wallets), emphasize that power is more evenly distributed.
+
+                Example: "Voting power is distributed, with the top 50% shared across 120 wallets, showing balanced governance participation."
+                Single Wallet Dominance: If a single wallet accounts for the top 25% or 50% of voting power, highlight this extreme dominance.
+
+                Example: "One wallet alone controls 50% of the voting power, signaling an unusual concentration of influence."
+                Balanced Mid-Tier Influence: If the top 25%-50% includes a moderate to large number of wallets (e.g., 25-70 wallets), note their significant collective impact.
+
+                Example: "The top 25%-50% of voting power is distributed among 60 wallets, showcasing strong mid-tier influence in governance
+                ### **Additional Instructions**
+
+                - DO **NOT** include hashtags or emojis.
+                - DO **NOT** add any additional text besides the tweet itself. 
+                - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters
+                - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.) 
+            """
+
+            part_3_message = self._generate_chatGPT_response(prompt_for_third_tweet)
+            messages.append(part_3_message)
+
+            # Tweet 4
+            ################################################################
+
+
+            prompt_for_fourth_tweet = f"""
+                **Prompt Template for Fourth Tweet of a Thread (Final Voting Activity Comparison)**
+
+                ---
+
+                ### **Required Inputs:**
+
+                - `{{ voting_power_rank }}` = {prompt_data["final_voting_power_rank"]}
+                - `{{ voter_turnout_rank }}`= {prompt_data["final_voter_turnout_rank"]}
+                - `{{ voting_power_percentile }}` = {prompt_data["final_voting_power_percentile"]}
+                - `{{ voter_percentile }}` = {prompt_data["final_voter_percentile"]}
+                - `{{ proposal_title }}` = {proposal_title}
+                - `{{ space_twitter_id }}` = {twitter_handle}
+                - `{{ proposal_description }}` = {proposal_text}
+
+                ---
+
+                ### **Intro**
+
+                Begin the tweet with **`4/`**. Compare the concluded proposal’s voting activity to previous proposals within the same space.
+
+                Mention relevant data points using placeholders. Ensure the tweet is under 245 characters. Keep the tone neutral and professional.
+
+                ---
+
+                ### **Dynamic Comments Based on Voting Activity Comparison**
+
+                Add a comment based on the most relevant insight from the comparison of turnout data. Only include one (most relevant):
+
+                - **High Turnout (Above 75th Percentile):** If both voter participation and voting power turnout were high, emphasize strong engagement. 
+                - **High-Mid Turnout (Between 50th-75th Percentile):  If both voter participation and voting power turnout were low-mid, highlight above average engagement.** 
+                - **Low-Mid Turnout (Between 25th-50th Percentile):** If both voter participation and voting power turnout were low-mid, highlight below average engagement.
+                - **Low Turnout (Below 25th Percentile):** If both voter participation and voting power turnout were low, highlight the lack of engagement.
+                - **Discrepancy Between Voters and Voting Power:** If voter turnout rank is significantly higher or lower than voting power rank, nly use this if the discrpency is very large.
+                - **Top Performer (Rank 1-3):** If the proposal ranks in the top 1-3 spots for turnout, emphasize its leading position.
+                - **Middle of the Pack (25th-75th Percentile):** If turnout falls between the 25th and 75th percentile, focus on balanced engagement.
+
+                ### **Additional Instructions**
+
+                - DO **NOT** include hashtags or emojis.
+                - DO **NOT** add any additional text besides the tweet itself. 
+                - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters
+                - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.)
+            """
+
+            part_4_message = self._generate_chatGPT_response(prompt_for_fourth_tweet)
+            messages.append(part_4_message)
+
+            # Message Cleanup 
+            ################################################################
+            final_messages = []
+            for message in messages:
+                validation_prompt = f"""
+                Please carefully review the following tweet that is a part of a twitter thread and remove any incomplete phrases at the end 
+                that seem to occasionally get left at the end when we generate the tweets with gpt.
+                if the last sentence seems to be cut off remove it from the output (eg. doesn't end with a period) 
+                do not use this - execpt as a bulletpoint 
+                Tweet: "{message}"
+
+                Return fixed tweet
+                """
+                refined_message = self._generate_chatGPT_response(validation_prompt)
+                final_messages.append(refined_message)
+
+
+            # Tweet 5
+            ################################################################
+
+            part_5_message = (
+                f"5/ If you want to learn more about this {twitter_handle} proposal check out our @flipsidecrypto Dashboard:\n\n"
+                "https://flipsidecrypto.xyz/pine/snapshot-proposal-lookup-nFH10H\n\n"
+                f"To participate in the vote go here: {link_to_vote}"
+            )
+
+            final_messages.append(part_5_message)
+
+            # Append space_id and messages to the result list
+            all_messages.append({
+                "space_id": space_id,
+                "messages": final_messages,
+                "proposal_id": proposal_id
+            })
+        
+        output_filename = "proposal_messages_2.txt"
+        with open(output_filename, "w", encoding="utf-8") as file:
+            for proposal_data in all_messages:
+                space_id = proposal_data["space_id"]
+                msgs = proposal_data["messages"]
+                
+                file.write(f"Space ID: {space_id}\n\n")  
+                for msg in msgs:
+                    file.write(msg + "\n\n")            
+                file.write("-----\n\n")
+        
+        return all_messages
+
+
+
     
     def create_proposal_halftime(self):
 
@@ -421,24 +679,21 @@ class GovernanceHandler:
             thread1_id = self.twitter_client.post_thread_reply(messages[1], orginal_post_id)
             self.twitter_client.post_thread_reply(messages[2], thread1_id)
 
-
-    def _generate_claude_response(self, prompt):
+    
+    def _generate_chatGPT_response(self, prompt: str) -> str:
         try:
-            response = self.client.messages.create(
-                model="claude-3-5-sonnet-20241022",
-                max_tokens=100,
-                messages=[{"role": "user", "content": prompt}]
+            response = self.client.chat.completions.create(
+                model="gpt-4o",
+                messages=[ {"role": "system", "content": "Keep Tweet brief under 240 char and informative put a pagebreak between sentences. If any number are mentioned in the thousands, millions, billions, or trillions mention them shorthand with two decimals (eg. 1.85B) "},
+                    {"role": "user", "content": prompt}
+                ],
+                max_tokens=75
             )
-            if response and hasattr(response, 'content'):
-                text_block = response.content[0]
-                final_message = text_block.text if hasattr(text_block, 'text') else "Error: No text found in response."
-                return final_message
-            else:
-                return "Error: Invalid response format from Claude API."
-        except Exception as claude_error:
-            print(f"Error communicating with the Claude API: {claude_error}")
-            return "Error: Unable to generate response."
-        
+            # Extract and return the content from the response
+            return response.choices[0].message.content.strip()
+        except Exception  as chatgpt_error:
+            # Handle any errors
+            return f"An error occurred: {str(chatgpt_error)}"        
 
 
     def generate_space_image(self, space_id, part):
@@ -511,8 +766,7 @@ class GovernanceHandler:
 if __name__ == "__main__": 
     governance_data = GovernanceHandler() 
 
-    governance_data.proposal_halftime_messages() 
-    #print(result) 
+    result = governance_data.proposal_final_messages() 
     
     #governance_data.create_proposal_announcement()
      

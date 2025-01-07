@@ -1,0 +1,28 @@
+Space ID: gmx.eth
+
+1/ The governance proposal titled "GMX-Solana: Mainnet Test and Second Round of Audit" from @GMX_IO has concluded. We are now reviewing the results and the community's response. Zenith won decisively with 86.98% of the vote, showcasing strong community support.
+
+2/ The graph shows the final voter breakdown for the GMX-Solana proposal.  
+
+Total voters: 27.  
+
+Votes: Zenith - 78,000, Sherlock - 11,641.  
+
+Zenith's dominance is clear with significantly more support.
+
+3/ Key insights on the proposal for GMX-Solana: With a total of 27 voters, voting power distribution data is currently unavailable. This analysis would provide valuable insights into the community dynamics and governance health as we move forward.
+
+4/ Comparing voting activity for the 'GMX-Solana: Mainnet Test and Second Round of Audit' proposal: Voting power rank is 45, while voter turnout rank is 50.
+
+Voter and voting power percentiles are 16.98% and 7.55% respectively.
+
+Noteworthy is the low voter participation, suggesting a lack of engagement.
+
+5/ If you want to learn more about this @GMX_IO proposal check out our @flipsidecrypto Dashboard:
+
+https://flipsidecrypto.xyz/pine/snapshot-proposal-lookup-nFH10H
+
+To participate in the vote go here: https://snapshot.box/#/s:gmx.eth/proposal/0x11953281aac686d41e57bfe4a1f341b1343f591096c583d738ebb9f317fa8a85
+
+-----
+

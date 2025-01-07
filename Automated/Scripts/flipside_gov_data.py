@@ -526,11 +526,69 @@ class FlipsideGovData:
             prompt_data["voting_power_percentile"] = row["voting_power_percentile_rank"]
             prompt_data["voter_percentile"] = row["voters_percentile_rank"]
 
-    
         # Part3
         ###########################################################
 
-        sql3 = f""" 
+
+        sql3 = f"""
+            WITH tab1 AS (
+            SELECT space_id
+            FROM external.snapshot.fact_proposals
+            WHERE proposal_id LIKE '{proposal_id}'
+            ),
+            proposal_data AS (
+            SELECT 
+                proposal_id,
+                PROPOSAL_TITLE,
+                CASE WHEN proposal_id LIKE '{proposal_id}' THEN 'Selected Proposal' ELSE 'Other Proposal' END AS proposal_type,
+                MIN(vote_timestamp) AS start_time,
+                COUNT(DISTINCT voter) AS voters,
+                SUM(voting_power) AS total_voting_power
+            FROM external.snapshot.ez_snapshot
+            WHERE space_id IN (SELECT * FROM tab1)
+            GROUP BY 1, 2, 3
+            ),
+            ranked_proposals AS (
+            SELECT 
+                proposal_id,
+                proposal_type,
+                PROPOSAL_TITLE,
+                voters,
+                start_time,
+                total_voting_power,
+                RANK() OVER (ORDER BY total_voting_power DESC) AS voting_power_rank,
+                RANK() OVER (ORDER BY voters DESC) AS voters_rank,
+                COUNT(*) OVER () AS total_proposals,
+                PERCENT_RANK() OVER (ORDER BY voters DESC) AS voters_percentile,
+                PERCENT_RANK() OVER (ORDER BY total_voting_power DESC) AS voting_power_percentile
+            FROM proposal_data
+            )
+
+            SELECT
+            voting_power_rank,
+            100 - ROUND(voting_power_percentile * 100, 2) AS voting_power_percentile_rank,
+            voters_rank,
+            100 - ROUND(voters_percentile * 100, 2) AS voters_percentile_rank
+            FROM ranked_proposals
+            WHERE Proposal_ID LIKE '{proposal_id}'
+        """
+
+        result3 = self.flipside.query(sql3)
+        records3 = result3.records
+
+        # We expect exactly one row from this query.
+        if records3:
+            row = records3[0]
+            # row2 keys will be lowercase, e.g. "voting_power_rank", etc.
+            prompt_data["final_voting_power_rank"] = row["voting_power_rank"]
+            prompt_data["final_voter_turnout_rank"] = row["voters_rank"]
+            prompt_data["final_voting_power_percentile"] = row["voting_power_percentile_rank"]
+            prompt_data["final_voter_percentile"] = row["voters_percentile_rank"]
+    
+        # Part4
+        ###########################################################
+
+        sql4 = f""" 
             WITH tab1 AS (
                 SELECT 
                     VOTER,
@@ -604,8 +662,8 @@ class FlipsideGovData:
                 END;
         """
         
-        result3 = self.flipside.query(sql3)
-        records3 = result3.records
+        result4 = self.flipside.query(sql4)
+        records4 = result4.records
 
         # Initialize defaults in case some groups are missing:
         prompt_data["top_10%_voting_power_wallets"] = 'N/A'
@@ -616,7 +674,7 @@ class FlipsideGovData:
         prompt_data["top_50%_voting_power_power"]   = 'N/A'
 
         # Populate based on query results
-        for row in records3:
+        for row in records4:
             group_name = row["voting_power_group"]          # e.g. "Top 25%"
             wallet_count = row["wallet_count"]              # e.g. 2
             total_vp = row["total_voting_power"]            # e.g. 9107017
@@ -640,18 +698,18 @@ class FlipsideGovData:
 if __name__ == "__main__":
     flipside = FlipsideGovData()
     
-    '''
-    tweet2_path = flipside.hourly_total_voting_power_by_choice("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
-    print(tweet2_path) 
-    tweet3_path = flipside.voting_power_by_wallet("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
-    print(tweet3_path) 
-    tweet4_path = flipside.space_proposals_by_voting_power("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
-    print(tweet4_path)
-    '''
+    
+    tweet2_path = flipside.hourly_total_voting_power_by_choice("0x708e9b02a7c5c173aeefa353fc78cd5d2d1e6ea05163481276be2f580355b9e1")
+    #print(tweet2_path) 
+    tweet3_path = flipside.voting_power_by_wallet("0x708e9b02a7c5c173aeefa353fc78cd5d2d1e6ea05163481276be2f580355b9e1")
+    #print(tweet3_path) 
+    tweet4_path = flipside.space_proposals_by_voting_power("0x708e9b02a7c5c173aeefa353fc78cd5d2d1e6ea05163481276be2f580355b9e1")
+    #print(tweet4_path)
+    
 
-    #data = flipside.prompt_stats("0x04c5984e2e2b8270a793bfb1bbe35c2c8a360429e2e1a5e72a3917215c51144d")
+    #data = flipside.prompt_stats("0x11953281aac686d41e57bfe4a1f341b1343f591096c583d738ebb9f317fa8a85")
     #print(data) 
 
 
-    results = flipside.space_proposals_by_voting_power("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
-    print(results)
+    #results = flipside.space_proposals_by_voting_power("0x90fab9ab51bb8ca09bab7d76e7ccacaf7dad184e697c870c30957770211cc95d")
+    #print(results)
