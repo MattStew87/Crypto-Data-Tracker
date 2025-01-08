@@ -1,13 +1,9 @@
 import matplotlib.pyplot as plt
-from matplotlib.patches import Ellipse
 from matplotlib.offsetbox import OffsetImage, AnnotationBbox
 from PIL import Image
-from decimal import Decimal
-from datetime import datetime
 import os
 from dotenv import load_dotenv
-import psycopg2
-import random
+
 
 class GraphGenerator:
     def __init__(self, output_dir="graphs", logo_path="Image_bank/pine_watermark.png"):
@@ -27,47 +23,6 @@ class GraphGenerator:
         plt.rcParams['font.family'] = 'Times New Roman'
         # Set the default background color to off-white
         plt.rcParams['figure.facecolor'] = '#f2efe9'
-
-        self.db_config = {
-            "host": os.getenv("DATABASE_HOST"),
-            "database": "CARROT_DB", 
-            "user": os.getenv("DATABASE_USER"),
-            "password": os.getenv("DATABASE_PASSWORD"),
-            "port": 5432
-        }
-    
-    def execute_and_prepare_queries(self, additional_queries):
-        """
-        Executes SQL queries from additional_queries, cleans data, and returns results.
-        :param additional_queries: List of dictionaries containing SQL queries, graph types, and final columns.
-        :return: List of tuples (cleaned_data, graph_type, final_columns).
-        """
-        query_results = []
-
-        try:
-            # Connect to the PostgreSQL database
-            with psycopg2.connect(**self.db_config) as conn:
-                with conn.cursor() as cursor:
-                    for query_info in additional_queries:
-                        try:
-                            sql_query = query_info["sql_query"]
-                            graph_type = query_info["graph_type"]
-                            final_columns = query_info["final_columns"]
-                            graph_title = query_info["graph_title"]
-
-                            formatted_sql = f"""{sql_query}"""
-                            cursor.execute(formatted_sql)
-                            raw_data = cursor.fetchall()
-                            
-                            # Append results as a tuple (cleaned_data, graph_type, final_columns)
-                            query_results.append((raw_data, graph_type, final_columns, graph_title))
-                            
-                        except Exception as query_error:
-                            print(f"Error executing query: {sql_query}. Error: {query_error}")
-        except Exception as db_error:
-            print(f"Database connection error: {db_error}")
-
-        return query_results
 
 
     def save_graph(self, fig, filename):
@@ -368,130 +323,3 @@ class GraphGenerator:
 
         return self.save_graph(fig, filename)
 
-
-    def generate_graphs(self, additional_queries):
-        """
-        Executes queries via `execute_and_prepare_queries` and generates graphs based on graph types.
-        :param additional_queries: List of dictionaries containing SQL queries, graph types, and final columns.
-        :return: List of file paths to the generated graphs.
-        """
-        # Step 1: Fetch query results
-        query_results = self.execute_and_prepare_queries(additional_queries)
-
-        # Step 2: Initialize a list to store file paths of generated graphs
-        graph_file_paths = []
-
-        # Step 3: Process the results and generate graphs
-        for query_result in query_results:
-            data, graph_type, final_columns, graph_title = query_result
-
-            rand = random.randint(100000, 999999)
-
-            # Generate the appropriate graph and store the file path
-            if graph_type == "BASIC_LINE":
-                graph_path = self.create_line_graph(
-                    data=data,
-                    x_label=final_columns[0],
-                    y_label=final_columns[1],
-                    title=graph_title,
-                    filename=f"basic_line_{rand}"
-                )
-            elif graph_type == "MULTI_LINE":
-                graph_path = self.create_multi_line_graph(
-                    data=data,
-                    x_label=final_columns[0],
-                    y_labels=final_columns[1:],
-                    title=graph_title,
-                    filename=f"multi_line_{rand}"
-                )
-            elif graph_type == "GROUPED_LINE":
-                graph_path = self.create_grouped_line_graph(
-                    data=data,
-                    x_label=final_columns[0],
-                    y_label=final_columns[2],
-                    title=graph_title,
-                    filename=f"grouped_line_{rand}"
-                )
-            elif graph_type == "GROUPED_SCATTER":
-                graph_path = self.create_grouped_scatter_graph(
-                    data=data,
-                    x_label=final_columns[0],
-                    y_label=final_columns[2],
-                    title=graph_title,
-                    filename=f"grouped_scatter_1"
-                )
-            elif graph_type == "PIECHART":
-                graph_path = self.create_pie_chart(
-                    data=data,
-                    title=graph_title,
-                    filename=f"pie_chart_{rand}"
-                )
-            elif graph_type == "BASIC_BAR":
-                graph_path = self.create_bar_chart(
-                    data=data,
-                    x_label=final_columns[0],
-                    y_label=final_columns[1],
-                    title=graph_title,
-                    filename=f"basic_bar_{rand}"
-                )
-            elif graph_type == "STACKED_BAR":
-                graph_path = self.create_stacked_bar_chart(
-                    data=data,
-                    x_label=final_columns[0],
-                    y_label=final_columns[2],
-                    title=graph_title,
-                    filename=f"stacked_bar_{rand}"
-                )
-            else:
-                print(f"Unsupported graph type: {graph_type}")
-                graph_path = None
-
-            if graph_path:
-                graph_file_paths.append(graph_path)
-
-        # Step 4: Return the list of file paths
-        return graph_file_paths
-
-
-
-if __name__ == "__main__":
-    graph_gen = GraphGenerator()
-
-    # Mock additional queries input
-    additional_queries = [
-          {
-            "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
-            "final_columns": ["Date", "event_type", "Amount"],
-            "graph_type": "GROUPED_SCATTER",
-            "graph_title" : "Daily Carrot minted and Burned" 
-         }
-    ]
- 
-
-    # Run the function and print results
-    results = graph_gen.generate_graphs(additional_queries)
-    print(results) 
- 
-    
-"""
-additional_queries = [
-          {
-            "sql_query": "SELECT date_trunc('day', block_timestamp) as date, event_type, sum(amount) as Amount from carrot_burn_mint_actions where amount is not null and block_timestamp > current_date - 16 group by date, event_type order by date desc",
-            "final_columns": ["Date", "event_type", "Amount"],
-            "graph_type": "STACKED_BAR",
-            "graph_title" : "Daily Carrot minted and Burned" 
-         },
-         {
-            "sql_query": "select block_timestamp, net_holders from tab1 where block_timestamp > current_date - 50 order by block_timestamp desc",
-            "final_columns": ["Date", "Net Holders"],
-            "graph_type": "BASIC_BAR",
-            "graph_title" : "Daily Carrot Net Holders" 
-        },
-        {
-            "sql_query": "select * from tab1 order by block_timestamp desc",
-            "final_columns": ["Date", "Net Holders", "Carrot Price (USD)"],
-            "graph_type": "MULTI_LINE",
-            "graph_title" : "Daily Carrot Price and Net Holders" 
-        }
-    ]
-"""

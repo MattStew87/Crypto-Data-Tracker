@@ -1,7 +1,8 @@
 import time
 import schedule
 from update_registry import UpdateRegistry
-from datetime import datetime, timedelta, timezone
+from governance_handler import GovernanceHandler
+from datetime import datetime
 
 def run_updates():
     """
@@ -15,29 +16,29 @@ def run_updates():
     except Exception as e:
         print(f"Error in run_updates: {e}")
 
-def get_utc_midnight_local():
+def run_tweet():
     """
-    Calculate the local time equivalent of midnight UTC.
+    Function to execute the governance proposal handling.
     """
-    now = datetime.now(timezone.utc)
-    utc_midnight = datetime.combine(now.date() + timedelta(days=1), datetime.min.time(), tzinfo=timezone.utc)
-    local_midnight = utc_midnight.astimezone().replace(tzinfo=None)  # Convert to local time without timezone
-    return local_midnight.strftime("%H:%M")  # Format as HH:MM
+    try:
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"run_tweet called at {current_time}")
+        governance_handler = GovernanceHandler()
+        governance_handler.execute_proposal()
+    except Exception as e:
+        print(f"Error in run_tweet: {e}")
 
 def start_process_manager():
     """
     Run updates immediately and keep the process running for testing.
     """
-
-    #run_updates() 
-    #time.sleep(10000) 
-
-    # Get the local time equivalent of midnight UTC
-    midnight_utc_local = get_utc_midnight_local()
     print(f"Process Manager has been started")
     
-    # Schedule the update
-    schedule.every().day.at(midnight_utc_local).do(run_updates)
+    # Schedule the updates to run every day at 6:00 PM local time
+    schedule.every().day.at("18:00").do(run_updates)
+
+    # Schedule tweets to run every 3 hours
+    schedule.every(3).hours.do(run_tweet)
 
     while True:
         schedule.run_pending()

@@ -1,33 +1,7 @@
-
-- NEED to create a table that holds only proposals in annoucements, and proposals that are halfway done. 
-  - After a proposal announcement add proposal to table, then pull from that table for updates (WHEN IT IS HALFWAY DONE). 
-  - Need to think about selection for proposal annoucement. 
-
-
-
 STEPS: 
 
-1. Add images, base background, and twitter to space.json 
-2 Figure out how to pass down the proposal once you take it in 
-3. Figure out the parameters of accepting a proposal
-
-
-
-Plan: 
-- Start processing proposals based off given space_ids
-- Figure out a way to select propsals, also figure out how to keep it running and working correctly
-
-
-CURRENT IDEA: 
-
-- create a json file to store proposal_ids with the keys being halftime_tweet and final_tweet. 
-- Whenever you run something through proposal announcement you will add the proposal id to both of these lists. 
-
-- You will have a function called get_proposals() based off of your input either final_part or halftime_part it will grab 
-  the proposal_ids from the respective lists. Also based off the part it will either use a where statement to check 
-  for proposals that are halfway over or proposals that are all the way over. 
-
-- Each time a proposal is executed, within create_proposal_halftime or create_proposal_final it will get rid of it from the json file. 
+1. Add images to space.json 
+2. Cleanup code
 
 
 
@@ -85,4 +59,3 @@ WHERE date_added = CURRENT_DATE
 ORDER BY created_at DESC
 
 --------------------------------------------------------------------------------------------------
-

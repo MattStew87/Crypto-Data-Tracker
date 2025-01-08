@@ -1,12 +1,11 @@
 class InputHandler:
-    def __init__(self, table_manager, mv_manager, alert_manager):
+    def __init__(self, table_manager, mv_manager):
         """
         Initialize the InputHandler with a reference to the TableManager instance.
         :param table_manager: An instance of the TableManager.
         """
         self.table_manager = table_manager
         self.mv_manager = mv_manager
-        self.alert_manager = alert_manager
 
     def raw_table_workflow(self):
         """
@@ -133,92 +132,5 @@ class InputHandler:
         self.mv_manager.create_materialized_view(table_name, sql_query)
         self.mv_manager.add_mv_refresh()
         print(f"✅ Materialized View '{table_name}' created successfully!")
-        print("=" * 40)
-
-
-    def alerts_workflow(self):
-        """
-        Handles the workflow for creating alerts with a user-friendly interface.
-        """
-        print("\n" + "=" * 40)
-        print("🚨 Welcome to the Alerts Workflow 🚨")
-        print("=" * 40 + "\n")
-
-        # Step 1: Alert name
-        print("Step 1: Enter the Name of Your Alert")
-        alert_name = input("🔹 Alert Name: ").strip()
-
-        # Step 2: Alert SQL
-        print("\nStep 2: Define the Alert Condition (SQL Query)")
-        print("💡 The SQL query must evaluate to TRUE or FALSE.")
-        print("   Type your query line by line, and type 'END' to finish.")
-        print("-" * 40)
-
-        sql_query_lines = []
-        while True:
-            line = input()
-            if line.upper().strip() == "END":
-                break
-            sql_query_lines.append(line)
-
-        alert_sql = ' '.join(sql_query_lines).strip()
-
-        # Step 3: AI Prompt Info
-        print("\nStep 3: (Optional) Add an AI Prompt")
-        print("💡 If this alert involves AI processing, provide a prompt.")
-        print("   Leave blank if not applicable.")
-        ai_prompt_info = input("🔹 AI Prompt: ").strip()
-
-        # Step 3: Twitter Prompt Info
-        print("\nStep 4: (Optional) Add an Twitter Prompt")
-        print("💡 If this alert involves Twitter processing, provide a prompt.")
-        print("   Leave blank if not applicable.")
-        twitter_prompt_info = input("🔹 Twitter Prompt: ").strip()
-
-        # Step 4: Additional SQL Queries
-        print("\nStep 5: (Optional) Add Additional SQL Queries")
-        print("💡 Enter queries to fetch more data for this alert.")
-        print("   Type each query one at a time, and type 'END' to finish.")
-        print("-" * 40)
-
-        additional_queries = []
-
-        while True:
-            print("\nDefine an Alert Condition:")
-            print("💡 Type 'END' for SQL Query to stop adding conditions.")
-
-            # Input SQL Query
-            query = input("SQL Query> ").strip()
-            if query.upper() == "END":
-                break
-
-            # Input Final Columns
-            print("💡 Enter the final columns (e.g., date, net_holders, price). Separate by commas.")
-            columns = input("Final Columns> ").strip().split(",")
-            columns = [col.strip() for col in columns if col.strip()]  # Clean and validate
-
-            graph_title = input("Graph Title> ").strip()
-
-            # Input Graph Type
-            print("💡 Choose the graph type: BASIC_LINE, MULTI_LINE, GROUPED_LINE, PIECHART, BASIC_BAR, STACKED_BAR.")
-            while True:
-                graph_type = input("Graph Type> ").strip().upper()
-                if graph_type in ["BASIC_LINE", "MULTI_LINE", "GROUPED_LINE", "PIECHART", "BASIC_BAR", "STACKED_BAR" ]:
-                    break
-                print("❌ Invalid graph type. Please choose one of: BASIC_LINE, MULTI_LINE, GROUPED_LINE, PIECHART, BASIC_BAR, STACKED_BAR.")
-
-            # Append to the list of additional queries
-            additional_queries.append({
-                "sql_query": query,
-                "final_columns": columns,
-                "graph_type": graph_type, 
-                "graph_title": graph_title
-            })
-
-        # Step 5: Register the Alert
-        print("\n" + "=" * 40)
-        print("📋 Registering Your Alert...")
-        self.alert_manager.create_alert(alert_name, alert_sql, ai_prompt_info, additional_queries, twitter_prompt_info)
-        print(f"✅ Alert '{alert_name}' registered successfully!")
         print("=" * 40)
 

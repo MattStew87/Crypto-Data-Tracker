@@ -2,9 +2,7 @@ import psycopg2
 from flipside import Flipside
 from dotenv import load_dotenv
 import os
-import json
-from alert_processor import AlertProcessor
-from core_task_manager import CoreTaskManager  
+import json  
 
 
 class UpdateRegistry:
@@ -12,7 +10,7 @@ class UpdateRegistry:
     Manages the registration and execution of update queries for tables and materialized views.
     """
 
-    def __init__(self, registry_file="../config/update_registry.json", mv_registry_file="../config/materialized_views.json", alert_registry_file="../config/alerts.json"):
+    def __init__(self, registry_file="../config/update_registry.json", mv_registry_file="../config/materialized_views.json"):
         """
         Initializes the registries and loads existing updates from JSON files if available.
         :param registry_file: Path to the JSON file storing the update registry.
@@ -21,10 +19,8 @@ class UpdateRegistry:
         load_dotenv()
         self.registry_file = registry_file
         self.mv_registry_file = mv_registry_file
-        self.alert_registry_file = alert_registry_file
         self.registry = self.load_json(self.registry_file)  
         self.materialized_views = self.load_json(self.mv_registry_file)  
-        self.alerts = self.load_json(self.alert_registry_file)
 
     def load_json(self, file_path):
         """
@@ -77,28 +73,6 @@ class UpdateRegistry:
             self.materialized_views.append(mv_name)
             self.save_json(self.mv_registry_file, self.materialized_views)
 
-    def register_alert(self, alert_name, alert_sql, metadata):
-        """
-        Registers an alert in the registry.
-        :param alert_name: Name of the alert.
-        :param alert_sql: SQL query that evaluates to TRUE or FALSE.
-        :param metadata: Metadata containing AI prompt and additional SQL queries.
-        """
-        if alert_name not in self.alerts:
-            self.alerts[alert_name] = {
-                "alert_sql": alert_sql,
-                "metadata": metadata
-            }
-        else:
-            print(f"Alert '{alert_name}' already exists. Updating existing alert.")
-            self.alerts[alert_name].update({
-                "alert_sql": alert_sql,
-                "metadata": metadata
-            })
-
-        # Save the updated registry to the JSON file
-        self.save_json(self.alert_registry_file, self.alerts)
-
 
     def execute_updates(self):
         """
@@ -113,10 +87,6 @@ class UpdateRegistry:
             "password": os.getenv("DATABASE_PASSWORD"),
             "port": "5432"
         }
-
-        # Initialize variables at the top
-        alerts_to_process = {}  # Dictionary to store alerts that are triggered
-        task_manager = CoreTaskManager(max_cores=8)  # Initialize CoreTaskManager
 
         try:
             # Establish a single database connection
@@ -169,31 +139,6 @@ class UpdateRegistry:
                         cur.execute(f"REFRESH MATERIALIZED VIEW {mv_name};")
                         conn.commit()
                         print(f"Materialized view '{mv_name}' refreshed successfully!")
-
-                    # Evaluate alerts while keeping the connection open
-                    for alert_name, alert_data in self.alerts.items():
-                        try:
-                            # Extract alert SQL and metadata
-                            alert_sql = alert_data.get("alert_sql", "")
-                            metadata = alert_data.get("metadata", {})
-
-                            # Dynamically wrap the SQL in triple quotes for consistency
-                            formatted_sql = f"""{alert_sql}"""
-                            cur.execute(formatted_sql)
-                            result = cur.fetchone()
-
-                            if result and result[0]:  # Check if the alert condition is TRUE
-                                alerts_to_process[alert_name] = metadata  # Add to processing queue
-
-                        except Exception as e:
-                            print(f"Error checking alert '{alert_name}': {e}")
-
-            # Run triggered alerts in parallel using CoreTaskManager
-            if alerts_to_process:
-                print("🔄 Starting alert processing...")
-                task_manager.run_alerts(alerts_to_process)
-            else:
-                print("✅ No alerts triggered.")
 
         except Exception as e:
             print(f"Error executing updates: {e}")
