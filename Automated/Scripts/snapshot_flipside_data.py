@@ -5,7 +5,7 @@ from graph_generator import GraphGenerator
 from datetime import datetime
 
 
-class FlipsideGovData:
+class SnapshotFlipsideData:
 
     def __init__(self): 
         # Load the .env file
@@ -696,7 +696,7 @@ class FlipsideGovData:
 
        
 if __name__ == "__main__":
-    flipside = FlipsideGovData()
+    flipside = SnapshotFlipsideData()
     
     
     tweet2_path = flipside.hourly_total_voting_power_by_choice("0xe4ea71ad1e49384952cf6bfd8c02e3a0669fe8f2d3fe39f88d614bba358d0263")

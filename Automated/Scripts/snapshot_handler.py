@@ -6,13 +6,13 @@ from dotenv import load_dotenv
 import psycopg2
 import os
 from twitter_handler import TwitterHandler
-from flipside_gov_data import FlipsideGovData
+from snapshot_flipside_data import SnapshotFlipsideData
 from openai import OpenAI
 
 import time 
 
 
-class GovernanceHandler: 
+class SnapshotHandler: 
     
     def __init__(self): 
         load_dotenv() 
@@ -31,7 +31,7 @@ class GovernanceHandler:
 
         self.twitter_client = TwitterHandler() 
 
-        self.flipside_gov_data = FlipsideGovData() 
+        self.flipside_gov_data = SnapshotFlipsideData() 
 
         script_dir = os.path.dirname(os.path.abspath(__file__))
         spaces_json_path = os.path.join(script_dir, "Image_bank", "spaces.json")
@@ -45,7 +45,28 @@ class GovernanceHandler:
             # Connect to the PostgreSQL database
             with psycopg2.connect(**self.db_config) as conn:
                 with conn.cursor() as cursor:
-                    sql_query = """SELECT * FROM snapshot_new_proposals WHERE space_id IN ('arbitrumfoundation.eth', 'aave.eth', 'ens.eth', 'apecoin.eth', 'balancer.eth', 'lido-snapshot.eth', 'cvx.eth', 'starknet.eth', 'safe.eth', 'stgdao.eth', 'uniswapgovernance.eth', 'gitcoindao.eth', 'gmx.eth', 'speraxdao.eth', 'shellprotocol.eth', 'sushigov.eth', 'radiantcapital.eth', 'beets.eth', 'hop.eth', 'frax.eth', 'shapeshiftdao.eth', 'acrossprotocol.eth', 'rocketpool-dao.eth', 'comp-vote.eth', 'devdao.eth', 'abracadabrabymerlinthemagician.eth', 'morpho.eth', 'ymbiosisdao.eth', 'vote.vitadao.eth', 'stakewise.eth', 'prismafinance.eth') """
+                    sql_query = """
+                    SELECT * 
+                    FROM snapshot_new_proposals 
+                    WHERE space_id IN ('arbitrumfoundation.eth', 'aave.eth', 'ens.eth', 'apecoin.eth', 'balancer.eth',
+                        'lido-snapshot.eth', 'cvx.eth', 'starknet.eth', 'safe.eth', 'stgdao.eth',
+                        'uniswapgovernance.eth', 'gitcoindao.eth', 'gmx.eth', 'speraxdao.eth', 'shellprotocol.eth',
+                        'sushigov.eth', 'radiantcapital.eth', 'beets.eth', 'hop.eth', 'frax.eth',
+                        'shapeshiftdao.eth', 'acrossprotocol.eth', 'rocketpool-dao.eth', 'comp-vote.eth', 'devdao.eth',
+                        'abracadabrabymerlinthemagician.eth', 'morpho.eth', 'ymbiosisdao.eth', 'vote.vitadao.eth', 'stakewise.eth',
+                        'prismafinance.eth', 'metislayer2.eth', 'g-dao.eth', 'equilibriafi.eth', 'beaverbuilder.eth',
+                        'aavegotchi.eth', 'evergrow-lucro-governance.eth', 'moonwell-governance.eth', 'worldlibertyfinancial.com', 'etherfi-dao.eth',
+                        'moxie.eth', 'snapshot.dcl.eth', 'sandboxdao.eth', 'magicappstore.eth', 'metfi.io',
+                        'the-arena.eth', 'dfkvote.eth', 'polyhedragovernance.eth', 'hvax.eth', 'rdatadao.eth',
+                        'mendifinance.eth', 'gracy.eth', 'toshibase.eth', 'magpiexyz.eth', 'mutantcatsvote.eth',
+                        'gyrodao.eth', 'cow.eth', 'beefydao.eth', 'latticegov.eth', 'selfkey.eth',
+                        'thegurudao.eth', 'mocana.eth', 'gameswiftdao.eth', 'bioxyz.eth', 'sdao.eth',
+                        'dao.spaceid.eth', 'gauges.aurafinance.eth', 'wayfinderfoundation.eth', 'degen-defi.eth', 'madebyapesvote.eth',
+                        'hyperlockfi.eth', '1inch.eth', 'extradao.eth', 'octantapp.eth', 'xborg.eth',
+                        'somonowo.eth', 'gearbox.eth', 'eventhorizongitcoin.eth', 'airdaofoundation.eth', 'jadeprotocol.eth',
+                        'gnosis.eth') 
+                    LIMIT 1
+                    """
                     cursor.execute(sql_query)
                     raw_data = cursor.fetchall()
 
@@ -69,8 +90,48 @@ class GovernanceHandler:
 
         except Exception as db_error:
             print(f"Database connection error: {db_error}")
-        
+
+        print(proposals) 
         return proposals
+    
+    def get_proposals(self, proposal_id, part): 
+        proposals = []
+        try:
+            # Connect to the PostgreSQL database
+            with psycopg2.connect(**self.db_config) as conn:
+                with conn.cursor() as cursor:
+                    sql_query = f"""
+                    SELECT * 
+                    FROM snapshot_gov_proposals
+                    WHERE PROPOSAL_ID IN {proposal_id} 
+                    LIMIT 1
+                    """
+                    cursor.execute(sql_query)
+                    raw_data = cursor.fetchall()
+
+                    # Column names in lower case and in order
+                    columns = [
+                        "proposal_id", 
+                        "proposal_title",
+                        "proposal_text",
+                        "choices",
+                        "created_at",
+                        "proposal_start_time",
+                        "proposal_end_time",
+                        "network",
+                        "space_id",
+                        "date_added"
+                    ]
+                    
+                    # Convert each row into a dictionary
+                    for row in raw_data:
+                        proposals.append(dict(zip(columns, row)))
+
+        except Exception as db_error:
+            print(f"Database connection error: {db_error}")
+
+        return proposals
+
 
     def proposal_announcement_messages(self): 
         all_messages = []
@@ -147,8 +208,6 @@ class GovernanceHandler:
             twitter_handle = self.spaces_data[space_id]["twitter"]
             
             prompt_data = self.flipside_gov_data.prompt_stats(proposal_id)
-            print(prompt_data) 
-            time.sleep(10000) 
 
             # Messages for the current proposal
             messages = []
@@ -174,7 +233,7 @@ class GovernanceHandler:
 
                 ### **Intro**
 
-                Start the first tweet of the thread with **`1/`**. Mention that the governance proposal with the title **`{{ proposal_title }}`** from **`{{ space_twitter_id }}`** is halfway through, and we are going to look at the activity so far.
+                Start the first tweet of the thread with **`1/`**. Mention that the governance proposal with the title  **`{{ proposal_title }}`** In quotes from **`{{ space_twitter_id }}`** is halfway through, and we are going to look at the activity so far.
 
                 Ensure the tweet is under 245 characters. Do not include emojis. keep brief and informative put a pagebreak between sentences.
 
@@ -204,7 +263,6 @@ class GovernanceHandler:
             - `choice_1_votes` = {prompt_data["1st_choice_voting_power"]}
             - `choice_2_name` = {prompt_data["2nd_choice_name"]}
             - `choice_2_votes` = {prompt_data["2nd_choice_voting_power"]}
-            - `proposal_title` = {proposal_title}
             - `space_twitter_id` = {twitter_handle}
 
             ---
@@ -230,6 +288,7 @@ class GovernanceHandler:
             - DO **NOT** include hashtags or emojis.
             - DO **NOT** add any additional text besides the tweet itself. 
             - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
+            - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.)
 
             """
 
@@ -250,8 +309,6 @@ class GovernanceHandler:
                 - `{{ top_10_percent_voting_power_wallets }}` = {prompt_data["top_10%_voting_power_wallets"] }
                 - `{{ top_25_percent_voting_power_wallets }}` = {prompt_data["top_25%_voting_power_wallets"] }
                 - `{{ top_50_percent_voting_power_wallets }}`= {prompt_data["top_50%_voting_power_wallets"] }
-            
-                - `{{ proposal_title }}` = {proposal_title}
                 - `{{ space_twitter_id }}` = {twitter_handle}
 
                 ---
@@ -307,7 +364,6 @@ class GovernanceHandler:
                 - `voter_turnout_rank` = {prompt_data["voter_turnout_rank"]}
                 - `voting_power_percentile` = {prompt_data["voting_power_percentile"]}
                 - `voter_percentile` = {prompt_data["voter_percentile"]}
-                - `proposal_title` = {proposal_title}
                 - `space_twitter_id` = {twitter_handle}
 
                 ---
@@ -353,7 +409,7 @@ class GovernanceHandler:
                 Please carefully review the following tweet that is a part of a twitter thread and remove any incomplete phrases at the end 
                 that seem to occasionally get left at the end when we generate the tweets with gpt.
                 if the last sentence seems to be cut off remove it from the output (eg. doesn't end with a period) 
-                do not use this - execpt as a bulletpoint 
+                do not use this - execpt as a bulletpoint. If the whole tweet is wrapped in quotes remove them and just leave the text. 
                 Tweet: "{message}"
 
                 Return fixed tweet
@@ -409,10 +465,8 @@ class GovernanceHandler:
             link_to_vote = f"https://snapshot.box/#/s:{space_id}/proposal/{proposal_id}"
             twitter_handle = self.spaces_data[space_id]["twitter"]
 
-            #prompt_data = self.flipside_gov_data.prompt_stats(proposal_id)
-            
-            prompt_data = self.flipside_gov_data.prompt_stats("0xe4ea71ad1e49384952cf6bfd8c02e3a0669fe8f2d3fe39f88d614bba358d0263")
-            print(prompt_data) 
+            prompt_data = self.flipside_gov_data.prompt_stats(proposal_id)
+            #prompt_data = self.flipside_gov_data.prompt_stats("0xe4ea71ad1e49384952cf6bfd8c02e3a0669fe8f2d3fe39f88d614bba358d0263")
            
             # Messages for the current proposal
             messages = []
@@ -438,7 +492,7 @@ class GovernanceHandler:
 
                 ### **Intro**
 
-                Start the first tweet of the thread with **`1/`**. Mention that the governance proposal with the title **`{{ proposal_title }}`** from **`{{ space_twitter_id }}`** has concluded and mension the results.
+                Start the first tweet of the thread with **`1/`**. Mention that the governance proposal with the title **`{{ proposal_title }}` In quotes ** from **`{{ space_twitter_id }}`** has concluded and mension the results.
 
                 Ensure the tweet is under 245 characters. Do not include emojis. keep breif and infomative put a pagebreak between sentences.
 
@@ -471,7 +525,6 @@ class GovernanceHandler:
                 - `{{ choice_1_votes }}` = {prompt_data["1st_choice_voting_power"]}
                 - `{{ choice_2_name }}` =  {prompt_data["2nd_choice_name"]}
                 - `{{ choice_2_votes }}` = {prompt_data["2nd_choice_voting_power"]}
-                - `{{ proposal_title }}` = {proposal_title}
                 - `{{ space_twitter_id }}` = {twitter_handle}
 
                 ---
@@ -496,6 +549,7 @@ class GovernanceHandler:
                 - DO **NOT** include hashtags or emojis.
                 - DO **NOT** add any additional text besides the tweet itself. 
                 - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters
+                - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.)
             """
 
             part_2_message = self._generate_chatGPT_response(prompt_for_second_tweet)
@@ -516,7 +570,6 @@ class GovernanceHandler:
                 - `{{ top_25_percent_voting_power_wallets }}` = {prompt_data["top_25%_voting_power_wallets"] }
                 - `{{ top_50_percent_voting_power_wallets }}`= {prompt_data["top_50%_voting_power_wallets"] }
            
-                - `{{ proposal_title }}` = {proposal_title}
                 - `{{ space_twitter_id }}` = {twitter_handle}
                 ---
 
@@ -571,7 +624,6 @@ class GovernanceHandler:
                 - `{{ voter_turnout_rank }}`= {prompt_data["final_voter_turnout_rank"]}
                 - `{{ voting_power_percentile }}` = {prompt_data["final_voting_power_percentile"]}
                 - `{{ voter_percentile }}` = {prompt_data["final_voter_percentile"]}
-                - `{{ proposal_title }}` = {proposal_title}
                 - `{{ space_twitter_id }}` = {twitter_handle}
 
                 ---
@@ -615,7 +667,7 @@ class GovernanceHandler:
                 Please carefully review the following tweet that is a part of a twitter thread and remove any incomplete phrases at the end 
                 that seem to occasionally get left at the end when we generate the tweets with gpt.
                 if the last sentence seems to be cut off remove it from the output (eg. doesn't end with a period) 
-                do not use this - execpt as a bulletpoint 
+                do not use this - execpt as a bulletpoint. If the whole tweet is wrapped in quotes remove them and just leave the text. 
                 Tweet: "{message}"
 
                 Return fixed tweet
@@ -656,6 +708,19 @@ class GovernanceHandler:
         return all_messages
 
 
+    
+    def create_proposal_announcement(self):
+        
+        proposal_messages = self.proposal_announcement_messages()
+        for proposal in proposal_messages: 
+            space_id = proposal.get("space_id", "")
+            messages = proposal.get("messages", "")
+                        
+            cover_image = self.generate_space_image(space_id, 1)
+
+            orginal_post_id = self.twitter_client.post_with_media(messages[0], cover_image)
+            thread1_id = self.twitter_client.post_thread_reply(messages[1], orginal_post_id)
+            self.twitter_client.post_thread_reply(messages[2], thread1_id)
 
     
     def create_proposal_halftime(self):
@@ -681,26 +746,36 @@ class GovernanceHandler:
 
             self.twitter_client.post_thread_reply(messages[4], thread3_id)
 
-    
-    def create_proposal_announcement(self):
-        
-        proposal_messages = self.proposal_announcement_messages()
-        for proposal in proposal_messages: 
+
+    def create_proposal_final(self):
+
+        final_messages =  self.proposal_final_messages() 
+
+        for proposal in final_messages: 
             space_id = proposal.get("space_id", "")
             messages = proposal.get("messages", "")
+            proposal_id = proposal.get("proposal_id", "")
                         
-            cover_image = self.generate_space_image(space_id, 1)
-
+            cover_image = self.generate_space_image(space_id, 3)
             orginal_post_id = self.twitter_client.post_with_media(messages[0], cover_image)
-            thread1_id = self.twitter_client.post_thread_reply(messages[1], orginal_post_id)
-            self.twitter_client.post_thread_reply(messages[2], thread1_id)
+
+            Tweet2_media = self.flipside_gov_data.hourly_total_voting_power_by_choice(proposal_id)
+            thread1_id = self.twitter_client.post_thread_reply_with_media(messages[1], Tweet2_media, orginal_post_id)
+
+            Tweet3_media = self.flipside_gov_data.voting_power_by_wallet(proposal_id)
+            thread2_id = self.twitter_client.post_thread_reply_with_media(messages[2], Tweet3_media, thread1_id)
+
+            Tweet4_media = self.flipside_gov_data.space_proposals_by_voting_power(proposal_id)
+            thread3_id = self.twitter_client.post_thread_reply_with_media(messages[3], Tweet4_media, thread2_id)
+
+            self.twitter_client.post_thread_reply(messages[4], thread3_id)
 
     
     def _generate_chatGPT_response(self, prompt: str) -> str:
         try:
             response = self.client.chat.completions.create(
                 model="gpt-4o",
-                messages=[ {"role": "system", "content": "Keep Tweet brief under 240 char and informative put a pagebreak between sentences. If any number are mentioned in the thousands, millions, billions, or trillions mention them shorthand with two decimals (eg. 1.85B) "},
+                messages=[ {"role": "system", "content": "Keep Tweet brief under 240 char and informative put **TWO NEWLINES CHARATERS** between sentences. If any numbers are mentioned in the thousands, millions, billions, or trillions mention them shorthand with two decimals (eg. 1.85B)."},
                     {"role": "user", "content": prompt}
                 ],
                 max_tokens=75
@@ -726,7 +801,7 @@ class GovernanceHandler:
 
         base_image_path = os.path.join(script_dir, "Image_bank", os.path.basename(space_data["base_image"]))
         logo_image_path = os.path.join(script_dir, "Image_bank", os.path.basename(space_data["space_image"]))
-        title_text = space_data["part1_text"] if part == 1 else space_data["part2_text"]
+        title_text = (space_data["part1_text"] if part == 1 else space_data["part2_text"] if part == 2  else space_data["part3_text"] if part == 3 else "Invalid part")
 
         # Open the base and logo images
         base_image = Image.open(base_image_path)
@@ -780,9 +855,11 @@ class GovernanceHandler:
         return output_image_path
 
 if __name__ == "__main__": 
-    governance_data = GovernanceHandler() 
+    governance_data = SnapshotHandler() 
 
-    result = governance_data.proposal_halftime_messages() 
+    governance_data.get_new_proposals() 
+
+    #result = governance_data.proposal_final_messages() 
     
     #governance_data.create_proposal_announcement()
      

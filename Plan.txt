@@ -3,35 +3,47 @@
   - After a proposal announcement add proposal to table, then pull from that table for updates (WHEN IT IS HALFWAY DONE). 
   - Need to think about selection for proposal annoucement. 
 
-- NEED the system to be based on proposal_ids. Find a way to blacklist proposals that don't follow the format
-  - create_proposal_halftime() needs to be passed proposal_id from proposal_halftime_messages()
-  - proposal_halftime_messages needs to be able to take in a proposal_id directly
-
-THINGS TO DO: 
-- Fix up claude prompt (need better more consistent responses) [JACK] 
-
-- Add in images for every single space_id in spaces.json
 
 
- 
+STEPS: 
+
+1. Add images, base background, and twitter to space.json 
+2 Figure out how to pass down the proposal once you take it in 
+3. Figure out the parameters of accepting a proposal
 
 
 
-Plan:
-- Organize file names (make stuff like snapshot_handler instead of governance handler) 
+Plan: 
+- Start processing proposals based off given space_ids
+- Figure out a way to select propsals, also figure out how to keep it running and working correctly
 
+
+CURRENT IDEA: 
+
+- create a json file to store proposal_ids with the keys being halftime_tweet and final_tweet. 
+- Whenever you run something through proposal announcement you will add the proposal id to both of these lists. 
+
+- You will have a function called get_proposals() based off of your input either final_part or halftime_part it will grab 
+  the proposal_ids from the respective lists. Also based off the part it will either use a where statement to check 
+  for proposals that are halfway over or proposals that are all the way over. 
+
+- Each time a proposal is executed, within create_proposal_halftime or create_proposal_final it will get rid of it from the json file. 
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 
 OLD GIT COMMIT: b4056c66d4f0eafb589e72f5e828a30d0484fe7b
-
-
-
-
-
-
-
-
-
 
 
 --------------------------------------------------------------------------------------------------
@@ -41,9 +53,7 @@ OLD GIT COMMIT: b4056c66d4f0eafb589e72f5e828a30d0484fe7b
 
 TEST INPUTS: 
 --------------------------------------------------------------------------------------------------
-
-{'block_timestamp' : 'TIMESTAMP', 'net_holders' : 'int', 'price' : 'numeric'}
-
+Columns: 
 {
     'proposal_id': 'text',
     'proposal_title': 'text',
@@ -57,6 +67,7 @@ TEST INPUTS:
     'date_added': 'TIMESTAMP'
 }
 
+Update Query: 
 
 SELECT 
 proposal_id,
@@ -72,128 +83,6 @@ date_added
 FROM snapshot_gov_proposals
 WHERE date_added = CURRENT_DATE
 ORDER BY created_at DESC
-
---------------------------------------------------------------------------------------------------
-
-with tab1 as (
-  SELECT 
-    tx_id,
-    mint_amount / power(10, 9) as amt
-  from solana.defi.fact_token_mint_actions
-  where mint LIKE 'CRTx1JouZhzSU6XytsE42UQraoGqiHgxabocVfARTy2s'
-  and block_timestamp > '2024-05-01'
-)
-
-, Carrot_Price as ( 
-SELECT 
-  date(block_timestamp) as day,
-  median(amount/amt) as median_price
-
-FROM solana.core.fact_transfers as a
-  left outer join tab1
-    on a.tx_id = tab1.tx_id  
-where tx_to like 'FfCRL34rkJiMiX5emNDrYp3MdWH2mES3FvDQyFppqgpJ'
-and mint like 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
-and block_timestamp > '2024-05-01'
-GROUP BY 1 
-having not median_price = 0
-order by 1 
-) 
-
-, Carrot_Holders as (
-SELECT
-  date(block_timestamp) as day,
-  sum(
-    case when bal = 0 then -1 
-    when  change = bal then 1 
-    else 0 end
-  ) as net_holders
-
-FROM (
-SELECT
-  block_timestamp,
-  owner,
-  balance - pre_balance as change,
-  sum(balance - pre_balance) over (partition by owner ORDER by block_id) as bal
-
-FROM solana.core.fact_token_balances
-WHERE mint = 'CRTx1JouZhzSU6XytsE42UQraoGqiHgxabocVfARTy2s'
-  AND succeeded = TRUE
-  AND block_timestamp::date >= '2024-08-01'
-)
-group by 1 
-ORDER BY 1 
-) 
-
-select
-Carrot_Price.day as block_timestamp, 
-net_holders,
-median_price as price
-from Carrot_Price left outer join Carrot_Holders on 
-Carrot_Price.day = Carrot_Holders.day
-END
-
---------------------------------------------------------------------------------------------------
-
-with tab1 as (
-  SELECT 
-    tx_id,
-    mint_amount / power(10, 9) as amt
-  from solana.defi.fact_token_mint_actions
-  where mint LIKE 'CRTx1JouZhzSU6XytsE42UQraoGqiHgxabocVfARTy2s'
-  and block_timestamp > '2024-05-01'
-)
-
-, Carrot_Price as ( 
-SELECT 
-  date(block_timestamp) as day,
-  median(amount/amt) as median_price
-
-FROM solana.core.fact_transfers as a
-  left outer join tab1
-    on a.tx_id = tab1.tx_id  
-where tx_to like 'FfCRL34rkJiMiX5emNDrYp3MdWH2mES3FvDQyFppqgpJ'
-and mint like 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
-and block_timestamp > '2024-05-01'
-and block_timestamp > current_date - 2 
-GROUP BY 1 
-having not median_price = 0
-order by 1 
-) 
-
-, Carrot_Holders as (
-SELECT
-  date(block_timestamp) as day,
-  sum(
-    case when bal = 0 then -1 
-    when  change = bal then 1 
-    else 0 end
-  ) as net_holders
-
-FROM (
-SELECT
-  block_timestamp,
-  owner,
-  balance - pre_balance as change,
-  sum(balance - pre_balance) over (partition by owner ORDER by block_id) as bal
-
-FROM solana.core.fact_token_balances
-WHERE mint = 'CRTx1JouZhzSU6XytsE42UQraoGqiHgxabocVfARTy2s'
-  AND succeeded = TRUE
-  AND block_timestamp::date >= '2024-08-01'
-)
-Where block_timestamp > current_date - 2 
-group by 1 
-ORDER BY 1 
-) 
-
-select
-Carrot_Price.day as block_timestamp, 
-net_holders,
-median_price as price
-from Carrot_Price left outer join Carrot_Holders on 
-Carrot_Price.day = Carrot_Holders.day
-END
 
 --------------------------------------------------------------------------------------------------
 

@@ -1,25 +1,32 @@
 Space ID: gmx.eth
 
-1/ The governance proposal "GMX-Solana: Mainnet Test and Second Round of Audit" from @GMX_IO has concluded.  
-Results: "Yes Earmark 6.9M to GTC Citizens" received 3.12M votes and won with 99.97%.  
-The "No" option received 733 votes.
+1/ The proposal "GMX-Solana: Mainnet Test and Second Round of Audit" from @GMX_IO has concluded.  
 
-2/ Check out the final voter breakdown for the GMX-Solana proposal.  
-  
-Total voters: 942.  
-  
-Yes Earmark 6.9M to GTC Citizens received 3.12M votes.  
-  
-No. Do Not Earmark 6.9M received 733 votes.  
-  
-Yes Earmark dominated the voting.
+Zenith received 80.03K votes (81.28%), while Sherlock gathered 11.64K votes.  
 
-3/ In the GMX-Solana proposal, out of 942 total voters, the top 10%, 25%, and 50% of voting power are each controlled by just 1-2 wallets. This reveals an extreme concentration of influence.
+Zenith is the winning option.
 
-4/ Proposal on "GMX-Solana: Mainnet Test and Second Round of Audit" received varied engagement.  
-Voter turnout ranked 85th, landing in the 47.5 percentile.  
-Voting power ranked 112th at 30.62 percentile.  
-Overall, engagement was balanced, mid-range within @GMX_IO.
+2/ Check out the attached graph for the final voting breakdown.  
+
+Total voters: 35.  
+
+Votes for Zenith: 80.03K.  
+
+Votes for Sherlock: 11.64K.  
+
+Zenith showed clear dominance with significantly more votes than Sherlock.
+
+3/ The voting power distribution in the latest proposal shows an extreme concentration.  
+
+One wallet alone holds 50% of the voting power.  
+
+This points to a significant influence held by a single entity in governance decisions at @GMX_IO.
+
+4/ Proposal voting activity showed a voter turnout rank of 48 and a voting power rank of 44.  
+
+Both are below the 25th percentile, with voter and power percentiles at 11.32 and 18.87, respectively.  
+
+This highlights a lack of engagement within @GMX_IO.
 
 5/ If you want to learn more about this @GMX_IO proposal check out our @flipsidecrypto Dashboard:
 
