@@ -32,7 +32,7 @@
         "twitter": "@apecoin"
     },
     "balancer.eth": {
-        "base_image": "./base_yellow.png",
+        "base_image": "./base_black.png",
         "space_image": "./balancer.png",
         "part1_text": "Balancer Proposal Live",
         "part2_text": "Balancer Proposal Metrics",
@@ -72,7 +72,7 @@
         "twitter": "@safe"
     },
     "stgdao.eth": {
-        "base_image": "./base_yellow.png",
+        "base_image": "./base_black.png",
         "space_image": "./stgdao.png",
         "part1_text": "Stargate Proposal Live",
         "part2_text": "Stargate Proposal Metrics",
@@ -152,7 +152,7 @@
         "twitter": "@HopProtocol"
     },
     "frax.eth": {
-        "base_image": "./base_yellow.png",
+        "base_image": "./base_black.png",
         "space_image": "./frax.png",
         "part1_text": "Frax Proposal Live",
         "part2_text": "Frax Proposal Metrics",
@@ -192,7 +192,7 @@
         "twitter": "@compgovernance"
     },
     "devdao.eth": {
-        "base_image": "./base_yellow.png",
+        "base_image": "./base_black.png",
         "space_image": "./devdao.png",
         "part1_text": "Devdao Proposal Live",
         "part2_text": "Devdao Proposal Metrics",
@@ -208,7 +208,7 @@
         "twitter": "@MIM_Spell"
     },
     "morpho.eth": {
-        "base_image": "./base_yellow.png",
+        "base_image": "./base_black.png",
         "space_image": "./morpho.png",
         "part1_text": "Morpho Proposal Live",
         "part2_text": "Morpho Proposal Metrics",
@@ -232,7 +232,7 @@
         "twitter": "@vita_dao"
     },
     "stakewise.eth": {
-        "base_image": "./base_yellow.png",
+        "base_image": "./base_black.png",
         "space_image": "./stakewise.png",
         "part1_text": "Stakewise Proposal Live",
         "part2_text": "Stakewise Proposal Metrics",
@@ -240,7 +240,7 @@
         "twitter": "@stakewise"
     },
     "prismafinance.eth": {
-        "base_image": "./base_yellow.png",
+        "base_image": "./base_black.png",
         "space_image": "./prismafinance.png",
         "part1_text": "PrismaFinance Proposal Live",
         "part2_text": "PrismaFinance Propsal Metrics",
@@ -296,7 +296,7 @@
         "twitter": "@MoonwellDeFi"
     },
     "worldlibertyfinancial.com": {
-        "base_image": "./base_yellow.png",
+        "base_image": "./base_black.png",
         "space_image": "./worldlibertyfinancial-modified.png",
         "part1_text": "World Liberty Proposal Live",
         "part2_text": "World Liberty Proposal Metrics",
@@ -360,7 +360,7 @@
         "twitter": "@DeFiKingdoms"
     },
     "polyhedragovernance.eth": {
-        "base_image": "./base_yellow.png",
+        "base_image": "./base_black.png",
         "space_image": "./polyhedragovernance-modified.png",
         "part1_text": "Polyhedra Proposal Live",
         "part2_text": "Polyhedra Proposal Metrics",
@@ -432,7 +432,7 @@
         "twitter": "@xgurunetwork"
     },
     "gameswiftdao.eth": {
-        "base_image": "./base_yellow.png",
+        "base_image": "./base_black.png",
         "space_image": "./gameswiftdao-modified.png",
         "part1_text": "GameSwift Proposal Live",
         "part2_text": "GameSwift Proposal Metrics",
@@ -480,7 +480,7 @@
         "twitter": "@ExtraFi_io"
     },
     "octantapp.eth": {
-        "base_image": "./base_yellow.png",
+        "base_image": "./base_black.png",
         "space_image": "./octantapp-modified.png",
         "part1_text": "Octant Proposal Live",
         "part2_text": "Octant Proposal Metrics",

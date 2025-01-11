@@ -20,7 +20,11 @@ class GovernanceHandler:
 
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-        self.snapshot_handler = SnapshotHandler() 
+        self.snapshot_handler = SnapshotHandler()
+
+        # Resolve the path to snapshot_proposals.json dynamically
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        self.json_file_path = os.path.join(script_dir, "../config/snapshot_proposals.json") 
 
         self.selected_proposal = self.select_best_proposal() 
 
@@ -72,7 +76,7 @@ class GovernanceHandler:
                                 'prismafinance.eth', 'metislayer2.eth', 'g-dao.eth', 'equilibriafi.eth', 'beaverbuilder.eth',
                                 'aavegotchi.eth', 'evergrow-lucro-governance.eth', 'moonwell-governance.eth', 'worldlibertyfinancial.com', 'etherfi-dao.eth',
                                 'moxie.eth', 'snapshot.dcl.eth', 'sandboxdao.eth', 'magicappstore.eth', 'metfi.io',
-                                'the-arena.eth', 'dfkvote.eth', 'polyhedragovernance.eth', 'hvax.eth', 'rdatadao.eth',
+                                'the-arena.eth', 'dfkvote.eth', 'polyhedragovernance.eth', 'rdatadao.eth',
                                 'mendifinance.eth', 'gracy.eth', 'toshibase.eth', 'magpiexyz.eth', 'mutantcatsvote.eth',
                                 'gyrodao.eth', 'cow.eth', 'beefydao.eth', 'latticegov.eth', 'selfkey.eth',
                                 'thegurudao.eth', 'mocana.eth', 'gameswiftdao.eth', 'bioxyz.eth', 'sdao.eth',
@@ -81,6 +85,8 @@ class GovernanceHandler:
                                 'somonowo.eth', 'gearbox.eth', 'eventhorizongitcoin.eth', 'airdaofoundation.eth', 'jadeprotocol.eth',
                                 'gnosis.eth'
                             ) 
+                            ORDER BY created_at DESC 
+                            LIMIT 10
                         """
                         cursor.execute(sql_query)
                         raw_data = cursor.fetchall()
@@ -117,13 +123,11 @@ class GovernanceHandler:
 
             proposals = self.get_new_proposals()
 
-            # Load the existing JSON file to get previously selected proposals
-            json_file_path = "../config/snapshot_proposals.json"
 
             try:
                 # Load existing data or initialize an empty structure
-                if os.path.exists(json_file_path) and os.path.getsize(json_file_path) > 0:
-                    with open(json_file_path, "r") as file:
+                if os.path.exists(self.json_file_path) and os.path.getsize(self.json_file_path) > 0:
+                    with open(self.json_file_path, "r") as file:
                         data = json.load(file)
                 else:
                     # If the file is missing or empty, initialize the structure
@@ -176,7 +180,7 @@ class GovernanceHandler:
                         data[stage].append(proposal_id)
 
                         # Write the updated data back to the JSON file
-                        with open(json_file_path, "w") as file:
+                        with open(self.json_file_path, "w") as file:
                             json.dump(data, file, indent=4)
 
                         return selected_proposal  # Return the selected proposal
@@ -191,6 +195,9 @@ class GovernanceHandler:
             return None  # Return None if selection failed
     
     def execute_proposal(self): 
+        if not self.selected_proposal:
+            print("No proposal selected for execution.")
+            return
 
         stage = self.selected_proposal["stage"]
         if stage == 'Announcement': 
@@ -204,3 +211,4 @@ class GovernanceHandler:
 if __name__ == "__main__": 
     gov_hanlder = GovernanceHandler() 
     gov_hanlder.execute_proposal() 
+   

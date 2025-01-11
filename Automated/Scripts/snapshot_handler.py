@@ -51,13 +51,14 @@ class SnapshotHandler:
         link_to_vote = f"https://snapshot.box/#/s:{space_id}/proposal/{proposal_id}"
         twitter_handle = self.spaces_data[space_id]["twitter"]
 
-        
-        # Messages for the current proposal
+
         messages = []
 
-        # Generate first part
+        # Tweet 1
+        ################################################################
+
         part_1_prompt = (
-            f"Write a professional and concise tweet to announce a new governance proposal. This should start with 1/"
+            f"Write a professional and concise tweet to announce a new governance proposal. This must start with 1/"
             f"The tweet must highlight the proposal's title ({proposal_title}), the twitter handle ({twitter_handle}), "
             f"and display the proposal's live period in a short date range format, like 'Jan 2nd - 7th'. "
             f"Use the actual date/time from {proposal_start_time} to {proposal_end_time} for context, but do not show hours, minutes, seconds, or the year in the final tweet. "
@@ -67,24 +68,62 @@ class SnapshotHandler:
         part_1_message = self._generate_chatGPT_response(part_1_prompt)
         messages.append(part_1_message)
 
-        # Generate second part
-        part_2_prompt = (
-            f"Write a professional and concise tweet summarizing the details of the proposal. Use the following text to explain "
-            f"what the proposal is about: {proposal_text}"
-            f"Please split the following text into exactly two lines. Do **not** include any numbering or extra labels like 1/2 or 2/2. Output only the text in two lines, separated by **two** newline characters. No other characters, punctuation, or headers"
-            f"Do not include hashtags or emojis. "
-            f"The post should start with 2/."
-        )
+        # Tweet 2
+        ################################################################
+
+        part_2_prompt =f"""
+            ### **Prompt Template for Shortened Second Tweet of a Thread**
+
+            ---
+
+            ### **Required Inputs:**
+
+            - {{ proposal_title }} = {proposal_title}
+            - {{ proposal_description }} = {proposal_text}
+
+            ---
+
+            ### **Structure for the Second Tweet:**
+
+            Start with **2/** to indicate the second tweet in the thread.
+
+            1. Highlight **why the proposal matters** or **how it will be implemented**.
+            2. Emphasize **unique elements or decisions** related to the proposal.
+
+            ---
+
+            ### **Output Format:**
+
+            2/ This proposal addresses {{ key issue or challenge }}.
+            It’s expected to {{ key impact or outcome }}, supporting {{ mission or objective }}.
+            
+            ---
+
+            ### **Example Second Tweets:**
+
+            2/ This proposal strengthens Stargate’s alignment with Abstract, a zk-powered chain focused on culture-driven communities.
+
+            It’s expected to boost cross-chain liquidity and solidify Stargate’s zk ecosystem presence.
+            
+            ---
+
+            2/ The Retroactive Public Goods Funding proposal addresses the need to reward contributors for prior work.
+
+            The proposal is expected to drive future contributions by funding successful projects retroactively.
+
+            **Output should have a max of one short sentence and one long one.**
+        """
+
         part_2_message = self._generate_chatGPT_response(part_2_prompt)
         messages.append(part_2_message)
 
-        # Generate third part
-        part_3_prompt = (
-            f"Write a professional and concise tweet to provide readers a link to vote if they want to participate. Include the link to vote: {link_to_vote}. "
-            f"Do not include hashtags or emojis. "
-            f"This should start with 3/."
+        # Tweet 3
+        ################################################################
+
+        part_3_message = (
+            f"3/ Be a part of the decision-making process. Cast your vote on the latest proposal by visiting the following link: \n\n"
+            f"{link_to_vote}"
         )
-        part_3_message = self._generate_chatGPT_response(part_3_prompt)
         messages.append(part_3_message)
 
         # Append space_id and messages to the result list
