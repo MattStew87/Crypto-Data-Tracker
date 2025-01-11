@@ -38,7 +38,7 @@ def start_process_manager():
     schedule.every().day.at("18:00").do(run_updates)
 
     # Schedule tweets to run every 3 hours
-    schedule.every(1).hours.do(run_tweet)
+    schedule.every(2).hours.do(run_tweet)
 
     while True:
         schedule.run_pending()

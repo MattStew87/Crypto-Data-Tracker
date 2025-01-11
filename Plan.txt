@@ -1,7 +1,7 @@
 STEPS: 
 
 1. Add in every DAO we want to Add
-2. Push data to databse. Add something to update_registry to handle daily updates
+2. Push data to database. Add something to update_registry to handle daily updates (just call insert_proposals)
 
 3. Work on grabbing voting data from speceficed proposal (similar to snapshot_flipside_data) 
 

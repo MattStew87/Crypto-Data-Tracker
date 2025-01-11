@@ -59,7 +59,7 @@ class SnapshotHandler:
 
         part_1_prompt = (
             f"Write a professional and concise tweet to announce a new governance proposal. This must start with 1/"
-            f"The tweet must highlight the proposal's title ({proposal_title}), the twitter handle ({twitter_handle}), "
+            f"The tweet must highlight the proposal's title ({proposal_title}) In quotes, from ({twitter_handle}), "
             f"and display the proposal's live period in a short date range format, like 'Jan 2nd - 7th'. "
             f"Use the actual date/time from {proposal_start_time} to {proposal_end_time} for context, but do not show hours, minutes, seconds, or the year in the final tweet. "
             f"DO NOT include hashtags or emojis. "
@@ -112,6 +112,12 @@ class SnapshotHandler:
             The proposal is expected to drive future contributions by funding successful projects retroactively.
 
             **Output should have a max of one short sentence and one long one.**
+
+            ### **Additional Instructions**
+
+            - DO **NOT** include hashtags or emojis.
+            - DO **NOT** add any additional text besides the tweet itself. 
+            - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline character
         """
 
         part_2_message = self._generate_chatGPT_response(part_2_prompt)
