@@ -343,6 +343,14 @@
         "part3_text": "Magic Square Proposal Wrap-up",
         "twitter": "@MagicSquareio"
     },
+    "metfi.io": {
+        "base_image": "./base_green.png",
+        "space_image": "./metfi-modified.png",
+        "part1_text": "Metfi Proposal Live",
+        "part2_text": "Metfi Proposal Metrics",
+        "part3_text": "Metfi Proposal Wrap-up",
+        "twitter": "@MetFi_DAO"
+    },
     "the-arena.eth": {
         "base_image": "./base_orange.png",
         "space_image": "./the-arena-modified.png",
@@ -374,6 +382,14 @@
         "part2_text": "r/datadao Proposal Metrics",
         "part3_text": "r/datadao Proposal Wrap-up",
         "twitter": "@rdatadao"
+    },
+    "mendifinance.eth": {
+        "base_image": "./base_blue.png",
+        "space_image": "./mendifinance-modified.png",
+        "part1_text": "Mendi Proposal Live",
+        "part2_text": "Mendi Proposal Metrics",
+        "part3_text": "Mendi Proposal Wrap-up",
+        "twitter": "@MendiFinance"
     },
     "gracy.eth": {
         "base_image": "./base_purple.png",
@@ -407,6 +423,14 @@
         "part3_text": "Gyroscope Proposal Wrap-up",
         "twitter": "@GyroStable"
     },
+    "cow.eth": {
+        "base_image": "./base_pink.png",
+        "space_image": "./cow-modified.png",
+        "part1_text": "Cow Proposal Live",
+        "part2_text": "Cow Proposal Metrics",
+        "part3_text": "Cow Proposal Wrap-up",
+        "twitter": "@CoWSwap"
+    },
     "beefydao.eth": {
         "base_image": "./base_pink.png",
         "space_image": "./beefydao-modified.png",
@@ -431,6 +455,14 @@
         "part3_text": "Guru Proposal Wrap-up",
         "twitter": "@xgurunetwork"
     },
+    "mocana.eth": {
+        "base_image": "./base_pink.png",
+        "space_image": "./mocana-modified.png",
+        "part1_text": "Mocana Proposal Live",
+        "part2_text": "Mocana Proposal Metrics",
+        "part3_text": "Mocana Proposal Wrap-up",
+        "twitter": "@Moca_Network"
+    },
     "gameswiftdao.eth": {
         "base_image": "./base_black.png",
         "space_image": "./gameswiftdao-modified.png",
@@ -438,6 +470,14 @@
         "part2_text": "GameSwift Proposal Metrics",
         "part3_text": "GameSwift Proposal Wrap-up",
         "twitter": "@GameSwift_io"
+    },
+    "bioxyz.eth": {
+        "base_image": "./base_green.png",
+        "space_image": "./bioxyz-modified.png",
+        "part1_text": "Bioxyz Proposal Live",
+        "part2_text": "Bioxyz Proposal Metrics",
+        "part3_text": "Bioxyz Proposal Wrap-up",
+        "twitter": "@bioprotocol"
     },
     "dao.spaceid.eth": {
         "base_image": "./base_green.png",
@@ -454,6 +494,30 @@
         "part2_text": "Aura Proposal Metrics",
         "part3_text": "Aura Proposal Wrap-up",
         "twitter": "@AuraFinance"
+    },
+    "wayfinderfoundation.eth": {
+        "base_image": "./base_black.png",
+        "space_image": "./wayfinderfoundation-modified.png",
+        "part1_text": "Wayfinder Proposal Live",
+        "part2_text": "Wayfinder Proposal Metrics",
+        "part3_text": "Wayfinder Proposal Wrap-up",
+        "twitter": "@AIWayfinder"
+    },
+    "degen-defi.eth": {
+        "base_image": "./base_pink.png",
+        "space_image": "./degen-defi-modified.png",
+        "part1_text": "ShitcoinClub Proposal Live",
+        "part2_text": "ShitcoinClub Proposal Metrics",
+        "part3_text": "ShitcoinClub Proposal Wrap-up",
+        "twitter": "@ShitcoinClub_"
+    },
+    "madebyapesvote.eth": {
+        "base_image": "./base_black.png",
+        "space_image": "./madebyapesvote-modified.png",
+        "part1_text": "BoredApeYC Proposal Live",
+        "part2_text": "BoredApeYC Proposal Metrics",
+        "part3_text": "BoredApeYC Proposal Wrap-up",
+        "twitter": "@BoredApeYC"
     },
     "hyperlockfi.eth": {
         "base_image": "./base_yellow.png",
