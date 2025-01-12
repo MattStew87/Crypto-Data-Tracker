@@ -17,9 +17,11 @@ class UpdateRegistry:
         :param mv_registry_file: Path to the JSON file storing materialized view names.
         """
         load_dotenv()
-        self.registry_file = registry_file
-        self.mv_registry_file = mv_registry_file
-        self.registry = self.load_json(self.registry_file)  
+
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        self.registry_file = os.path.join(script_dir, registry_file)
+        self.mv_registry_file = os.path.join(script_dir, mv_registry_file)
+        self.registry = self.load_json(self.registry_file)
         self.materialized_views = self.load_json(self.mv_registry_file)  
 
     def load_json(self, file_path):
@@ -142,6 +144,5 @@ class UpdateRegistry:
 
         except Exception as e:
             print(f"Error executing updates: {e}")
-
 
 

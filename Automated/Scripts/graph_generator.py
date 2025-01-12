@@ -11,18 +11,17 @@ class GraphGenerator:
         Initialize the GraphGenerator.
         :param output_dir: Directory to save generated graph images.
         """
-
         load_dotenv() 
 
-        os.makedirs(output_dir, exist_ok=True)
-        self.output_dir = output_dir
-        self.logo_path = logo_path
-        self.calmColors = ["#2A503A", "#8BC9A3", "#3E9F73", "#3AB0AA", "#EEDC82", "#F4A261", "#F4D3D6", "#6D8AA7"]
+        script_dir = os.path.dirname(os.path.abspath(__file__))
 
-        # Set default font to Times New Roman
-        plt.rcParams['font.family'] = 'Times New Roman'
-        # Set the default background color to off-white
-        plt.rcParams['figure.facecolor'] = '#f2efe9'
+        self.output_dir = os.path.join(script_dir, output_dir)
+        self.logo_path = os.path.join(script_dir, logo_path)
+        os.makedirs(self.output_dir, exist_ok=True)
+
+        self.calmColors = ["#2A503A", "#8BC9A3", "#3E9F73", "#3AB0AA", "#EEDC82", "#F4A261", "#F4D3D6", "#6D8AA7"]
+        plt.rcParams['font.family'] = 'Times New Roman' # Set default font to Times New Roman
+        plt.rcParams['figure.facecolor'] = '#f2efe9' # Set the default background color to off-white
 
 
     def save_graph(self, fig, filename):
