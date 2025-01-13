@@ -64,6 +64,8 @@ class SnapshotHandler:
             f"Use the actual date/time from {proposal_start_time} to {proposal_end_time} for context, but do not show hours, minutes, seconds, or the year in the final tweet. "
             f"DO NOT include hashtags or emojis. "
             f"This should not call to action, just inform."
+            f"have tweet lead with proposal name after 1/"
+            f"DO NOT include this char anywhere *"
         )
         part_1_message = self._generate_chatGPT_response(part_1_prompt)
         messages.append(part_1_message)
@@ -127,7 +129,7 @@ class SnapshotHandler:
         ################################################################
 
         part_3_message = (
-            f"3/ Be a part of the decision-making process. Cast your vote on the latest proposal by visiting the following link: \n\n"
+            f"3/ To be a part of the decision-making process. Cast your vote on the latest proposal by visiting the following link: \n\n"
             f"{link_to_vote}"
         )
         messages.append(part_3_message)
@@ -142,6 +144,7 @@ class SnapshotHandler:
         # Extract proposal data
         proposal_id = proposal['proposal_id']
         proposal_title = proposal['proposal_title']
+        proposal_text = proposal['proposal_text']
         choices = proposal['choices']
         proposal_start_time = proposal['proposal_start_time']
         proposal_end_time = proposal['proposal_end_time']
@@ -164,18 +167,12 @@ class SnapshotHandler:
 
             - `proposal_title` = {proposal_title}
             - `space_twitter_id` = {twitter_handle}
-            - `1st choice votes` = {prompt_data["1st_choice_voting_power"]}
-            - `2nd choice votes` = {prompt_data["2nd_choice_voting_power"]}
-            - `1st choice name` = {prompt_data["1st_choice_name"]}
-            - `2nd choice name` = {prompt_data["2nd_choice_name"]}
-            - `leading_percent` = {prompt_data["leading_percent"]}
-            - `leading_option` = {prompt_data["1st_choice_name"]}
-
+            - `proposal_text` = {proposal_text}
             ---
 
             ### **Intro**
 
-            Start the first tweet of the thread with **`1/`**. Mention that the governance proposal with the title  **`{{ proposal_title }}`** In quotes from **`{{ space_twitter_id }}`** is halfway through, and we are going to look at the activity so far.
+            Start the first tweet of the thread with **`1/`**. Mention that the governance proposal with the title  **`{{ proposal_title }}`** In quotes from **`{{ space_twitter_id }}`** is halfway through.
 
             Ensure the tweet is under 245 characters. Do not include emojis. keep brief and informative put a pagebreak between sentences.
 
@@ -185,7 +182,9 @@ class SnapshotHandler:
 
             - DO **NOT** include hashtags or emojis.
             - DO **NOT** add any additional text besides the tweet itself. 
-            - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters    
+            - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters
+            - Have the seccond setence mension the dolar figure of the proposal or if there is non just a few word suummary of it keep it short
+             
         """
 
         part_1_message = self._generate_chatGPT_response(prompt_for_first_tweet)
@@ -211,7 +210,7 @@ class SnapshotHandler:
 
         ### **Intro**
 
-        Begin the tweet with **`2/`**. Reference the attached graph showing hourly voting activity and total votes by choice.
+        Begin the tweet with **`2/`**. 
 
         
         Mention the total number of voters and votes for each choice of top 2 using placeholders. Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Do not include emojis. keep brief and informative put a pagebreak between sentences.
@@ -220,10 +219,11 @@ class SnapshotHandler:
 
         ### **Dynamic Comments Based on Voting Activity**
 
-        Add a comment based on the most relevant dynamic from the graph. Only include one (most relevant):
+        Add a comment based on the most relevant dynamic from the graph. Only include one (most relevant) do not mension dynamic title:
 
-        - **Choice Dominance:** If one choice received significantly more votes than the other, mention this dominance.
-        - **Close Race:** If the final votes between choices are close, note the competitive nature of the proposal.
+        - **Choice Dominance** If one choice received significantly more votes than the other, mention this dominance.
+        - **Choice Winning** If one choice received more votes than the other it is not very close but also not a domination.
+        - **Close Race** If the final votes between choices are close, note the competitive nature of the proposal.
 
             ### **Additional Instructions**
 
@@ -231,6 +231,7 @@ class SnapshotHandler:
         - DO **NOT** add any additional text besides the tweet itself. 
         - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
         - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.)
+        - Every time a voting choice is talked about surround it with " on both sides
 
         """
 
@@ -249,7 +250,6 @@ class SnapshotHandler:
 
             - `{{ total_voters }}` = {prompt_data["total_voters"]}
             - `{{ top_10_percent_voting_power_wallets }}` = {prompt_data["top_10%_voting_power_wallets"] }
-            - `{{ top_25_percent_voting_power_wallets }}` = {prompt_data["top_25%_voting_power_wallets"] }
             - `{{ top_50_percent_voting_power_wallets }}`= {prompt_data["top_50%_voting_power_wallets"] }
             - `{{ space_twitter_id }}` = {twitter_handle}
 
@@ -257,9 +257,9 @@ class SnapshotHandler:
 
             ### **Intro**
 
-            Begin the tweet with **`3/`**. Highlight the key insights about how voting power is distributed among participants in the proposal.
+            Begin the tweet with **`3/`**. 
 
-            Mention relevant data points using placeholders. Choose to emphasize concentration at the top, mid-tier wallet influence, or balanced distribution, depending on the data.
+            Mention relevant data points about how voting power is distributed among participants using placeholders. 
             Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Keep brief and informative put a pagebreak between sentences.
 
             ---
@@ -268,7 +268,7 @@ class SnapshotHandler:
 
             Add a comment based on the most relevant dynamic from the voting power breakdown. Only include one (most relevant):
 
-            - Extreme Concentration Among a Handful: If only a small number of wallets (e.g., <10) make up the top 50% of voting power, note the concentration of power among a select few.
+            - Extreme Concentration Among a Handful: If only a under 10 wallets or below 0.1% make up the top 50% of voting power, note the concentration of power among a select few.
             Example: "The top 50% of voting power is controlled by just 8 wallets, highlighting a significant concentration of influence."
             
             - Distributed Power Among Many Wallets: If the top 50% of voting power is shared among a large number of wallets (e.g., >50 wallets), emphasize that power is more evenly distributed.
@@ -409,9 +409,7 @@ class SnapshotHandler:
             - `{{ proposal_title }}` = {proposal_title}
             - `{{ space_twitter_id }}` = {twitter_handle}
             - `{{ 1st choice votes }}` = {prompt_data["1st_choice_voting_power"]}
-            - `{{ 2nd choice votes }}` = {prompt_data["2nd_choice_voting_power"]}
             - `{{ 1st choice name }}` = {prompt_data["1st_choice_name"]}
-            - `{{ 2nd choice name }}` = {prompt_data["2nd_choice_name"]}
             - `{{ winning_option }}` = {prompt_data["1st_choice_name"]}
             - `{{ winning_percent }}` = {prompt_data["leading_percent"]}
 
@@ -429,6 +427,8 @@ class SnapshotHandler:
             - DO **NOT** include hashtags or emojis.
             - DO **NOT** add any additional text besides the tweet itself. 
             - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters
+            - DO NOT include this char anywhere *
+            - have tweet lead with proposal name after 1/
 
             """
 
@@ -456,25 +456,34 @@ class SnapshotHandler:
 
             ### **Intro**
 
-            Begin the tweet with **`2/`**. Reference the attached graph showing the final voting activity breakdown and total votes by choice.
+            Begin the tweet with **`2/`**. 
 
             Mention the total number of voters and votes for each choice of top 2 using placeholders. Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Do not include emojis. keep breif and infomative put a pagebreak between sentences.
 
             ---
 
-            ### **Dynamic Comments Based on Voting Activity**
+             Begin the tweet with **`2/`**. 
 
-            Add a comment based on the most relevant dynamic from the graph. Only include one (most relevant):
+        
+        Mention the total number of voters and votes for each choice of top 2 using placeholders. Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Do not include emojis. keep brief and informative put a pagebreak between sentences.
 
-            - **Choice Dominance:** If one choice received significantly more votes than the other, mention this dominance.
-            - **Close Race:** If the final votes between choices are close, note the competitive nature of the proposal.
+        ---
+
+        ### **Dynamic Comments Based on Voting Activity**
+
+        Add a comment based on the most relevant dynamic from the graph. Only include one (most relevant) do not mension dynamic title:
+
+        - **Choice Dominance** If one choice received significantly more votes than the other, mention this dominance.
+        - **Choice Winning** If one choice received more votes than the other it is not very close but also not a domination.
+        - **Close Race** If the final votes between choices are close, note the competitive nature of the proposal.
 
             ### **Additional Instructions**
 
-            - DO **NOT** include hashtags or emojis.
-            - DO **NOT** add any additional text besides the tweet itself. 
-            - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters
-            - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.)
+        - DO **NOT** include hashtags or emojis.
+        - DO **NOT** add any additional text besides the tweet itself. 
+        - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
+        - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.)
+        - Every time a voting choice is talked about surround it with " on both sides
         """
 
         part_2_message = self._generate_chatGPT_response(prompt_for_second_tweet)
@@ -485,25 +494,23 @@ class SnapshotHandler:
 
         prompt_for_third_tweet = f"""
             **Prompt Template for Third Tweet of a Thread (Final Voting Power Distribution)**
-
             ---
 
             ### **Required Inputs:**
 
             - `{{ total_voters }}` = {prompt_data["total_voters"]}
             - `{{ top_10_percent_voting_power_wallets }}` = {prompt_data["top_10%_voting_power_wallets"] }
-            - `{{ top_25_percent_voting_power_wallets }}` = {prompt_data["top_25%_voting_power_wallets"] }
             - `{{ top_50_percent_voting_power_wallets }}`= {prompt_data["top_50%_voting_power_wallets"] }
-        
             - `{{ space_twitter_id }}` = {twitter_handle}
+
             ---
 
             ### **Intro**
 
-            Begin the tweet with **`3/`**. Highlight the key insights about how voting power was distributed among participants in the concluded proposal.
+            Begin the tweet with **`3/`**. 
 
-            Mention relevant data points using placeholders. Choose to emphasize concentration at the top, mid-tier wallet influence, or balanced distribution, depending on the data. 
-            Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Keep brief and infomative put a pagebreak between sentences.
+            Mention relevant data points about how voting power is distributed among participants using placeholders. 
+            Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Keep brief and informative put a pagebreak between sentences.
 
             ---
 
@@ -511,24 +518,24 @@ class SnapshotHandler:
 
             Add a comment based on the most relevant dynamic from the voting power breakdown. Only include one (most relevant):
 
-            -Extreme Concentration Among a Handful: If only a small number of wallets (e.g., <10) make up the top 50% of voting power, note the concentration of power among a select few.
-
+            - Extreme Concentration Among a Handful: If only a under 10 wallets or below 0.1% make up the top 50% of voting power, note the concentration of power among a select few.
             Example: "The top 50% of voting power is controlled by just 8 wallets, highlighting a significant concentration of influence."
-            Distributed Power Among Many Wallets: If the top 50% of voting power is shared among a large number of wallets (e.g., >50 wallets), emphasize that power is more evenly distributed.
-
+            
+            - Distributed Power Among Many Wallets: If the top 50% of voting power is shared among a large number of wallets (e.g., >50 wallets), emphasize that power is more evenly distributed.
             Example: "Voting power is distributed, with the top 50% shared across 120 wallets, showing balanced governance participation."
-            Single Wallet Dominance: If a single wallet accounts for the top 25% or 50% of voting power, highlight this extreme dominance.
-
+            
+            - Single Wallet Dominance: If a single wallet accounts for the top 25% or 50% of voting power, highlight this extreme dominance.
             Example: "One wallet alone controls 50% of the voting power, signaling an unusual concentration of influence."
-            Balanced Mid-Tier Influence: If the top 25%-50% includes a moderate to large number of wallets (e.g., 25-70 wallets), note their significant collective impact.
-
+            
+            - Balanced Mid-Tier Influence: If the top 25%-50% includes a moderate to large number of wallets (e.g., 25-70 wallets), note their significant collective impact.
             Example: "The top 25%-50% of voting power is distributed among 60 wallets, showcasing strong mid-tier influence in governance
+            
             ### **Additional Instructions**
 
             - DO **NOT** include hashtags or emojis.
             - DO **NOT** add any additional text besides the tweet itself. 
-            - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters
-            - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.) 
+            - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
+            - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.)
         """
 
         part_3_message = self._generate_chatGPT_response(prompt_for_third_tweet)

@@ -86,7 +86,7 @@ class GovernanceHandler:
                                 'gnosis.eth'
                             ) 
                             ORDER BY created_at DESC
-                            LIMIT 10
+                            LIMIT 12
                         """
                         cursor.execute(sql_query)
                         raw_data = cursor.fetchall()
@@ -201,14 +201,24 @@ class GovernanceHandler:
 
         stage = self.selected_proposal["stage"]
         if stage == 'Announcement': 
+            return self.snapshot_handler.proposal_announcement_messages(self.selected_proposal)
+        elif stage == 'Halftime':
+            return self.snapshot_handler.proposal_halftime_messages(self.selected_proposal)
+        elif stage == 'Final':
+            return self.snapshot_handler.proposal_final_messages(self.selected_proposal) 
+
+        '''
+        if stage == 'Announcement': 
             self.snapshot_handler.create_proposal_announcement(self.selected_proposal)
         elif stage == 'Halftime':
             self.snapshot_handler.create_proposal_halftime(self.selected_proposal)
         elif stage == 'Final':
             self.snapshot_handler.create_proposal_final(self.selected_proposal)  
+        '''
 
 
 if __name__ == "__main__": 
     gov_hanlder = GovernanceHandler() 
-    gov_hanlder.execute_proposal() 
+    result = gov_hanlder.execute_proposal() 
+    print(result) 
    
