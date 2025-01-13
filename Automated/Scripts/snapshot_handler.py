@@ -774,20 +774,6 @@ class SnapshotHandler:
         base_image.save(output_image_path)
         return output_image_path
 
-if __name__ == "__main__": 
-    governance_data = SnapshotHandler() 
-
-    result = governance_data.select_best_proposal()
-  
-
-    #result = governance_data.proposal_final_messages() 
-    
-    #governance_data.create_proposal_announcement()
-     
-    #path = governance_data.generate_space_image("arbitrumfoundation.eth", 1)
-    #print(path) 
-
-    #announcement_messages = governance_data.proposal_announcement_messages()
-    #print(announcement_messages)
 
 
+#if __name__ == "__main__": 

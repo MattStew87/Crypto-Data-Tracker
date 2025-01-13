@@ -1,22 +1,17 @@
 STEPS: 
 
-0. move workflow over to TeamViewer 
+1. Add something to update_registry to handle daily updates (just call insert_proposals)
+2. Finish adding in Final graph, add in something to grab all needed data.  
+3. Add in message handler and tweet handler (basically same as snapshot_handler but for tally)  
 
-1. Push data to database. Add something to update_registry to handle daily updates (just call insert_proposals)
-2. Work on grabbing voting data from speceficed proposal (similar to snapshot_flipside_data) 
-
-
-Tally: 
-- We may need to store governor_id, as well as the decimil 
+4. move workflow over to TeamViewer 
 
 
 
 THINGS TO THINK ABOUT: 
 - Move away from json files start storing stuff in the db
-
-
-
-
+- for the snap_proposal.json it could just be a database with stage and proposal id and we could store
+  both snapshot and tally data there. 
 
 
 --------------------------------------------------------------------------------------------------
@@ -68,150 +63,3 @@ ORDER BY created_at DESC
 
 --------------------------------------------------------------------------------------------------
 
-
-CODE [Proposals, Tally]
-
-
-import requests
-import os
-from dotenv import load_dotenv
-from datetime import datetime, timedelta
-
-def fetch_proposals(api_key, governor_id):
-    url = "https://api.tally.xyz/query"
-
-    # GraphQL query to fetch proposals with BlocklessTimestamp only
-    query = """
-    query ($input: ProposalsInput!) {
-        proposals(input: $input) {
-            nodes {
-                ... on Proposal {
-                    id
-                    metadata {
-                        title
-                    }
-                    status
-                    start {
-                        ... on Block {
-                            timestamp
-                        }
-                    }
-                    end {
-                        ... on Block {
-                            timestamp
-                        }
-                    }
-                    voteStats {
-                        type
-                        votesCount
-                        votersCount
-                        percent
-                    }
-                }
-            }
-            pageInfo {
-                firstCursor
-                lastCursor
-                count
-            }
-        }
-    }
-    """
-    
-    headers = {"Api-Key": api_key}
-    after_cursor = None
-    proposals = []
-
-    while True:
-        variables = {
-            "input": {
-                "filters": {
-                    "governorId": f"eip155:1:{governor_id}"  # Filter by governor ID
-                },
-                "page": {
-                    "limit": 10,  # Maximum items per page
-                    "afterCursor": after_cursor  # Pagination cursor
-                },
-                "sort": {
-                    "isDescending": True,
-                    "sortBy": "id"  # Sort by proposal ID
-                }
-            }
-        }
-
-        try:
-            response = requests.post(url, json={"query": query, "variables": variables}, headers=headers)
-            if response.status_code == 200:
-                data = response.json()
-                page = data.get("data", {}).get("proposals", {})
-                nodes = page.get("nodes", [])
-                proposals.extend(nodes)
-
-                # Handle pagination
-                after_cursor = page.get("pageInfo", {}).get("lastCursor")
-                if not after_cursor:
-                    break  # Exit loop if no more pages
-            else:
-                print(f"Query failed with status {response.status_code}: {response.text}")
-                break
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            break
-
-    return proposals
-
-
-def calculate_time_stage(start_time, end_time):
-    """
-    Determines the stage of a proposal (Announcement, Halftime, Final)
-    based on its start and end times relative to the current time.
-    """
-    now = datetime.utcnow()
-    one_day_ago = now - timedelta(days=1)
-    one_day_later = now + timedelta(days=1)
-
-    # Convert RFC3339 timestamp to datetime
-    start_dt = datetime.fromisoformat(start_time.replace("Z", "+00:00"))
-    end_dt = datetime.fromisoformat(end_time.replace("Z", "+00:00"))
-    halftime_dt = start_dt + (end_dt - start_dt) / 2
-
-    if start_dt >= one_day_ago and start_dt <= now:
-        return "Announcement"
-    elif halftime_dt >= one_day_ago and halftime_dt <= now:
-        return "Halftime"
-    elif end_dt >= now and end_dt <= one_day_later:
-        return "Final"
-    else:
-        return None
-
-# Load API key from .env file
-load_dotenv()
-api_key = os.getenv("TALLY_API_KEY")
-
-# Fetch proposals for the specified governor ID
-governor_id = "0x408ED6354d4973f66138C91495F2f2FCbd8724C3"
-proposals = fetch_proposals(api_key, governor_id)
-
-# Print proposals if found
-if proposals:
-    for proposal in proposals:
-        start_time = proposal['start']['timestamp'] 
-        end_time = proposal['end']['timestamp'] 
-        if start_time and end_time:  # Ensure timestamps are available
-            #stage = calculate_time_stage(start_time, end_time)
-
-            #if stage:  # Only print if the proposal is in the specified stages
-            #print(f"Stage: {stage}")
-            print(f"ID: {proposal['id']}")
-            print(f"Title: {proposal['metadata']}")
-            print(f"Start: {start_time}")
-            print(f"End: {end_time}")
-            print("Vote Stats:")
-            for vote in proposal.get('voteStats', []):
-                print(f"  Type: {vote['type']}")
-                print(f"  Votes Count: {vote['votesCount']}")
-                print(f"  Voters Count: {vote['votersCount']}")
-                print(f"  Percent: {vote['percent']}%")
-            print("-" * 50)
-else:
-    print("No active proposals found.")

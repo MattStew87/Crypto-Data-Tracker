@@ -130,7 +130,7 @@ class TallyData:
         voter_file_path = self.graph_generator.create_grouped_line_graph(daily_votes_by_count, 'Date', 'Total Voters', 'Daily Total Voters by Choice', 'tally_daily_total_voters_by_choice')
         voting_power_file_path = self.graph_generator.create_grouped_line_graph(daily_votes_by_amount, 'Date', 'Total Voting Power', 'Daily Total Voting Power by Choice', 'tally_daily_total_voting_power_by_choice')
 
-        return voter_file_path, voting_power_file_path
+        return [voter_file_path, voting_power_file_path]
     
 
 
@@ -240,19 +240,336 @@ class TallyData:
         voter_file_path = self.graph_generator.create_bar_chart(wallets_list, "Voting Power Group", "Wallets", 'Voters by Wallet Voting Power Group', 'tally_voters_by_wallet_voting_power_group')
         voting_power_file_path = self.graph_generator.create_bar_chart(voting_power_list, "Voting Power Group", "Voting Power", 'Voting Power by Wallet Voting Power Group', 'tally_voting_power_by_wallet_voting_power_group')
 
-        return voter_file_path, voting_power_file_path
+        return [voter_file_path, voting_power_file_path]
 
 
+    def tally_space_proposals_by_voting_power(self, proposal_id, decimals, governor_id):
+        url = "https://api.tally.xyz/query"
 
+        # GraphQL query to fetch proposals
+        query = """
+        query ($input: ProposalsInput!) {
+            proposals(input: $input) {
+                nodes {
+                    ... on Proposal {
+                        id
+                        block {
+                            timestamp
+                        }
+                        start {
+                            ... on Block {
+                                timestamp
+                            }
+                        }
+                        voteStats {
+                            type
+                            votesCount
+                            votersCount
+                            percent
+                        }
+                    }
+                }
+                pageInfo {
+                    lastCursor 
+                }
+            }
+        }
+        """
+
+        headers = {"Api-Key": self.tally_api_key}
+        after_cursor = None
+        proposal_tuples_by_voting_power = []
+        proposal_tuples_by_voters = []
+
+        while True:
+            time.sleep(1)
+            variables = {
+                "input": {
+                    "filters": {
+                        "governorId": f"{governor_id}"  # Filter by governor ID
+                    },
+                    "page": {
+                        "limit": 100,  # Maximum items per page
+                        "afterCursor": after_cursor  # Pagination cursor
+                    },
+                    "sort": {
+                        "isDescending": True,
+                        "sortBy": "id"  # Sort by proposal ID
+                    }
+                }
+            }
+
+            try:
+                response = requests.post(url, json={"query": query, "variables": variables}, headers=headers)
+                if response.status_code == 200:
+                    data = response.json()
+                    page = data.get("data", {}).get("proposals", {})
+                    nodes = page.get("nodes", [])
+
+                    # Process each proposal
+                    for proposal in nodes:
+                        # Extract relevant data
+                        prop_id = proposal.get("id")
+                        block = proposal.get("block", {}).get("timestamp")
+                        start_time = proposal.get("start", {}).get("timestamp", block) 
+
+                        # Default to block timestamp if start time is missing
+                        start_time = datetime.fromisoformat(start_time).date()
+
+                        # Process voteStats
+                        vote_stats = proposal.get("voteStats", [])
+                        total_voting_power = sum(int(vote.get("votesCount", 0)) / (10**decimals) for vote in vote_stats if vote["type"] in ["for", "against", "abstain"])
+                        total_voters_count = sum(int(vote.get("votersCount", 0)) for vote in vote_stats if vote["type"] in ["for", "against", "abstain"])
+
+                        # Determine proposal type
+                        proposal_type = "Selected Proposal" if prop_id == proposal_id else "Other Proposal"
+
+                        # Add to tuples
+                        proposal_tuples_by_voting_power.append((start_time, proposal_type, total_voting_power))
+                        proposal_tuples_by_voters.append((start_time, proposal_type, total_voters_count))
+
+                    # Handle pagination
+                    after_cursor = page.get("pageInfo", {}).get("lastCursor")
+                    if not after_cursor:
+                        break  # Exit loop if no more pages
+                else:
+                    print(f"Query failed with status {response.status_code}: {response.text}")
+                    break
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                break
+
+        voter_file_path = self.graph_generator.create_grouped_scatter_graph(proposal_tuples_by_voters, "Start Time", "Total Voters", 'Space Proposals by Voters', 'tally_space_proposals_by_voters')
+        voting_power_file_path = self.graph_generator.create_grouped_scatter_graph(proposal_tuples_by_voting_power, "Start Time", "Total Voting Power", 'Space Proposals by Voting Power', 'tally_space_proposals_by_voting_power')
+
+        return [voter_file_path, voting_power_file_path]
+    
+    
+    def get_top_voters_info(self, proposal_id, decimals):
+        """
+        Calculate the number of wallets needed to make up the top 10% and 50% of total voting power.
+        :param proposal_id: ID of the proposal.
+        :param decimals: Number of decimals for normalization.
+        :return: A dictionary with top 10% and 50% wallet counts.
+        """
+        url = "https://api.tally.xyz/query"
+        query = """
+        query ($input: VotesInput!) {
+            votes(input: $input) {
+                nodes {
+                    ... on Vote {
+                        amount
+                    }
+                }
+                pageInfo {
+                    lastCursor
+                }
+            }
+        }
+        """
+        headers = {"Api-Key": self.tally_api_key}
+        after_cursor = None
+
+        wallet_voting_powers = []
+
+        while True:
+            time.sleep(1)
+            variables = {
+                "input": {
+                    "filters": {
+                        "proposalId": proposal_id,
+                        "includePendingVotes": False
+                    },
+                    "page": {
+                        "limit": 200,
+                        "afterCursor": after_cursor
+                    }
+                }
+            }
+
+            try:
+                response = requests.post(url, json={"query": query, "variables": variables}, headers=headers)
+                if response.status_code == 200:
+                    data = response.json()
+                    page = data.get("data", {}).get("votes", {})
+                    nodes = page.get("nodes", [])
+                    if not nodes:
+                        break
+
+                    for vote in nodes:
+                        amount = int(vote.get("amount", 0)) / (10 ** decimals)
+                        wallet_voting_powers.append(amount)
+
+                    # Handle pagination
+                    after_cursor = page.get("pageInfo", {}).get("lastCursor")
+                    if not after_cursor:
+                        break
+                else:
+                    print(f"Query failed with status {response.status_code}: {response.text}")
+                    break
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                break
+
+        # Sort voting powers in descending order
+        wallet_voting_powers.sort(reverse=True)
+
+        total_power = sum(wallet_voting_powers)
+
+        def calculate_top_percent(percent):
+            threshold = percent * total_power
+            cumulative = 0
+            for i, power in enumerate(wallet_voting_powers, start=1):
+                cumulative += power
+                if cumulative >= threshold:
+                    return i
+            return len(wallet_voting_powers)
+
+        return {
+            "top_10_percent_voting_power_wallets": calculate_top_percent(0.1),
+            "top_50_percent_voting_power_wallets": calculate_top_percent(0.5)
+        }
 
     
-    def tally_space_proposals_by_voting_power(self, proposal_id, decimals, governor_id): 
-        print("chciken")
+
+    def prompt_data(self, proposal_id, decimals, governor_id):
+        url = "https://api.tally.xyz/query"
+
+        # GraphQL query to fetch proposals
+        query = """
+        query ($input: ProposalsInput!) {
+            proposals(input: $input) {
+                nodes {
+                    ... on Proposal {
+                        id    
+                        voteStats {
+                            type
+                            votesCount
+                            votersCount
+                            percent
+                        }
+                    }
+                }
+                pageInfo {
+                    lastCursor
+                }
+                
+            }
+        }
+        """
+
+        headers = {"Api-Key": self.tally_api_key}
+        after_cursor = None
+
+        # Variables for rank calculation
+        proposals_voting_power = []
+        proposals_voter_turnout = []
+
+        # Final data for the specific proposal
+        proposal_data = {}
+
+        while True:
+            time.sleep(1)
+            variables = {
+                "input": {
+                    "filters": {
+                        "governorId": f"{governor_id}"  # Filter by governor ID
+                    },
+                    "page": {
+                        "limit": 100,  # Maximum items per page
+                        "afterCursor": after_cursor  # Pagination cursor
+                    },
+                    "sort": {
+                        "isDescending": True,
+                        "sortBy": "id"  # Sort by proposal ID
+                    }
+                }
+            }
+
+            try:
+                response = requests.post(url, json={"query": query, "variables": variables}, headers=headers)
+                if response.status_code == 200:
+                    data = response.json()
+                    page = data.get("data", {}).get("proposals", {})
+                    nodes = page.get("nodes", [])
+
+                    for proposal in nodes:
+                        prop_id = proposal.get("id")
+                        vote_stats = proposal.get("voteStats", [])
+                        total_voting_power = sum(
+                            int(vote.get("votesCount", 0)) / (10 ** decimals)
+                            for vote in vote_stats
+                            if vote["type"] in ["for", "against", "abstain"]
+                        )
+                        total_voters_count = sum(
+                            int(vote.get("votersCount", 0))
+                            for vote in vote_stats
+                            if vote["type"] in ["for", "against", "abstain"]
+                        )
+
+                        proposals_voting_power.append((prop_id, total_voting_power))
+                        proposals_voter_turnout.append((prop_id, total_voters_count))
+
+                        if prop_id == proposal_id:
+                            # Identify the top choices and their stats
+                            valid_votes = [vote for vote in vote_stats if vote["type"] in ["for", "against", "abstain"]]
+                            sorted_votes = sorted(valid_votes, key=lambda x: int(x.get("votesCount", 0)), reverse=True)
+
+                            if sorted_votes:
+                                winning_option = sorted_votes[0]
+                                second_choice = sorted_votes[1] if len(sorted_votes) > 1 else None
+
+                                proposal_data = {
+                                    "1st_choice_votes": int(winning_option.get("votesCount", 0)) / (10 ** decimals),
+                                    "1st_choice_name": winning_option["type"],
+                                    "winning_option": winning_option["type"],
+                                    "winning_percent": winning_option.get("percent", 0),
+                                    "total_voters": total_voters_count,
+                                    "choice_2_name": second_choice["type"] if second_choice else None,
+                                    "choice_2_votes": int(second_choice.get("votesCount", 0)) / (10 ** decimals) if second_choice else None
+                                }
+
+                                # Call the helper method to add top voter metrics
+                                top_voters_info = self.get_top_voters_info(proposal_id, decimals)
+                                proposal_data.update(top_voters_info)
+
+                    # Handle pagination
+                    after_cursor = page.get("pageInfo", {}).get("lastCursor")
+                    if not after_cursor:
+                        break
+                else:
+                    print(f"Query failed with status {response.status_code}: {response.text}")
+                    break
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                break
+
+        # Calculate rank and percentile
+        proposals_voting_power.sort(key=lambda x: x[1], reverse=True)
+        proposals_voter_turnout.sort(key=lambda x: x[1], reverse=True)
+
+        voting_power_rank = next((i + 1 for i, (pid, _) in enumerate(proposals_voting_power) if pid == proposal_id), None)
+        voter_turnout_rank = next((i + 1 for i, (pid, _) in enumerate(proposals_voter_turnout) if pid == proposal_id), None)
+
+        if voting_power_rank is not None:
+            proposal_data["voting_power_rank"] = voting_power_rank
+            proposal_data["voting_power_percentile"] = 100 - (voting_power_rank - 1) / len(proposals_voting_power) * 100
+
+        if voter_turnout_rank is not None:
+            proposal_data["voter_turnout_rank"] = voter_turnout_rank
+            proposal_data["voter_turnout_percentile"] = 100 - (voter_turnout_rank - 1) / len(proposals_voter_turnout) * 100
+
+        return proposal_data
+
+
+
+
 
     
 
 if __name__ == "__main__": 
     tally_data_client = TallyData() 
-    votes_count, votes_amount = tally_data_client.tally_voting_power_by_wallet(2499208639684806584, 18)
-    print(f"Voting power: {votes_amount}")
-    print(f"Voters: {votes_count}")
+    result = tally_data_client.prompt_data('2499208639684806584', 18, 'eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9')
+    print(f"Result: {result}")
+
+

@@ -21,10 +21,10 @@ class TallyProposalFetcher:
             "port": "5432"
         }
 
-        #self.space_keys = [{'space': 'Unlock Dao', 'governor_id': 'eip155:8453:0x65bA0624403Fc5Ca2b20479e9F626eD4D78E0aD9'}]
-
+        #self.space_keys = [{'space': 'Arbitrum', 'governor_id': 'eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9'}]
+        
         self.space_keys = [
-            {'space': 'Uniswap', 'governor_id': 'eip155:1:0x408ED6354d4973f66138C91495F2f2FCbd8724C3'}, {'space': 'Arbitrum', 'governor_id': 'eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9'}, {'space': 'Compound', 'governor_id': 'eip155:1:0xc0Da02939E1441F497fd74F78cE7Decb17B66529'},
+            {'space': 'Uniswap', 'governor_id': 'eip155:1:0x408ED6354d4973f66138C91495F2f2FCbd8724C3'}, {'space': 'Arbitrum Core', 'governor_id': 'eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9'}, {'space': 'Compound', 'governor_id': 'eip155:1:0xc0Da02939E1441F497fd74F78cE7Decb17B66529'},
             {'space': 'Dope Wars', 'governor_id': 'eip155:1:0xDBd38F7e739709fe5bFaE6cc8eF67C3820830E0C'}, {'space': 'Lil Nouns', 'governor_id': 'eip155:1:0x5d2C31ce16924C2a71D317e5BbFd5ce387854039'}, {'space': 'Nouns Dao', 'governor_id': 'eip155:1:0x6f3E6272A167e8AcCb32072d08E0957F9c79223d'},
             {'space': 'PoolTogether', 'governor_id': 'eip155:1:0x8a907De47E00830a2b742db65e938a3ea1070A2E'}, {'space': 'Rari Dao', 'governor_id': 'eip155:1:0x6552C8fb228f7776Fc0e4056AA217c139D4baDa1'}, {'space': 'Unlock Dao', 'governor_id': 'eip155:8453:0x65bA0624403Fc5Ca2b20479e9F626eD4D78E0aD9'},
             {'space': 'InstaDapp', 'governor_id': 'eip155:1:0x0204Cd037B2ec03605CFdFe482D8e257C765fA1B'}, {'space': 'Idle Dao', 'governor_id': 'eip155:1:0x3D5Fc645320be0A085A32885F078F7121e5E5375'}, {'space': 'Cryptex', 'governor_id': 'eip155:1:0x874C5D592AfC6803c3DD60d6442357879F196d5b'},
@@ -43,7 +43,7 @@ class TallyProposalFetcher:
             {'space': 'Hifi Dao', 'governor_id': 'eip155:1:0xef0A0421Ea43b602E5Be35e9018Dd3E34Bcee007'}, {'space': 'Increment', 'governor_id': 'eip155:1:0x134E7ABaF7E8c440f634aE9f5532A4df53c19385'}, {'space': 'DIMO', 'governor_id': 'eip155:137:0xD203e37D96cC0b9b7Dc00fC3fDfcf1b1A2E8c547'},
             {'space': 'Sudoswap', 'governor_id': 'eip155:1:0x6853f8865BA8e9FBd9C8CCE3155ce5023fB7EEB0'}, {'space': 'Public Nouns', 'governor_id': 'eip155:1:0x2BbEbFECA0fEbde8C70EF8501C991f3AB2095862'}, {'space': 'Internet Token', 'governor_id': 'eip155:8453:0xc5C3a1882Eff9539527D88E2453cAB10d9bc1581'},
             {'space': 'Gloom Governor', 'governor_id': 'eip155:8453:0xFc8c580f1AfAaC016cBb45c1ced7F73F7DBa1FEc'}, {'space': 'Lucidao', 'governor_id': 'eip155:137:0xac1fdCA2Be645E3e06c7832613a78C72135DA945'}, {'space': 'Radworks', 'governor_id': 'eip155:1:0x690e775361AD66D1c4A25d89da9fCd639F5198eD'},
-            {'space': 'Blur', 'governor_id': 'eip155:1:0xF7967b43949Fb0Cec48e63e345512d5Ea5845810'}
+            {'space': 'Blur', 'governor_id': 'eip155:1:0xF7967b43949Fb0Cec48e63e345512d5Ea5845810'}, {'space': 'Arbitrum Treasury', 'governor_id': 'eip155:42161:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4'}
         ]
     
 
@@ -222,4 +222,5 @@ class TallyProposalFetcher:
 
 if __name__ == "__main__": 
     tally_client = TallyProposalFetcher()
-    result = tally_client.insert_proposals()
+    result = tally_client.fetch_proposals()
+    print(result) 
