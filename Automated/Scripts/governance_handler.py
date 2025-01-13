@@ -85,7 +85,7 @@ class GovernanceHandler:
                                 'somonowo.eth', 'gearbox.eth', 'eventhorizongitcoin.eth', 'airdaofoundation.eth', 'jadeprotocol.eth',
                                 'gnosis.eth'
                             ) 
-                            ORDER BY created_at DESC 
+                            ORDER BY created_at DESC
                             LIMIT 10
                         """
                         cursor.execute(sql_query)

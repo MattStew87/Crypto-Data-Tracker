@@ -48,7 +48,7 @@
         "twitter": "@LidoFinance"
     },
     "cvx.eth": {
-        "base_image": "./base.png",
+        "base_image": "./base_black.png",
         "space_image": "./cvx-modified.png",
         "part1_text": "Convex Proposal Live",
         "part2_text": "Convex Proposal Metrics",
@@ -200,7 +200,7 @@
         "twitter": "@developer_dao"
     },
     "abracadabrabymerlinthemagician.eth": {
-        "base_image": "./base.png",
+        "base_image": "./base_purple.png",
         "space_image": "./abracadabrabymerlinthemagician-modified.png",
         "part1_text": "Abracadabra Proposal Live",
         "part2_text": "Abracadabra Proposal Metrics",
@@ -216,7 +216,7 @@
         "twitter": "@MorphoLabs"
     },
     "symbiosisdao.eth": {
-        "base_image": "./base.png",
+        "base_image": "./base_green.png",
         "space_image": "symbiosisdao-modified.png",
         "part1_text": "Symbiosis Proposal Live",
         "part2_text": "Symbiosis Proposal Metrics",

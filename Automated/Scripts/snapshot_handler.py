@@ -59,7 +59,7 @@ class SnapshotHandler:
 
         part_1_prompt = (
             f"Write a professional and concise tweet to announce a new governance proposal. This must start with 1/"
-            f"The tweet must highlight the proposal's title ({proposal_title}) In quotes, from ({twitter_handle}), "
+            f"The tweet must highlight the proposal's title ({proposal_title}) In quotes, from {twitter_handle}, "
             f"and display the proposal's live period in a short date range format, like 'Jan 2nd - 7th'. "
             f"Use the actual date/time from {proposal_start_time} to {proposal_end_time} for context, but do not show hours, minutes, seconds, or the year in the final tweet. "
             f"DO NOT include hashtags or emojis. "
@@ -687,7 +687,7 @@ class SnapshotHandler:
         try:
             response = self.client.chat.completions.create(
                 model="gpt-4o",
-                messages=[ {"role": "system", "content": "Keep Tweet brief under 240 char and informative put **TWO NEWLINES CHARATERS** between sentences. If any numbers are mentioned in the thousands, millions, billions, or trillions mention them shorthand with two decimals (eg. 1.85B)."},
+                messages=[ {"role": "system", "content": "Keep Tweet brief under 240 char and informative put **TWO NEWLINES CHARACTERS** between sentences. If any numbers are mentioned in the thousands, millions, billions, or trillions mention them shorthand with two decimals (eg. 1.85B). Also do not Include Emoji's"},
                     {"role": "user", "content": prompt}
                 ],
                 max_tokens=75

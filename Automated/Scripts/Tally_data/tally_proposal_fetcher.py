@@ -45,6 +45,7 @@ class TallyProposalFetcher:
             {'space': 'Gloom Governor', 'governor_id': 'eip155:8453:0xFc8c580f1AfAaC016cBb45c1ced7F73F7DBa1FEc'}, {'space': 'Lucidao', 'governor_id': 'eip155:137:0xac1fdCA2Be645E3e06c7832613a78C72135DA945'}, {'space': 'Radworks', 'governor_id': 'eip155:1:0x690e775361AD66D1c4A25d89da9fCd639F5198eD'},
             {'space': 'Blur', 'governor_id': 'eip155:1:0xF7967b43949Fb0Cec48e63e345512d5Ea5845810'}
         ]
+    
 
 
     def fetch_proposals(self):
@@ -82,6 +83,14 @@ class TallyProposalFetcher:
                                 ... on Block {
                                     timestamp
                                 }
+                            }
+                            governor {
+                                id
+                                 token {
+                                    ... on Token {
+                                        decimals
+                                    }
+                                } 
                             }
                             voteStats {
                                 type
@@ -169,6 +178,9 @@ class TallyProposalFetcher:
                                     start_time = proposal.get('start', {}).get('timestamp', block)
                                     end_time = proposal.get('end', {}).get('timestamp',  "1970-01-01T00:00:00Z") 
                                     vote_stats = proposal.get('voteStats', [])
+                                    governor_id = proposal.get('governor', {}).get('id', '')
+                                    decimals = proposal.get('governor', {}).get('token', {}).get('decimals', 0)
+
 
                                     # Insert into the database
                                     sql_insert = """
@@ -180,8 +192,10 @@ class TallyProposalFetcher:
                                         start_time,
                                         end_time,
                                         voteStats, 
-                                        space_name
-                                    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                                        space_name, 
+                                        governor_id, 
+                                        decimals
+                                    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                                     ON CONFLICT (proposal_id) DO NOTHING
                                     """
                                     cursor.execute(
@@ -194,7 +208,9 @@ class TallyProposalFetcher:
                                             start_time,
                                             end_time,
                                             psycopg2.extras.Json(vote_stats),  # Store voteStats as JSONB
-                                            space_name
+                                            space_name, 
+                                            governor_id, 
+                                            decimals
                                         )
                                     )
                                     print(f"proposal added.")
@@ -206,5 +222,4 @@ class TallyProposalFetcher:
 
 if __name__ == "__main__": 
     tally_client = TallyProposalFetcher()
-    tally_client.insert_proposals()
-
+    result = tally_client.insert_proposals()

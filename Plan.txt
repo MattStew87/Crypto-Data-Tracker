@@ -6,12 +6,13 @@ STEPS:
 2. Work on grabbing voting data from speceficed proposal (similar to snapshot_flipside_data) 
 
 
+Tally: 
+- We may need to store governor_id, as well as the decimil 
+
+
 
 THINGS TO THINK ABOUT: 
 - Move away from json files start storing stuff in the db
-
-
-
 
 
 

@@ -32,8 +32,9 @@ def start_process_manager():
     """
     Run updates immediately and keep the process running for testing.
     """
-    print(f"Process Manager has been started")
-    
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"Process Manager started at: {current_time}")
+
     # Schedule the updates to run every day at 6:00 PM local time
     schedule.every().day.at("18:00").do(run_updates)
 
