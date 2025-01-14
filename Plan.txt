@@ -1,10 +1,18 @@
 STEPS: 
 
-1. Add something to update_registry to handle daily updates (just call insert_proposals)
-2. Finish adding in Final graph, add in something to grab all needed data.  
-3. Add in message handler and tweet handler (basically same as snapshot_handler but for tally)  
+
+
+2. Figure out top down approach of selecting proposals 
+2.5. make snapshot_proposals.json into db thing 
+
+
+2. Do brute force work of adding DAOs and twitters to json file 
+
+
+
 
 4. move workflow over to TeamViewer 
+  - Some text is windows based switch it over in generate_cover_image in tally_hanlder/snapshot_handler
 
 
 
@@ -12,6 +20,7 @@ THINGS TO THINK ABOUT:
 - Move away from json files start storing stuff in the db
 - for the snap_proposal.json it could just be a database with stage and proposal id and we could store
   both snapshot and tally data there. 
+- FIX logo placement grouped line graph 
 
 
 --------------------------------------------------------------------------------------------------
@@ -62,4 +71,3 @@ WHERE date_added = CURRENT_DATE
 ORDER BY created_at DESC
 
 --------------------------------------------------------------------------------------------------
-

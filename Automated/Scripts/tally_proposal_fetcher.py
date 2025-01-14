@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 import psycopg2
 from datetime import datetime, timedelta
 from psycopg2 import extras
-import time 
+import time
 
 class TallyProposalFetcher: 
 
@@ -21,7 +21,7 @@ class TallyProposalFetcher:
             "port": "5432"
         }
 
-        #self.space_keys = [{'space': 'Arbitrum', 'governor_id': 'eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9'}]
+        #self.space_keys = [{'space': 'Unlock Dao', 'governor_id': 'eip155:8453:0x65bA0624403Fc5Ca2b20479e9F626eD4D78E0aD9'}]
         
         self.space_keys = [
             {'space': 'Uniswap', 'governor_id': 'eip155:1:0x408ED6354d4973f66138C91495F2f2FCbd8724C3'}, {'space': 'Arbitrum Core', 'governor_id': 'eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9'}, {'space': 'Compound', 'governor_id': 'eip155:1:0xc0Da02939E1441F497fd74F78cE7Decb17B66529'},
@@ -45,7 +45,6 @@ class TallyProposalFetcher:
             {'space': 'Gloom Governor', 'governor_id': 'eip155:8453:0xFc8c580f1AfAaC016cBb45c1ced7F73F7DBa1FEc'}, {'space': 'Lucidao', 'governor_id': 'eip155:137:0xac1fdCA2Be645E3e06c7832613a78C72135DA945'}, {'space': 'Radworks', 'governor_id': 'eip155:1:0x690e775361AD66D1c4A25d89da9fCd639F5198eD'},
             {'space': 'Blur', 'governor_id': 'eip155:1:0xF7967b43949Fb0Cec48e63e345512d5Ea5845810'}, {'space': 'Arbitrum Treasury', 'governor_id': 'eip155:42161:0x789fC99093B09aD01C34DC7251D0C89ce743e5a4'}
         ]
-    
 
 
     def fetch_proposals(self):
@@ -156,7 +155,7 @@ class TallyProposalFetcher:
 
         return final_result
 
-
+    
     def insert_proposals(self):
             try:
                 data = self.fetch_proposals() 
@@ -167,16 +166,14 @@ class TallyProposalFetcher:
                         for item in data:
                             space_name = item['space_name'] 
                             for proposal in item['proposals']:
-                                if proposal['status'] == 'active': 
-                                    # Extract fields from the proposal
-                                    block = proposal.get('block', {}).get('timestamp',  "1970-01-01T00:00:00Z" )
-
+                                if proposal['status'] == 'active' and proposal.get('start', {}).get('timestamp') and proposal.get('end', {}).get('timestamp') : 
+                                    
                                     proposal_id = proposal['id']
                                     proposal_title = proposal['metadata'].get('title', '')
                                     proposal_description = proposal['metadata'].get('description', '')
                                     status = proposal['status']
-                                    start_time = proposal.get('start', {}).get('timestamp', block)
-                                    end_time = proposal.get('end', {}).get('timestamp',  "1970-01-01T00:00:00Z") 
+                                    start_time = proposal.get('start', {}).get('timestamp')
+                                    end_time = proposal.get('end', {}).get('timestamp') 
                                     vote_stats = proposal.get('voteStats', [])
                                     governor_id = proposal.get('governor', {}).get('id', '')
                                     decimals = proposal.get('governor', {}).get('token', {}).get('decimals', 0)
@@ -212,15 +209,11 @@ class TallyProposalFetcher:
                                             governor_id, 
                                             decimals
                                         )
-                                    )
-                                    print(f"proposal added.")
-                            print(f"Space added.")  
+                                    )  
                     conn.commit()
-                    print(f"Inserted proposals into the database.")
             except Exception as db_error:
                 print(f"Database error: {db_error}")
 
 if __name__ == "__main__": 
     tally_client = TallyProposalFetcher()
-    result = tally_client.fetch_proposals()
-    print(result) 
+    tally_client.insert_proposals()

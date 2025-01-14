@@ -2,7 +2,8 @@ import psycopg2
 from flipside import Flipside
 from dotenv import load_dotenv
 import os
-import json  
+import json 
+from tally_proposal_fetcher import TallyProposalFetcher 
 
 
 class UpdateRegistry:
@@ -17,6 +18,8 @@ class UpdateRegistry:
         :param mv_registry_file: Path to the JSON file storing materialized view names.
         """
         load_dotenv()
+
+        self.tally_proposal_fetcher = TallyProposalFetcher() 
 
         script_dir = os.path.dirname(os.path.abspath(__file__))
         self.registry_file = os.path.join(script_dir, registry_file)
@@ -141,6 +144,10 @@ class UpdateRegistry:
                         cur.execute(f"REFRESH MATERIALIZED VIEW {mv_name};")
                         conn.commit()
                         print(f"Materialized view '{mv_name}' refreshed successfully!")
+                    
+                    # Add new active Tally proposals to database
+                    self.tally_proposal_fetcher.insert_proposals() 
+                    print("Tally proposals added successfully") 
 
         except Exception as e:
             print(f"Error executing updates: {e}")

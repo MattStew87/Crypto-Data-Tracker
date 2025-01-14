@@ -426,13 +426,13 @@ class TallyData:
             return len(wallet_voting_powers)
 
         return {
-            "top_10_percent_voting_power_wallets": calculate_top_percent(0.1),
-            "top_50_percent_voting_power_wallets": calculate_top_percent(0.5)
+            "top_10%_voting_power_wallets": calculate_top_percent(0.1),
+            "top_50%_voting_power_wallets": calculate_top_percent(0.5)
         }
 
     
 
-    def prompt_data(self, proposal_id, decimals, governor_id):
+    def prompt_stats(self, proposal_id, decimals, governor_id):
         url = "https://api.tally.xyz/query"
 
         # GraphQL query to fetch proposals
@@ -520,13 +520,12 @@ class TallyData:
                                 second_choice = sorted_votes[1] if len(sorted_votes) > 1 else None
 
                                 proposal_data = {
-                                    "1st_choice_votes": int(winning_option.get("votesCount", 0)) / (10 ** decimals),
+                                    "1st_choice_voting_power": int(winning_option.get("votesCount", 0)) / (10 ** decimals),
                                     "1st_choice_name": winning_option["type"],
-                                    "winning_option": winning_option["type"],
-                                    "winning_percent": winning_option.get("percent", 0),
+                                    "leading_percent": winning_option.get("percent", 0),
                                     "total_voters": total_voters_count,
-                                    "choice_2_name": second_choice["type"] if second_choice else None,
-                                    "choice_2_votes": int(second_choice.get("votesCount", 0)) / (10 ** decimals) if second_choice else None
+                                    "2nd_choice_name": second_choice["type"] if second_choice else None,
+                                    "2nd_choice_voting_power": int(second_choice.get("votesCount", 0)) / (10 ** decimals) if second_choice else None
                                 }
 
                                 # Call the helper method to add top voter metrics
@@ -557,7 +556,7 @@ class TallyData:
 
         if voter_turnout_rank is not None:
             proposal_data["voter_turnout_rank"] = voter_turnout_rank
-            proposal_data["voter_turnout_percentile"] = 100 - (voter_turnout_rank - 1) / len(proposals_voter_turnout) * 100
+            proposal_data["voter_percentile"] = 100 - (voter_turnout_rank - 1) / len(proposals_voter_turnout) * 100
 
         return proposal_data
 
@@ -569,7 +568,7 @@ class TallyData:
 
 if __name__ == "__main__": 
     tally_data_client = TallyData() 
-    result = tally_data_client.prompt_data('2499208639684806584', 18, 'eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9')
+    result = tally_data_client.prompt_stats('2499208639684806584', 18, 'eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9')
     print(f"Result: {result}")
 
 

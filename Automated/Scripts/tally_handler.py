@@ -5,13 +5,12 @@ import os
 from datetime import datetime
 from dotenv import load_dotenv
 from twitter_handler import TwitterHandler
-from snapshot_flipside_data import SnapshotFlipsideData
+from tally_data import TallyData
 from openai import OpenAI
-
 import time 
 
 
-class SnapshotHandler: 
+class TallyHandler: 
     
     def __init__(self): 
         load_dotenv() 
@@ -34,22 +33,18 @@ class SnapshotHandler:
 
         self.twitter_client = TwitterHandler() 
 
-        self.flipside_gov_data = SnapshotFlipsideData() 
+        self.tally_gov_data = TallyData() 
 
 
     def proposal_announcement_messages(self, proposal): 
         
         # Extract proposal data
-        proposal_id = proposal['proposal_id']
         proposal_title = proposal['proposal_title']
-        proposal_text = proposal['proposal_text']
-        choices = proposal['choices']
-        proposal_start_time = proposal['proposal_start_time']
-        proposal_end_time = proposal['proposal_end_time']
-        space_id = proposal['space_id']
-        link_to_vote = f"https://snapshot.box/#/s:{space_id}/proposal/{proposal_id}"
-        twitter_handle = self.spaces_data[space_id]["twitter"]
-
+        proposal_text = proposal['proposal_description']
+        proposal_start_time = proposal['start_time']
+        proposal_end_time = proposal['end_time']
+        space_id = proposal['space_name']
+        twitter_handle = "@FakeTwitter"
 
         messages = []
 
@@ -128,8 +123,8 @@ class SnapshotHandler:
         ################################################################
 
         part_3_message = (
-            f"3/ To be a part of the decision-making process. To cast your vote on the latest proposal by visiting the following link: \n\n"
-            f"{link_to_vote}"
+            f"3/ To be a part of the decision-making process. Cast your vote on the latest proposal by visiting the following link: \n\n"
+            f"https://www.tally.xyz/explore"
         )
         messages.append(part_3_message)
 
@@ -138,20 +133,19 @@ class SnapshotHandler:
 
         return result
     
+
     def proposal_halftime_messages(self, proposal): 
 
         # Extract proposal data
         proposal_id = proposal['proposal_id']
         proposal_title = proposal['proposal_title']
-        proposal_text = proposal['proposal_text']
-        choices = proposal['choices']
-        proposal_start_time = proposal['proposal_start_time']
-        proposal_end_time = proposal['proposal_end_time']
-        space_id = proposal['space_id']
-        link_to_vote = f"https://snapshot.box/#/s:{space_id}/proposal/{proposal_id}"
-        twitter_handle = self.spaces_data[space_id]["twitter"]
-        
-        prompt_data = self.flipside_gov_data.prompt_stats(proposal_id)
+        proposal_text = proposal['proposal_description']
+        space_id = proposal['space_name']
+        governor_id = proposal['governor_id']
+        decimals = proposal['decimals']
+        twitter_handle = "@FakeTwitter"
+    
+        prompt_data = self.tally_gov_data.prompt_stats(proposal_id, decimals, governor_id)
 
         # Messages for the current proposal
         messages = []
@@ -291,57 +285,6 @@ class SnapshotHandler:
         part_3_message = self._generate_chatGPT_response(prompt_for_third_tweet)
         messages.append(part_3_message)
 
-        # Tweet 4
-        ################################################################
-
-        prompt_for_fourth_tweet = f"""
-            ### **Prompt Template for Fourth Tweet of a Thread (Voting Activity Comparison)**
-
-            ---
-
-            ### **Required Inputs:**
-
-            - `voting_power_rank` = {prompt_data["voting_power_rank"]}
-            - `voter_turnout_rank` = {prompt_data["voter_turnout_rank"]}
-            - `voting_power_percentile` = {prompt_data["voting_power_percentile"]}
-            - `voter_percentile` = {prompt_data["voter_percentile"]}
-            - `space_twitter_id` = {twitter_handle}
-
-            ---
-
-            ### **Intro**
-
-            Begin the tweet with **`4/`**. Compare the current proposal’s voting activity to other proposals within the same space at a similar stage.
-
-            Mention relevant data points using placeholders. Ensure the tweet is under 245 characters. Keep the tone neutral and professional.
-
-            ---
-
-            ### **Dynamic Comments Based on Voting Activity Comparison**
-
-            Add a comment based on the most relevant insight from the comparison of turnout data. Only include one (most relevant):
-
-            - **High Turnout (Above 75th Percentile):** If both voter participation and voting power turnout were high, emphasize strong engagement. 
-            - **High-Mid Turnout (Between 50th-75th Percentile):  If both voter participation and voting power turnout were low-mid, highlight above average engagement.** 
-            - **Low-Mid Turnout (Between 25th-50th Percentile):** If both voter participation and voting power turnout were low-mid, highlight below average engagement.
-            - **Low Turnout (Below 25th Percentile):** If both voter participation and voting power turnout were low, highlight the lack of engagement.
-            - **Discrepancy Between Voters and Voting Power:** If voter turnout rank is significantly higher or lower than voting power rank, only use this if the discrpency is very large.
-            - **Top Performer (Rank 1-3):** If the proposal ranks in the top 1-3 spots for turnout, emphasize its leading position.
-            - **Middle of the Pack (25th-75th Percentile):** If turnout falls between the 25th and 75th percentile, focus on balanced engagement.
-
-            ### **Additional Instructions**
-
-            - DO **NOT** include hashtags or emojis.
-            - DO **NOT** add any additional text besides the tweet itself. 
-            - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters  
-            - The rank and percentile data are in reference to other proposals in the same governance space.
-            - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.)
-            
-        """
-
-        part_4_message = self._generate_chatGPT_response(prompt_for_fourth_tweet)
-        messages.append(part_4_message)
-
         # Message Cleanup 
         ################################################################
         final_messages = []
@@ -358,22 +301,22 @@ class SnapshotHandler:
             refined_message = self._generate_chatGPT_response(validation_prompt)
             final_messages.append(refined_message)
 
-        # Tweet 5
+        # Tweet 4
         ################################################################
 
-        part_5_message = (
-            f"5/ If you want to learn more about this {twitter_handle} proposal check out our @flipsidecrypto Dashboard:\n\n"
-            "https://flipsidecrypto.xyz/pine/snapshot-proposal-lookup-nFH10H\n\n"
-            f"To participate in the vote go here: {link_to_vote}"
+        part_4_message = (
+             f"4/ To be a part of the decision-making process. Cast your vote on the latest proposal by visiting the following link: \n\n"
+             f"https://www.tally.xyz/explore"
         )
 
-        final_messages.append(part_5_message)
+        final_messages.append(part_4_message)
 
         # Append space_id and messages to the result list
         result = {
             "space_id": space_id,
             "messages": final_messages,
-            "proposal_id": proposal_id
+            "proposal_id": proposal_id,
+            "decimals": decimals
         }        
 
         return result 
@@ -383,14 +326,12 @@ class SnapshotHandler:
         # Extract proposal data
         proposal_id = proposal['proposal_id']
         proposal_title = proposal['proposal_title']
-        choices = proposal['choices']
-        proposal_start_time = proposal['proposal_start_time']
-        proposal_end_time = proposal['proposal_end_time']
-        space_id = proposal['space_id']
-        link_to_vote = f"https://snapshot.box/#/s:{space_id}/proposal/{proposal_id}"
-        twitter_handle = self.spaces_data[space_id]["twitter"]
-
-        prompt_data = self.flipside_gov_data.prompt_stats(proposal_id)
+        space_id = proposal['space_name']
+        governor_id = proposal['governor_id']
+        decimals = proposal['decimals']
+        twitter_handle = "@FakeTwitter"
+    
+        prompt_data = self.tally_gov_data.prompt_stats(proposal_id, decimals, governor_id)
         
         # Messages for the current proposal
         messages = []
@@ -551,10 +492,10 @@ class SnapshotHandler:
 
             ### **Required Inputs:**
 
-            - `{{ voting_power_rank }}` = {prompt_data["final_voting_power_rank"]}
-            - `{{ voter_turnout_rank }}`= {prompt_data["final_voter_turnout_rank"]}
-            - `{{ voting_power_percentile }}` = {prompt_data["final_voting_power_percentile"]}
-            - `{{ voter_percentile }}` = {prompt_data["final_voter_percentile"]}
+            - `{{ voting_power_rank }}` = {prompt_data["voting_power_rank"]}
+            - `{{ voter_turnout_rank }}`= {prompt_data["voter_turnout_rank"]}
+            - `{{ voting_power_percentile }}` = {prompt_data["voting_power_percentile"]}
+            - `{{ voter_percentile }}` = {prompt_data["voter_percentile"]}
             - `{{ space_twitter_id }}` = {twitter_handle}
 
             ---
@@ -611,9 +552,8 @@ class SnapshotHandler:
         ################################################################
 
         part_5_message = (
-            f"5/ If you want to learn more about this {twitter_handle} proposal check out our @flipsidecrypto Dashboard:\n\n"
-            "https://flipsidecrypto.xyz/pine/snapshot-proposal-lookup-nFH10H\n\n"
-            f"To participate in the vote go here: {link_to_vote}"
+            f"5/ To be a part of the decision-making process. Cast your vote on the latest proposal by visiting the following link: \n\n"
+            f"https://www.tally.xyz/explore"
         )
 
         final_messages.append(part_5_message)
@@ -622,12 +562,13 @@ class SnapshotHandler:
         result = {
             "space_id": space_id,
             "messages": final_messages,
-            "proposal_id": proposal_id
-        }
+            "proposal_id": proposal_id, 
+            "governor_id": governor_id, 
+            "decimals": decimals
+        } 
     
         return result
-
-
+    
     
     def create_proposal_announcement(self, proposal):
         
@@ -636,7 +577,7 @@ class SnapshotHandler:
         space_id = proposal_message.get("space_id", "")
         messages = proposal_message.get("messages", "")
                     
-        cover_image = self.generate_space_image(space_id, 1)
+        cover_image = self.generate_space_image('arbitrumfoundation.eth', 1)
 
         orginal_post_id = self.twitter_client.post_with_media(messages[0], cover_image)
         thread1_id = self.twitter_client.post_thread_reply(messages[1], orginal_post_id)
@@ -650,19 +591,17 @@ class SnapshotHandler:
         space_id = halftime_message.get("space_id", "")
         messages = halftime_message.get("messages", "")
         proposal_id = halftime_message.get("proposal_id", "")
+        decimals = halftime_message.get("decimals", "") 
                     
-        cover_image = self.generate_space_image(space_id, 2)
-        Tweet2_media = self.flipside_gov_data.hourly_total_voting_power_by_choice(proposal_id)
-        Tweet3_media = self.flipside_gov_data.voting_power_by_wallet(proposal_id)
-        Tweet4_media = self.flipside_gov_data.space_proposals_by_voting_power(proposal_id)
+        cover_image = self.generate_space_image('arbitrumfoundation.eth', 2)
+        Tweet2_media = self.tally_gov_data.tally_daily_total_voting_power_by_choice(proposal_id, decimals)
+        Tweet3_media = self.tally_gov_data.tally_voting_power_by_wallet(proposal_id, decimals)
 
         orginal_post_id = self.twitter_client.post_with_media(messages[0], cover_image)
         thread1_id = self.twitter_client.post_thread_reply_with_media(messages[1], Tweet2_media, orginal_post_id)
         thread2_id = self.twitter_client.post_thread_reply_with_media(messages[2], Tweet3_media, thread1_id)
-        thread3_id = self.twitter_client.post_thread_reply_with_media(messages[3], Tweet4_media, thread2_id)
-        self.twitter_client.post_thread_reply(messages[4], thread3_id)
-
-
+        self.twitter_client.post_thread_reply(messages[3], thread2_id)
+    
     def create_proposal_final(self, proposal):
 
         final_message =  self.proposal_final_messages(proposal) 
@@ -670,11 +609,13 @@ class SnapshotHandler:
         space_id = final_message.get("space_id", "")
         messages = final_message.get("messages", "")
         proposal_id = final_message.get("proposal_id", "")
+        governor_id = final_message.get("governor_id", "")
+        decimals = final_message.get("decimals", "") 
                     
-        cover_image = self.generate_space_image(space_id, 3)
-        Tweet2_media = self.flipside_gov_data.hourly_total_voting_power_by_choice(proposal_id)
-        Tweet3_media = self.flipside_gov_data.voting_power_by_wallet(proposal_id)
-        Tweet4_media = self.flipside_gov_data.space_proposals_by_voting_power(proposal_id)
+        cover_image = self.generate_space_image('arbitrumfoundation.eth', 3)
+        Tweet2_media = self.tally_gov_data.tally_daily_total_voting_power_by_choice(proposal_id, decimals)
+        Tweet3_media = self.tally_gov_data.tally_voting_power_by_wallet(proposal_id, decimals)
+        Tweet4_media = self.tally_gov_data.tally_space_proposals_by_voting_power(proposal_id, decimals, governor_id)
 
         orginal_post_id = self.twitter_client.post_with_media(messages[0], cover_image)
         thread1_id = self.twitter_client.post_thread_reply_with_media(messages[1], Tweet2_media, orginal_post_id)
@@ -682,6 +623,8 @@ class SnapshotHandler:
         thread3_id = self.twitter_client.post_thread_reply_with_media(messages[3], Tweet4_media, thread2_id)
         self.twitter_client.post_thread_reply(messages[4], thread3_id)
 
+    
+    
     
     def _generate_chatGPT_response(self, prompt: str) -> str:
         try:
@@ -696,8 +639,7 @@ class SnapshotHandler:
             return response.choices[0].message.content.strip()
         except Exception  as chatgpt_error:
             # Handle any errors
-            return f"An error occurred: {str(chatgpt_error)}"  
-              
+            return f"An error occurred: {str(chatgpt_error)}"
 
 
     def generate_space_image(self, space_id, part):
@@ -765,7 +707,11 @@ class SnapshotHandler:
 
         # Save the final output
         base_image.save(output_image_path)
-        return output_image_path
+        return output_image_path  
+              
+
+
+   
 
 
 
