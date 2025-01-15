@@ -606,6 +606,470 @@
         "part2_text": "Gnosis Proposal Metrics",
         "part3_text": "Gnosis Proposal Wrap-up",
         "twitter": "@GnosisDAO"
+    },
+    "Uniswap": {
+        "base_image": "./base_pink.png",
+        "space_image": "./tally_uniswap-modified.png",
+        "part1_text": "Uniswap Proposal Live",
+        "part2_text": "Uniswap Proposal Metrics",
+        "part3_text": "Uniswap Proposal Wrap-up",
+        "twitter": "@Uniswap"
+    },
+    "Arbitrum Core": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_arbitrum-modified.png",
+        "part1_text": "Arbitrum Core Proposal Live",
+        "part2_text": "Arbitrum Core Proposal Metrics",
+        "part3_text": "Arbitrum Core Proposal Wrap-up",
+        "twitter": "@arbitrum"
+    },
+    "Compound": {
+        "base_image": "./base_green.png",
+        "space_image": "./tally_compound-modified.png",
+        "part1_text": "Compound Proposal Live",
+        "part2_text": "Compound Proposal Metrics",
+        "part3_text": "Compound Proposal Wrap-up",
+        "twitter": "@compoundfinance"
+    },
+    "Dope Wars": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_dopewars-modified.png",
+        "part1_text": "Dope Wars Proposal Live",
+        "part2_text": "Dope Wars Proposal Metrics",
+        "part3_text": "Dope Wars Proposal Wrap-up",
+        "twitter": "@TheDopeWars"
+    },
+    "Lil Nouns": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_lilnouns-modified.png",
+        "part1_text": "Lil Nouns Proposal Live",
+        "part2_text": "Lil Nouns Proposal Metrics",
+        "part3_text": "Lil Nouns Proposal Wrap-up",
+        "twitter": "@lilnounsdao"
+    },
+    "Nouns Dao": {
+        "base_image": "./base_yellow.png",
+        "space_image": "./tally_nouns-modified.png",
+        "part1_text": "Nouns Dao Proposal Live",
+        "part2_text": "Nouns Dao Proposal Metrics",
+        "part3_text": "Nouns Dao Proposal Wrap-up",
+        "twitter": "@nounsdao"
+    },
+    "PoolTogether": {
+        "base_image": "./base_purple.png",
+        "space_image": "./tally_pooltogether-modified.png",
+        "part1_text": "PoolTogether Proposal Live",
+        "part2_text": "PoolTogether Proposal Metrics",
+        "part3_text": "PoolTogether Proposal Wrap-up",
+        "twitter": "@PoolTogether_"
+    },
+    "Rari Dao": {
+        "base_image": "./base_orange.png",
+        "space_image": "./tally_rariDao-modified.png",
+        "part1_text": "Rari Dao Proposal Live",
+        "part2_text": "Rari Dao Proposal Metrics",
+        "part3_text": "Rari Dao Proposal Wrap-up",
+        "twitter": "@rarifoundation"
+    },
+    "Unlock Dao": {
+        "base_image": "./base_purple.png",
+        "space_image": "./tally_unlockdao-modified.png",
+        "part1_text": "Unlock Dao Proposal Live",
+        "part2_text": "Unlock Dao Proposal Metrics",
+        "part3_text": "Unlock Dao Proposal Wrap-up",
+        "twitter": "@UnlockProtocol"
+    },
+    "InstaDapp": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_instadapp-modified.png",
+        "part1_text": "InstaDapp Proposal Live",
+        "part2_text": "InstaDapp Proposal Metrics",
+        "part3_text": "InstaDapp Proposal Wrap-up",
+        "twitter": "@Instadapp"
+    },
+    "Idle Dao": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_idleDao-modified.png",
+        "part1_text": "Idle Dao Proposal Live",
+        "part2_text": "Idle Dao Proposal Metrics",
+        "part3_text": "Idle Dao Proposal Wrap-up",
+        "twitter": "@idlefinance"
+    },
+    "Cryptex": {
+        "base_image": "./base_purple.png",
+        "space_image": "./tally_cryptex-modified.png",
+        "part1_text": "Cryptex Proposal Live",
+        "part2_text": "Cryptex Proposal Metrics",
+        "part3_text": "Cryptex Proposal Wrap-up",
+        "twitter": "@CryptexFinance"
+    },
+    "Optimism": {
+        "base_image": "./base_orange.png",
+        "space_image": "./tally_optimism-modified.png",
+        "part1_text": "Optimism Proposal Live",
+        "part2_text": "Optimism Proposal Metrics",
+        "part3_text": "Optimism Proposal Wrap-up",
+        "twitter": "@Optimism"
+    },
+    "ZKsync": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_zksync-modified.png",
+        "part1_text": "ZKsync Proposal Live",
+        "part2_text": "ZKsync Proposal Metrics",
+        "part3_text": "ZKsync Proposal Wrap-up",
+        "twitter": "@zksync"
+    },
+    "Aave": {
+        "base_image": "./base_purple.png",
+        "space_image": "./tally_aave-modified.png",
+        "part1_text": "Aave Proposal Live",
+        "part2_text": "Aave Proposal Metrics",
+        "part3_text": "Aave Proposal Wrap-up",
+        "twitter": "@aave"
+    },
+    "ENS": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_ens-modified.png",
+        "part1_text": "ENS Proposal Live",
+        "part2_text": "ENS Proposal Metrics",
+        "part3_text": "ENS Proposal Wrap-up",
+        "twitter": "@ensdomains"
+    },
+    "Gitcoin": {
+        "base_image": "./base_green.png",
+        "space_image": "./tally_gitcoin-modified.png",
+        "part1_text": "Gitcoin Proposal Live",
+        "part2_text": "Gitcoin Proposal Metrics",
+        "part3_text": "Gitcoin Proposal Wrap-up",
+        "twitter": "@gitcoin"
+    },
+    "Hop": {
+        "base_image": "./base_orange.png",
+        "space_image": "./tally_hop-modified.png",
+        "part1_text": "Hop Proposal Live",
+        "part2_text": "Hop Proposal Metrics",
+        "part3_text": "Hop Proposal Wrap-up",
+        "twitter": "@HopProtocol"
+    },
+    "GMX": {
+        "base_image": "./base_green.png",
+        "space_image": "./gmx.png",
+        "part1_text": "GMX Proposal Live",
+        "part2_text": "GMX Proposal Metrics",
+        "part3_text": "GMX Proposal Wrap-up",
+        "twitter": "@GMX_IO"
+    },
+    "Realtoken": {
+        "base_image": "./base_yellow.png",
+        "space_image": "./tally_realtoken-modified.png",
+        "part1_text": "Realtoken Proposal Live",
+        "part2_text": "Realtoken Proposal Metrics",
+        "part3_text": "Realtoken Proposal Wrap-up",
+        "twitter": "@RealTokenDAO"
+    },
+    "Lisk": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_lisk-modified.png",
+        "part1_text": "Lisk Proposal Live",
+        "part2_text": "Lisk Proposal Metrics",
+        "part3_text": "Lisk Proposal Wrap-up",
+        "twitter": "@LiskHQ"
+    },
+    "Diva Staking": {
+        "base_image": "./base_purple.png",
+        "space_image": "./tally_divaStaking-modified.png",
+        "part1_text": "Diva Staking Proposal Live",
+        "part2_text": "Diva Staking Proposal Metrics",
+        "part3_text": "Diva Staking Proposal Wrap-up",
+        "twitter": "@divastaking"
+    },
+    "Open Dollar": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_openDollar-modified.png",
+        "part1_text": "Open Dollar Proposal Live",
+        "part2_text": "Open Dollar Proposal Metrics",
+        "part3_text": "Open Dollar Proposal Wrap-up",
+        "twitter": "@open_dollar"
+    },
+    "Fei": {
+        "base_image": "./base_green.png",
+        "space_image": "./tally_fei-modified.png",
+        "part1_text": "Fei Proposal Live",
+        "part2_text": "Fei Proposal Metrics",
+        "part3_text": "Fei Proposal Wrap-up",
+        "twitter": "@feiprotocol"
+    },
+    "SpellsDao": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_spellsDao-modified.png",
+        "part1_text": "SpellsDao Proposal Live",
+        "part2_text": "SpellsDao Proposal Metrics",
+        "part3_text": "SpellsDao Proposal Wrap-up",
+        "twitter": "@spellsdao"
+    },
+    "Moonwell": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_moonwell-modified.png",
+        "part1_text": "Moonwell Proposal Live",
+        "part2_text": "Moonwell Proposal Metrics",
+        "part3_text": "Moonwell Proposal Wrap-up",
+        "twitter": "@MoonwellDeFi"
+    },
+    "HAI": {
+        "base_image": "./base_green.png",
+        "space_image": "./tally_HAI-modified.png",
+        "part1_text": "HAI Proposal Live",
+        "part2_text": "HAI Proposal Metrics",
+        "part3_text": "HAI Proposal Wrap-up",
+        "twitter": "@letsgethai"
+    },
+    "Ondo Dao": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_ondo-modified.png",
+        "part1_text": "Ondo Dao Proposal Live",
+        "part2_text": "Ondo Dao Proposal Metrics",
+        "part3_text": "Ondo Dao Proposal Wrap-up",
+        "twitter": "@OndoFoundation"
+    },
+    "Seamless": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_seamless-modified.png",
+        "part1_text": "Seamless Proposal Live",
+        "part2_text": "Seamless Proposal Metrics",
+        "part3_text": "Seamless Proposal Wrap-up",
+        "twitter": "@SeamlessFi"
+    },
+    "Euler": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_euler-modified.png",
+        "part1_text": "Euler Proposal Live",
+        "part2_text": "Euler Proposal Metrics",
+        "part3_text": "Euler Proposal Wrap-up",
+        "twitter": "@eulerfinance"
+    },
+    "Tevaera": {
+        "base_image": "./base_green.png",
+        "space_image": "./tally_tevaera-modified.png",
+        "part1_text": "Tevaera Proposal Live",
+        "part2_text": "Tevaera Proposal Metrics",
+        "part3_text": "Tevaera Proposal Wrap-up",
+        "twitter": "@tevaera"
+    },
+    "Anvil": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_anvil-modified.png",
+        "part1_text": "Anvil Proposal Live",
+        "part2_text": "Anvil Proposal Metrics",
+        "part3_text": "Anvil Proposal Wrap-up",
+        "twitter": "@anvil_xyz"
+    },
+    "Yam Finance": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_yamfinance-modified.png",
+        "part1_text": "Yam Finance Proposal Live",
+        "part2_text": "Yam Finance Proposal Metrics",
+        "part3_text": "Yam Finance Proposal Wrap-up",
+        "twitter": "@YamFinance"
+    },
+    "Rari Capital": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_rariCapital-modified.png",
+        "part1_text": "Rari Capital Proposal Live",
+        "part2_text": "Rari Capital Proposal Metrics",
+        "part3_text": "Rari Capital Proposal Wrap-up",
+        "twitter": "@RariCapital"
+    },
+    "Mystiko": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_myStiko-modified.png",
+        "part1_text": "Mystiko Proposal Live",
+        "part2_text": "Mystiko Proposal Metrics",
+        "part3_text": "Mystiko Proposal Wrap-up",
+        "twitter": "@MystikoNetwork"
+    },
+    "TrueFi": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_truefi-modified.png",
+        "part1_text": "TrueFi Proposal Live",
+        "part2_text": "TrueFi Proposal Metrics",
+        "part3_text": "TrueFi Proposal Wrap-up",
+        "twitter": "@TrueFiDAO"
+    },
+    "Gas Dao": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_gasDao-modified.png",
+        "part1_text": "Gas Dao Proposal Live",
+        "part2_text": "Gas Dao Proposal Metrics",
+        "part3_text": "Gas Dao Proposal Wrap-up",
+        "twitter": "@0xGasDAO"
+    },
+    "Indexed": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_indexed-modified.png",
+        "part1_text": "Indexed Proposal Live",
+        "part2_text": "Indexed Proposal Metrics",
+        "part3_text": "Indexed Proposal Wrap-up",
+        "twitter": "@ndxfi"
+    },
+    "Tribe NopeDao": {
+        "base_image": "./base_green.png",
+        "space_image": "./tally_tribeNopeDao-modified.png",
+        "part1_text": "Tribe NopeDao Proposal Live",
+        "part2_text": "Tribe NopeDao Proposal Metrics",
+        "part3_text": "Tribe NopeDao Proposal Wrap-up",
+        "twitter": "@feiprotocol"
+    },
+    "Ampleforth": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_Ampleforth-modified.png",
+        "part1_text": "Ampleforth Proposal Live",
+        "part2_text": "Ampleforth Proposal Metrics",
+        "part3_text": "Ampleforth Proposal Wrap-up",
+        "twitter": "@AmpleforthOrg"
+    },
+    "Inverse": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_inverse-modified.png",
+        "part1_text": "Inverse Proposal Live",
+        "part2_text": "Inverse Proposal Metrics",
+        "part3_text": "Inverse Proposal Wrap-up",
+        "twitter": "@InverseFinance"
+    },
+    "MahaDao": {
+        "base_image": "./base_orange.png",
+        "space_image": "./tally_MahaDao-modified.png",
+        "part1_text": "MahaDao Proposal Live",
+        "part2_text": "MahaDao Proposal Metrics",
+        "part3_text": "MahaDao Proposal Wrap-up",
+        "twitter": "@themahadao"
+    },
+    "Collab.Land": {
+        "base_image": "./base_yellow.png",
+        "space_image": "./tally_collabLand-modified.png",
+        "part1_text": "Collab.Land Proposal Live",
+        "part2_text": "Collab.Land Proposal Metrics",
+        "part3_text": "Collab.Land Proposal Wrap-up",
+        "twitter": "@Collab_Land_"
+    },
+    "SoftDao": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_softDao-modified.png",
+        "part1_text": "SoftDao Proposal Live",
+        "part2_text": "SoftDao Proposal Metrics",
+        "part3_text": "SoftDao Proposal Wrap-up",
+        "twitter": "@TokensoftInc"
+    },
+    "DaxioDao": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_DaxioDao-modified.png",
+        "part1_text": "DaxioDao Proposal Live",
+        "part2_text": "DaxioDao Proposal Metrics",
+        "part3_text": "DaxioDao Proposal Wrap-up",
+        "twitter": "@DaxioGroup"
+    },
+    "Inedible": {
+        "base_image": "./base_green.png",
+        "space_image": "./tally_inedible-modified.png",
+        "part1_text": "Inedible Proposal Live",
+        "part2_text": "Inedible Proposal Metrics",
+        "part3_text": "Inedible Proposal Wrap-up",
+        "twitter": "@GoatTradingDex"
+    },
+    "BNB Chain": {
+        "base_image": "./base_yellow.png",
+        "space_image": "./tally_bnbChain-modified.png",
+        "part1_text": "BNB Chain Proposal Live",
+        "part2_text": "BNB Chain Proposal Metrics",
+        "part3_text": "BNB Chain Proposal Wrap-up",
+        "twitter": "@BNBCHAIN"
+    },
+    "Hifi Dao": {
+        "base_image": "./base_purple.png",
+        "space_image": "./tally_HifiDao-modified.png",
+        "part1_text": "Hifi Dao Proposal Live",
+        "part2_text": "Hifi Dao Proposal Metrics",
+        "part3_text": "Hifi Dao Proposal Wrap-up",
+        "twitter": "@HifiFinance"
+    },
+    "Increment": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_increment-modified.png",
+        "part1_text": "Increment Proposal Live",
+        "part2_text": "Increment Proposal Metrics",
+        "part3_text": "Increment Proposal Wrap-up",
+        "twitter": "@IncrementHQ"
+    },
+    "DIMO": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_DIMO-modified.png",
+        "part1_text": "DIMO Proposal Live",
+        "part2_text": "DIMO Proposal Metrics",
+        "part3_text": "DIMO Proposal Wrap-up",
+        "twitter": "@DIMO_Network"
+    },
+    "Sudoswap": {
+        "base_image": "./base_purple.png",
+        "space_image": "./tally_sudoswap-modified.png",
+        "part1_text": "Sudoswap Proposal Live",
+        "part2_text": "Sudoswap Proposal Metrics",
+        "part3_text": "Sudoswap Proposal Wrap-up",
+        "twitter": "@sudoswap"
+    },
+    "Public Nouns": {
+        "base_image": "./base_green.png",
+        "space_image": "./tally_publicNouns-modified.png",
+        "part1_text": "Public Nouns Proposal Live",
+        "part2_text": "Public Nouns Proposal Metrics",
+        "part3_text": "Public Nouns Proposal Wrap-up",
+        "twitter": "@PublicNouns"
+    },
+    "Internet Token": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_internetToken-modified.png",
+        "part1_text": "Internet Token Proposal Live",
+        "part2_text": "Internet Token Proposal Metrics",
+        "part3_text": "Internet Token Proposal Wrap-up",
+        "twitter": "@internet_token"
+    },
+    "Gloom Governor": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_gloomGovernor-modified.png",
+        "part1_text": "Gloom Governor Proposal Live",
+        "part2_text": "Gloom Governor Proposal Metrics",
+        "part3_text": "Gloom Governor Proposal Wrap-up",
+        "twitter": "@gloomtoken"
+    },
+    "Lucidao": {
+        "base_image": "./base_black.png",
+        "space_image": "./tally_lucidao-modified.png",
+        "part1_text": "Lucidao Proposal Live",
+        "part2_text": "Lucidao Proposal Metrics",
+        "part3_text": "Lucidao Proposal Wrap-up",
+        "twitter": "@Lucidao_"
+    },
+    "Radworks": {
+        "base_image": "./base_green.png",
+        "space_image": "./tally_radworks-modified.png",
+        "part1_text": "Radworks Proposal Live",
+        "part2_text": "Radworks Proposal Metrics",
+        "part3_text": "Radworks Proposal Wrap-up",
+        "twitter": "@radworks_"
+    },
+    "Blur": {
+        "base_image": "./base_orange.png",
+        "space_image": "./tally_blur-modified.png",
+        "part1_text": "Blur Proposal Live",
+        "part2_text": "Blur Proposal Metrics",
+        "part3_text": "Blur Proposal Wrap-up",
+        "twitter": "@blur_io"
+    },
+    "Arbitrum Treasury": {
+        "base_image": "./base_blue.png",
+        "space_image": "./tally_arbitrum-modified.png",
+        "part1_text": "Arbitrum Treasury Proposal Live",
+        "part2_text": "Arbitrum Treasury Proposal Metrics",
+        "part3_text": "Arbitrum Treasury Proposal Wrap-up",
+        "twitter": "@arbitrum"
     }
     
 }

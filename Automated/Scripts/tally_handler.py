@@ -44,7 +44,7 @@ class TallyHandler:
         proposal_start_time = proposal['start_time']
         proposal_end_time = proposal['end_time']
         space_id = proposal['space_name']
-        twitter_handle = "@FakeTwitter"
+        twitter_handle = self.spaces_data[space_id]["twitter"]
 
         messages = []
 
@@ -143,7 +143,7 @@ class TallyHandler:
         space_id = proposal['space_name']
         governor_id = proposal['governor_id']
         decimals = proposal['decimals']
-        twitter_handle = "@FakeTwitter"
+        twitter_handle = self.spaces_data[space_id]["twitter"]
     
         prompt_data = self.tally_gov_data.prompt_stats(proposal_id, decimals, governor_id)
 
@@ -329,7 +329,7 @@ class TallyHandler:
         space_id = proposal['space_name']
         governor_id = proposal['governor_id']
         decimals = proposal['decimals']
-        twitter_handle = "@FakeTwitter"
+        twitter_handle = self.spaces_data[space_id]["twitter"]
     
         prompt_data = self.tally_gov_data.prompt_stats(proposal_id, decimals, governor_id)
         
@@ -577,7 +577,7 @@ class TallyHandler:
         space_id = proposal_message.get("space_id", "")
         messages = proposal_message.get("messages", "")
                     
-        cover_image = self.generate_space_image('arbitrumfoundation.eth', 1)
+        cover_image = self.generate_space_image(space_id, 1)
 
         orginal_post_id = self.twitter_client.post_with_media(messages[0], cover_image)
         thread1_id = self.twitter_client.post_thread_reply(messages[1], orginal_post_id)
@@ -593,7 +593,7 @@ class TallyHandler:
         proposal_id = halftime_message.get("proposal_id", "")
         decimals = halftime_message.get("decimals", "") 
                     
-        cover_image = self.generate_space_image('arbitrumfoundation.eth', 2)
+        cover_image = self.generate_space_image(space_id, 2)
         Tweet2_media = self.tally_gov_data.tally_daily_total_voting_power_by_choice(proposal_id, decimals)
         Tweet3_media = self.tally_gov_data.tally_voting_power_by_wallet(proposal_id, decimals)
 
@@ -612,7 +612,7 @@ class TallyHandler:
         governor_id = final_message.get("governor_id", "")
         decimals = final_message.get("decimals", "") 
                     
-        cover_image = self.generate_space_image('arbitrumfoundation.eth', 3)
+        cover_image = self.generate_space_image(space_id, 3)
         Tweet2_media = self.tally_gov_data.tally_daily_total_voting_power_by_choice(proposal_id, decimals)
         Tweet3_media = self.tally_gov_data.tally_voting_power_by_wallet(proposal_id, decimals)
         Tweet4_media = self.tally_gov_data.tally_space_proposals_by_voting_power(proposal_id, decimals, governor_id)
@@ -711,8 +711,7 @@ class TallyHandler:
               
 
 
-   
-
 
 
 #if __name__ == "__main__": 
+

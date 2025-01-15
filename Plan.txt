@@ -1,10 +1,10 @@
 STEPS: 
 
 
-1. add images for each dao (png script), add twitters [JACK]
 
 
-4. move workflow over to TeamViewer 
+
+1. move workflow over to TeamViewer 
   - Some text is windows based switch it over in generate_cover_image in tally_handler/snapshot_handler
 
 
