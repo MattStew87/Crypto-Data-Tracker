@@ -26,7 +26,7 @@ class GovernanceHandler:
 
         # Resolve the path to snapshot_proposals.json dynamically
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        self.json_file_path = os.path.join(script_dir, "../config/snapshot_proposals.json")  
+        self.json_file_path = os.path.join(script_dir, "../config/past_proposals.json")  
 
 
     def get_new_proposals(self): 
@@ -295,7 +295,7 @@ class GovernanceHandler:
             elif stage == 'Final':
                 self.tally_handler.create_proposal_final(proposal) 
         else:
-            print("Stage was not on of the following stages ['SNAPSHOT', 'TALLY']")        
+            print(f"ERROR STAGE: {stage} PLATFORM: {platform}")        
     
 
 

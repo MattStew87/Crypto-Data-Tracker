@@ -153,3 +153,7 @@ class UpdateRegistry:
             print(f"Error executing updates: {e}")
 
 
+
+if __name__ == "__main__": 
+    updater = UpdateRegistry()
+    updater.execute_updates() 

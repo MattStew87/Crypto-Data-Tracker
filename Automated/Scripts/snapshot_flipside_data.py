@@ -700,10 +700,10 @@ if __name__ == "__main__":
     
     
     tweet2_path = flipside.hourly_total_voting_power_by_choice("0xe4ea71ad1e49384952cf6bfd8c02e3a0669fe8f2d3fe39f88d614bba358d0263")
-    #print(tweet2_path) 
-    tweet3_path = flipside.voting_power_by_wallet("0xe4ea71ad1e49384952cf6bfd8c02e3a0669fe8f2d3fe39f88d614bba358d0263")
+    print(tweet2_path) 
+    #tweet3_path = flipside.voting_power_by_wallet("0xe4ea71ad1e49384952cf6bfd8c02e3a0669fe8f2d3fe39f88d614bba358d0263")
     #print(tweet3_path) 
-    tweet4_path = flipside.space_proposals_by_voting_power("0xe4ea71ad1e49384952cf6bfd8c02e3a0669fe8f2d3fe39f88d614bba358d0263")
+    #tweet4_path = flipside.space_proposals_by_voting_power("0xe4ea71ad1e49384952cf6bfd8c02e3a0669fe8f2d3fe39f88d614bba358d0263")
     #print(tweet4_path)
     
 
