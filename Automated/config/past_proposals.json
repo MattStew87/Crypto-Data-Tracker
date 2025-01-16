@@ -1,19 +1,8 @@
 {
-    "Announcement": [
-        "0xc1ebf7157b7b6eea1e07765ddefd184962bfecf575b606c4ba2db9468a6e3c60"
-    ],
+    "Announcement": [],
     "Halftime": [
-        "0x4844bc43cfac2600d0d2fcd57d679ec273fa341d0290eb6266b7102e61bd6542",
-        "2502358713906497413",
-        "2500867561885796046",
-        "2503319053016237636",
-        "2503922584454694528"
+        "0xbb30e314a1e842fa6a61dbd2e2899751c9526311b633c1e62acdabdc59797ccc",
+        "2500867561885796046"
     ],
-    "Final": [
-        "0x35986148f8ddb65f7ffa4cd547a3fbc4c7bf6dccc8d9f212098085e8b6cb714a",
-        "0xc148f38178feb1b9ffa270d2c98ae2354ab9ea7530232f191b54b9510e535ee3",
-        "0x524d7f51ea46bdc8fc461b999eff7a8da146386e5a49528b31d0a41293f0fe13",
-        "0x9f1080a00e41b8073c9bce3daf9b242f91e04bfedc5e17660fa1fbc36a16fa0a",
-        "2501264797731914887"
-    ]
+    "Final": []
 }

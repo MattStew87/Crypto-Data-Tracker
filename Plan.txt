@@ -1,11 +1,7 @@
 STEPS: 
 
-
-
-
-
-1. move workflow over to TeamViewer 
-  - Some text is windows based switch it over in generate_cover_image in tally_handler/snapshot_handler
+1. PUSH UPDATES (they have already been added and commited) 
+2. Fix logo placement on first graph 
 
 
 
