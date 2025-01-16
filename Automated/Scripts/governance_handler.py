@@ -13,7 +13,7 @@ class GovernanceHandler:
 
         self.db_config = {
             "host": os.getenv("DATABASE_HOST"),
-            "database": "CARROT_DB", 
+            "database": os.getenv("DATABASE_NAME"),  
             "user": os.getenv("DATABASE_USER"),
             "password": os.getenv("DATABASE_PASSWORD"),
             "port": 5432
@@ -87,7 +87,7 @@ class GovernanceHandler:
 
                             SELECT 
                             * 
-                            FROM snapshot_proposals 
+                            FROM snapshot_proposals
                             WHERE stage IS NOT NULL 
 
                             UNION ALL 
@@ -96,6 +96,7 @@ class GovernanceHandler:
                             * 
                             FROM tally_proposals 
                             WHERE stage IS NOT NULL 
+                            
                         """
                         cursor.execute(sql_query)
                         raw_data = cursor.fetchall()

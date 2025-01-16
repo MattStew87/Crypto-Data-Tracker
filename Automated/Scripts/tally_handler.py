@@ -17,7 +17,7 @@ class TallyHandler:
 
         self.db_config = {
             "host": os.getenv("DATABASE_HOST"),
-            "database": "CARROT_DB", 
+            "database": os.getenv("DATABASE_NAME"), 
             "user": os.getenv("DATABASE_USER"),
             "password": os.getenv("DATABASE_PASSWORD"),
             "port": 5432
@@ -676,8 +676,8 @@ class TallyHandler:
         draw = ImageDraw.Draw(base_image)
 
         # Set fonts (adjust to available fonts on your system)
-        title_font = ImageFont.truetype("C:/Windows/Fonts/segoeuib.ttf", 125)  # Bold Segoe UI
-        date_font = ImageFont.truetype("C:/Windows/Fonts/segoeuib.ttf", 35)
+        title_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 110)
+        date_font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 30)
 
         # Title text with bounding box
         bounding_box_width = 600  # Set the maximum width for the text
@@ -685,7 +685,7 @@ class TallyHandler:
 
         # Calculate position for wrapped text
         title_x = logo_position[0] + logo_size[0] + 50
-        title_y = logo_position[1] + (logo_image.height // 4) - 85
+        title_y = logo_position[1] + (logo_image.height // 4) - 67
         current_y = title_y
 
         # Draw each line of the wrapped text
@@ -699,7 +699,7 @@ class TallyHandler:
         current_date = datetime.now().strftime("%d %b, %Y").upper()
 
         # Date text (move into the pill-shaped element, adjust left and up slightly)
-        pill_x1, pill_y1, pill_x2, pill_y2 = base_image.width - 440, base_image.height - 200, base_image.width - 50, base_image.height - 100
+        pill_x1, pill_y1, pill_x2, pill_y2 = base_image.width - 440, base_image.height - 195, base_image.width - 50, base_image.height - 95
         date_position = (pill_x1 + (pill_x2 - pill_x1) // 2 - draw.textbbox((0, 0), current_date, font=date_font)[2] // 2,
                         pill_y1 + (pill_y2 - pill_y1) // 2 - draw.textbbox((0, 0), current_date, font=date_font)[3] // 2)
         draw.text(date_position, current_date, fill="black", font=date_font)
@@ -713,5 +713,7 @@ class TallyHandler:
 
 
 
-#if __name__ == "__main__": 
+if __name__ == "__main__": 
+    tally_hanlder = TallyHandler() 
+    tally_hanlder.generate_space_image('Cryptex', 2) 
 

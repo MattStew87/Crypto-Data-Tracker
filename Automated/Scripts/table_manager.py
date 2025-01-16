@@ -18,7 +18,7 @@ class TableManager:
         self.registry = registry
         self.db_config = {
             "host": os.getenv("DATABASE_HOST"),
-            "database": "CARROT_DB",
+            "database": os.getenv("DATABASE_NAME"),
             "user": os.getenv("DATABASE_USER"),
             "password": os.getenv("DATABASE_PASSWORD"),
             "port": "5432"

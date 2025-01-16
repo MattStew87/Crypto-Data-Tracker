@@ -20,7 +20,7 @@ class GraphGenerator:
         os.makedirs(self.output_dir, exist_ok=True)
 
         self.calmColors = ["#2A503A", "#8BC9A3", "#3E9F73", "#3AB0AA", "#EEDC82", "#F4A261", "#F4D3D6", "#6D8AA7"]
-        plt.rcParams['font.family'] = 'Times New Roman' # Set default font to Times New Roman
+        plt.rcParams['font.family'] = 'Liberation Serif' # Set default font to Times New Roman
         plt.rcParams['figure.facecolor'] = '#f2efe9' # Set the default background color to off-white
 
 
