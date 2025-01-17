@@ -123,7 +123,7 @@ class TallyHandler:
         ################################################################
 
         part_3_message = (
-            f"3/ To be a part of the decision-making process. Cast your vote on the latest proposal by visiting the following link: \n\n"
+            f"3/ To be a part of the decision-making process cast your vote on the latest proposal by visiting the following link: \n\n"
             f"https://www.tally.xyz/explore"
         )
         messages.append(part_3_message)
@@ -186,45 +186,44 @@ class TallyHandler:
         # Tweet 2
         ################################################################
         prompt_for_second_tweet = f"""
-        ### **Prompt Template for Second Tweet of a Thread (Hourly Voter and Activity Breakdown)**
+            ### **Prompt Template for Second Tweet of a Thread (Hourly Voter and Activity Breakdown)**
 
-        ---
+            ---
 
-        ### **Required Inputs:**
+            ### **Required Inputs:**
 
-        - `total_voters` = {prompt_data["total_voters"]}
-        - `choice_1_name` = {prompt_data["1st_choice_name"]}
-        - `choice_1_votes` = {prompt_data["1st_choice_voting_power"]}
-        - `choice_2_name` = {prompt_data["2nd_choice_name"]}
-        - `choice_2_votes` = {prompt_data["2nd_choice_voting_power"]}
-        - `space_twitter_id` = {twitter_handle}
+            - `total_voters` = {prompt_data["total_voters"]}
+            - `choice_1_name` = {prompt_data["1st_choice_name"]}
+            - `choice_1_votes` = {prompt_data["1st_choice_voting_power"]}
+            - `choice_2_name` = {prompt_data["2nd_choice_name"]}
+            - `choice_2_votes` = {prompt_data["2nd_choice_voting_power"]}
+            - `space_twitter_id` = {twitter_handle}
 
-        ---
+            ---
 
-        ### **Intro**
+            ### **Intro**
 
-        Begin the tweet with **`2/`**. 
+            Begin the tweet with **`2/`**.  Mention the total number of voters and votes for each choice of top 2 using placeholders. 
+            
+            ensure the tweet is under 245 characters. Keep the tone neutral and professional. Do not include emojis. keep brief and informative put a pagebreak between sentences.
 
-        
-        Mention the total number of voters and votes for each choice of top 2 using placeholders. Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Do not include emojis. keep brief and informative put a pagebreak between sentences.
+            ---
 
-        ---
+            ### **Dynamic Comments Based on Voting Activity**
 
-        ### **Dynamic Comments Based on Voting Activity**
+            Add a comment based on the most relevant dynamic from the graph. Only include one (most relevant) do not mension dynamic title:
 
-        Add a comment based on the most relevant dynamic from the graph. Only include one (most relevant) do not mension dynamic title:
-
-        - **Choice Dominance** If one choice received significantly more votes than the other, mention this dominance.
-        - **Choice Winning** If one choice received more votes than the other it is not very close but also not a domination.
-        - **Close Race** If the final votes between choices are close, note the competitive nature of the proposal.
+            - **Choice Dominance** If one choice received significantly more votes than the other, mention this dominance.
+            - **Choice Winning** If one choice received more votes than the other it is not very close but also not a domination.
+            - **Close Race** If the final votes between choices are close, note the competitive nature of the proposal.
 
             ### **Additional Instructions**
 
-        - DO **NOT** include hashtags or emojis.
-        - DO **NOT** add any additional text besides the tweet itself. 
-        - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
-        - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.)
-        - Every time a voting choice is talked about surround it with " on both sides
+            - DO **NOT** include hashtags or emojis.
+            - DO **NOT** add any additional text besides the tweet itself. 
+            - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
+            - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.)
+            - Every time a voting choice is talked about surround it with " on both sides
 
         """
 
@@ -250,9 +249,8 @@ class TallyHandler:
 
             ### **Intro**
 
-            Begin the tweet with **`3/`**. 
-
-            Mention relevant data points about how voting power is distributed among participants using placeholders. 
+            Begin the tweet with **`3/`**. Mention relevant data points about how voting power is distributed among participants using placeholders. 
+            
             Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Keep brief and informative put a pagebreak between sentences.
 
             ---
@@ -396,34 +394,28 @@ class TallyHandler:
 
             ### **Intro**
 
-            Begin the tweet with **`2/`**. 
+            Begin the tweet with **`2/`**. Mention the total number of voters and votes for each choice of top 2 using placeholders. 
+            
+            Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Do not include emojis. keep breif and infomative put a pagebreak between sentences.
 
-            Mention the total number of voters and votes for each choice of top 2 using placeholders. Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Do not include emojis. keep breif and infomative put a pagebreak between sentences.
 
             ---
 
-             Begin the tweet with **`2/`**. 
+            ### **Dynamic Comments Based on Voting Activity**
 
-        
-        Mention the total number of voters and votes for each choice of top 2 using placeholders. Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Do not include emojis. keep brief and informative put a pagebreak between sentences.
+            Add a comment based on the most relevant dynamic from the graph. Only include one (most relevant) do not mension dynamic title:
 
-        ---
-
-        ### **Dynamic Comments Based on Voting Activity**
-
-        Add a comment based on the most relevant dynamic from the graph. Only include one (most relevant) do not mension dynamic title:
-
-        - **Choice Dominance** If one choice received significantly more votes than the other, mention this dominance.
-        - **Choice Winning** If one choice received more votes than the other it is not very close but also not a domination.
-        - **Close Race** If the final votes between choices are close, note the competitive nature of the proposal.
+            - **Choice Dominance** If one choice received significantly more votes than the other, mention this dominance.
+            - **Choice Winning** If one choice received more votes than the other it is not very close but also not a domination.
+            - **Close Race** If the final votes between choices are close, note the competitive nature of the proposal.
 
             ### **Additional Instructions**
 
-        - DO **NOT** include hashtags or emojis.
-        - DO **NOT** add any additional text besides the tweet itself. 
-        - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
-        - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.)
-        - Every time a voting choice is talked about surround it with " on both sides
+            - DO **NOT** include hashtags or emojis.
+            - DO **NOT** add any additional text besides the tweet itself. 
+            - Format the tweet so that each sentence **after the first sentence** is separated by **two** newline characters 
+            - DO **NOT** add an additional comment at the end with direction to more infomation or twitter @ (eg. Follow @GMX_IO for updates.)
+            - Every time a voting choice is talked about surround it with " on both sides
         """
 
         part_2_message = self._generate_chatGPT_response(prompt_for_second_tweet)
@@ -447,9 +439,8 @@ class TallyHandler:
 
             ### **Intro**
 
-            Begin the tweet with **`3/`**. 
-
-            Mention relevant data points about how voting power is distributed among participants using placeholders. 
+            Begin the tweet with **`3/`**.  Mention relevant data points about how voting power is distributed among participants using placeholders. 
+            
             Ensure the tweet is under 245 characters. Keep the tone neutral and professional. Keep brief and informative put a pagebreak between sentences.
 
             ---
