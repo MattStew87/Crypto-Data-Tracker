@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import os
 import json 
 from tally_proposal_fetcher import TallyProposalFetcher 
+from dao_forum_scraper import DAOForumScraper
 
 
 class UpdateRegistry:
@@ -20,6 +21,7 @@ class UpdateRegistry:
         load_dotenv()
 
         self.tally_proposal_fetcher = TallyProposalFetcher() 
+        self.dao_forum_scraper = DAOForumScraper() 
 
         script_dir = os.path.dirname(os.path.abspath(__file__))
         self.registry_file = os.path.join(script_dir, registry_file)
@@ -148,6 +150,9 @@ class UpdateRegistry:
                     # Add new active Tally proposals to database
                     self.tally_proposal_fetcher.insert_proposals() 
                     print("Tally proposals added successfully") 
+
+                    self.dao_forum_scraper.run() 
+                    print("DAO forum scraper data successfully")
 
         except Exception as e:
             print(f"Error executing updates: {e}")

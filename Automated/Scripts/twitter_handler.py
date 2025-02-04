@@ -129,4 +129,48 @@ class TwitterHandler:
         except Exception as e:
             print(f"Error creating thread reply: {e}")
             return None
+    
+    
+    def get_comments_on_post(self, tweet_id):
+        """
+        Fetches comments (replies) on a specific tweet, excluding the original post and replies made by the authenticated user.
+        :param tweet_id: The ID of the original tweet to fetch comments for.
+        :return: A list of dictionaries containing the ID and text of the comments.
+        """
+        try:
+            print(f"Fetching comments on tweet ID: {tweet_id}")
+            
+            # Get the authenticated user's ID to filter out their replies
+            my_user_id = self.api_v2.get_me().data["id"]
+            
+            # Query to find replies to the tweet and exclude the authenticated user's tweets
+            query = f"conversation_id:{tweet_id} -from:{my_user_id}" 
+              
+            
+            # Make the API call to fetch replies
+            response = self.api_v2.search_recent_tweets(
+                query=query,
+                tweet_fields=["id", "text"],  # Only necessary fields
+                max_results=100,  # Adjust based on API limits
+                user_auth=True
+            )
+            
+            # Check if there are any replies
+            if not response.data:
+                print("No comments found.")
+                return []
+
+            # Filter out the original tweet manually
+            comments = [
+                (tweet["id"], tweet["text"], False)
+                for tweet in response.data
+                if tweet["id"] != tweet_id  # Exclude the original tweet
+            ]
+            
+            print(f"Found {len(comments)} comments.")
+            return comments
+
+        except Exception as e:
+            print(f"Error fetching comments: {e}")
+            return []
 

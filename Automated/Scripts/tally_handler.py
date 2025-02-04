@@ -8,6 +8,7 @@ from twitter_handler import TwitterHandler
 from tally_data import TallyData
 from openai import OpenAI
 import time 
+from comment_handler import CommentHandler
 
 
 class TallyHandler: 
@@ -34,6 +35,8 @@ class TallyHandler:
         self.twitter_client = TwitterHandler() 
 
         self.tally_gov_data = TallyData() 
+
+        self.comment_handler = CommentHandler() 
 
 
     def proposal_announcement_messages(self, proposal): 
@@ -129,7 +132,7 @@ class TallyHandler:
         messages.append(part_3_message)
 
         # Append space_id and messages to the result list
-        result = {"space_id": space_id, "messages": messages}
+        result = {"space_id": space_id, "messages": messages, 'proposal_title': proposal_title}
 
         return result
     
@@ -314,7 +317,8 @@ class TallyHandler:
             "space_id": space_id,
             "messages": final_messages,
             "proposal_id": proposal_id,
-            "decimals": decimals
+            "decimals": decimals,
+            'proposal_title': proposal_title
         }        
 
         return result 
@@ -555,7 +559,8 @@ class TallyHandler:
             "messages": final_messages,
             "proposal_id": proposal_id, 
             "governor_id": governor_id, 
-            "decimals": decimals
+            "decimals": decimals,
+            'proposal_title': proposal_title
         } 
     
         return result
@@ -567,12 +572,15 @@ class TallyHandler:
 
         space_id = proposal_message.get("space_id", "")
         messages = proposal_message.get("messages", "")
+        proposal_title = proposal_message.get("proposal_title", "")
                     
         cover_image = self.generate_space_image(space_id, 1)
 
         orginal_post_id = self.twitter_client.post_with_media(messages[0], cover_image)
         thread1_id = self.twitter_client.post_thread_reply(messages[1], orginal_post_id)
         self.twitter_client.post_thread_reply(messages[2], thread1_id)
+
+        self.comment_handler.set_tweet_id(orginal_post_id, proposal_title, space_id)
 
     
     def create_proposal_halftime(self, proposal):
@@ -583,6 +591,7 @@ class TallyHandler:
         messages = halftime_message.get("messages", "")
         proposal_id = halftime_message.get("proposal_id", "")
         decimals = halftime_message.get("decimals", "") 
+        proposal_title = halftime_message.get("proposal_title", "")
                     
         cover_image = self.generate_space_image(space_id, 2)
         Tweet2_media = self.tally_gov_data.tally_daily_total_voting_power_by_choice(proposal_id, decimals)
@@ -592,6 +601,8 @@ class TallyHandler:
         thread1_id = self.twitter_client.post_thread_reply_with_media(messages[1], Tweet2_media, orginal_post_id)
         thread2_id = self.twitter_client.post_thread_reply_with_media(messages[2], Tweet3_media, thread1_id)
         self.twitter_client.post_thread_reply(messages[3], thread2_id)
+
+        self.comment_handler.set_tweet_id(orginal_post_id, proposal_title, space_id)
     
     def create_proposal_final(self, proposal):
 
@@ -602,6 +613,7 @@ class TallyHandler:
         proposal_id = final_message.get("proposal_id", "")
         governor_id = final_message.get("governor_id", "")
         decimals = final_message.get("decimals", "") 
+        proposal_title = final_message.get("proposal_title", "")
                     
         cover_image = self.generate_space_image(space_id, 3)
         Tweet2_media = self.tally_gov_data.tally_daily_total_voting_power_by_choice(proposal_id, decimals)
@@ -614,6 +626,7 @@ class TallyHandler:
         thread3_id = self.twitter_client.post_thread_reply_with_media(messages[3], Tweet4_media, thread2_id)
         self.twitter_client.post_thread_reply(messages[4], thread3_id)
 
+        self.comment_handler.set_tweet_id(orginal_post_id, proposal_title, space_id)
     
     
     

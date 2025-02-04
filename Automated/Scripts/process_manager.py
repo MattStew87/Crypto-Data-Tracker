@@ -2,6 +2,7 @@ import time
 import schedule
 from update_registry import UpdateRegistry
 from governance_handler import GovernanceHandler
+from comment_handler import CommentHandler
 from datetime import datetime
 
 def run_updates():
@@ -32,6 +33,22 @@ def run_tweet():
     except Exception as e:
         print(f"Error in run_tweet: {e}")
 
+def process_comments():
+    """
+    Function to fetch comments from Twitter and respond to them.
+    Runs every 15 minutes.
+    """
+    try:
+        print('===========================================================================================================')
+        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print(f"process_comments called at {current_time} \n")
+        comment_handler = CommentHandler()
+        comment_handler.add_comments_to_db()
+        comment_handler.respond_to_comments()
+        print('===========================================================================================================\n\n')
+    except Exception as e:
+        print(f"Error in process_comments: {e}")
+
 def start_process_manager():
     """
     Run updates immediately and keep the process running for testing.
@@ -44,6 +61,9 @@ def start_process_manager():
 
     # Schedule tweets to run every 2 hours
     schedule.every(2).hours.do(run_tweet)
+
+    # Schedule comment processing every 15 minutes
+    schedule.every(15).minutes.do(process_comments)
 
     while True:
         schedule.run_pending()

@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from twitter_handler import TwitterHandler
 from snapshot_flipside_data import SnapshotFlipsideData
 from openai import OpenAI
+from comment_handler import CommentHandler
 
 import time 
 
@@ -35,6 +36,8 @@ class SnapshotHandler:
         self.twitter_client = TwitterHandler() 
 
         self.flipside_gov_data = SnapshotFlipsideData() 
+
+        self.comment_handler = CommentHandler() 
 
 
     def proposal_announcement_messages(self, proposal): 
@@ -134,7 +137,7 @@ class SnapshotHandler:
         messages.append(part_3_message)
 
         # Append space_id and messages to the result list
-        result = {"space_id": space_id, "messages": messages}
+        result = {"space_id": space_id, "messages": messages, 'proposal_title': proposal_title}
 
         return result
     
@@ -371,7 +374,8 @@ class SnapshotHandler:
         result = {
             "space_id": space_id,
             "messages": final_messages,
-            "proposal_id": proposal_id
+            "proposal_id": proposal_id,
+            'proposal_title': proposal_title
         }        
 
         return result 
@@ -615,7 +619,8 @@ class SnapshotHandler:
         result = {
             "space_id": space_id,
             "messages": final_messages,
-            "proposal_id": proposal_id
+            "proposal_id": proposal_id,
+            'proposal_title': proposal_title
         }
     
         return result
@@ -628,12 +633,16 @@ class SnapshotHandler:
 
         space_id = proposal_message.get("space_id", "")
         messages = proposal_message.get("messages", "")
+        proposal_title = proposal_message.get("proposal_title", "")
                     
         cover_image = self.generate_space_image(space_id, 1)
 
         orginal_post_id = self.twitter_client.post_with_media(messages[0], cover_image)
         thread1_id = self.twitter_client.post_thread_reply(messages[1], orginal_post_id)
         self.twitter_client.post_thread_reply(messages[2], thread1_id)
+
+        self.comment_handler.set_tweet_id(orginal_post_id, proposal_title, space_id)
+
 
     
     def create_proposal_halftime(self, proposal):
@@ -643,6 +652,7 @@ class SnapshotHandler:
         space_id = halftime_message.get("space_id", "")
         messages = halftime_message.get("messages", "")
         proposal_id = halftime_message.get("proposal_id", "")
+        proposal_title = halftime_message.get("proposal_title", "")
                     
         cover_image = self.generate_space_image(space_id, 2)
         Tweet2_media = self.flipside_gov_data.hourly_total_voting_power_by_choice(proposal_id)
@@ -655,6 +665,8 @@ class SnapshotHandler:
         thread3_id = self.twitter_client.post_thread_reply_with_media(messages[3], Tweet4_media, thread2_id)
         self.twitter_client.post_thread_reply(messages[4], thread3_id)
 
+        self.comment_handler.set_tweet_id(orginal_post_id, proposal_title, space_id)
+
 
     def create_proposal_final(self, proposal):
 
@@ -663,6 +675,7 @@ class SnapshotHandler:
         space_id = final_message.get("space_id", "")
         messages = final_message.get("messages", "")
         proposal_id = final_message.get("proposal_id", "")
+        proposal_title = final_message.get("proposal_title", "")
                     
         cover_image = self.generate_space_image(space_id, 3)
         Tweet2_media = self.flipside_gov_data.hourly_total_voting_power_by_choice(proposal_id)
@@ -674,6 +687,8 @@ class SnapshotHandler:
         thread2_id = self.twitter_client.post_thread_reply_with_media(messages[2], Tweet3_media, thread1_id)
         thread3_id = self.twitter_client.post_thread_reply_with_media(messages[3], Tweet4_media, thread2_id)
         self.twitter_client.post_thread_reply(messages[4], thread3_id)
+
+        self.comment_handler.set_tweet_id(orginal_post_id, proposal_title, space_id)
 
     
     def _generate_chatGPT_response(self, prompt: str) -> str:

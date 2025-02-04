@@ -1,0 +1,156 @@
+Jan 23 05:11:59 pine-Z790-AORUS-ELITE-AX python[118876]: #######################################################################################################################
+Jan 23 05:11:59 pine-Z790-AORUS-ELITE-AX python[118876]: run_tweet called at 2025-01-23 05:11:59
+Jan 23 05:12:05 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/Image_bank/final_output_image.png
+Jan 23 05:12:06 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882370717028700161
+Jan 23 05:12:06 pine-Z790-AORUS-ELITE-AX python[118876]: Creating tweet with media: 1/ "CIP-61: Price-Improvement-Share, Revenue-Share and Fees on CoW Protocol" by @CoWSwap is now live.
+Jan 23 05:12:06 pine-Z790-AORUS-ELITE-AX python[118876]: The proposal invites community feedback on enhancing trading economics.
+Jan 23 05:12:06 pine-Z790-AORUS-ELITE-AX python[118876]: Comment period runs from Jan 22nd - 29th.
+Jan 23 05:12:07 pine-Z790-AORUS-ELITE-AX python[118876]: Tweet created successfully: 1882370720161812708
+Jan 23 05:12:07 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882370720161812708: 2/ This proposal addresses the transition to a new revenue model for financial sustainability.
+Jan 23 05:12:07 pine-Z790-AORUS-ELITE-AX python[118876]: It’s expected to optimize revenue through price-improvement-sharing while allowing flexibility for partners to apply fees, supporting CoW Protocol's growth objectives.
+Jan 23 05:12:07 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882370721759813844
+Jan 23 05:12:07 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882370721759813844: 3/ To be a part of the decision-making process cast your vote on the latest proposal by visiting the following link:
+Jan 23 05:12:07 pine-Z790-AORUS-ELITE-AX python[118876]: https://snapshot.box/#/s:cow.eth/proposal/0xbafee087f3a1d5757e44a72fa76e8624ce212623153816a936a8888741485ef5
+Jan 23 05:12:07 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882370722489655341
+Jan 23 05:12:07 pine-Z790-AORUS-ELITE-AX python[118876]: #######################################################################################################################
+Jan 23 07:12:07 pine-Z790-AORUS-ELITE-AX python[118876]: #######################################################################################################################
+Jan 23 07:12:07 pine-Z790-AORUS-ELITE-AX python[118876]: run_tweet called at 2025-01-23 07:12:07
+Jan 23 07:13:57 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/Image_bank/final_output_image.png
+Jan 23 07:13:58 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882401384227565568
+Jan 23 07:13:58 pine-Z790-AORUS-ELITE-AX python[118876]: Creating tweet with media: 1/ "Bixbite For DUNA Compliance Reserve Administrator" proposal from @nounsdao concluded.
+Jan 23 07:13:58 pine-Z790-AORUS-ELITE-AX python[118876]: It received 107 first-choice votes.
+Jan 23 07:13:58 pine-Z790-AORUS-ELITE-AX python[118876]: The winning option was "for" with 44.58% of the votes.
+Jan 23 07:13:59 pine-Z790-AORUS-ELITE-AX python[118876]: Tweet created successfully: 1882401388040228980
+Jan 23 07:13:59 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_daily_total_voters_by_choice.png
+Jan 23 07:13:59 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882401389931909120
+Jan 23 07:13:59 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_daily_total_voting_power_by_choice.png
+Jan 23 07:14:00 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882401392238731264
+Jan 23 07:14:00 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882401388040228980 with text: 2/ A total of 55 voters participated.
+Jan 23 07:14:00 pine-Z790-AORUS-ELITE-AX python[118876]: "for" received 107 votes.
+Jan 23 07:14:00 pine-Z790-AORUS-ELITE-AX python[118876]: "against" gathered 76 votes.
+Jan 23 07:14:00 pine-Z790-AORUS-ELITE-AX python[118876]: The vote was competitive, reflecting a close race.
+Jan 23 07:14:00 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882401394046443549
+Jan 23 07:14:00 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_voters_by_wallet_voting_power_group.png
+Jan 23 07:14:01 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882401395665522688
+Jan 23 07:14:01 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_voting_power_by_wallet_voting_power_group.png
+Jan 23 07:14:01 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882401397628350464
+Jan 23 07:14:01 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882401394046443549 with text: 3/ Voting power distribution reveals insights for @nounsdao.
+Jan 23 07:14:01 pine-Z790-AORUS-ELITE-AX python[118876]: 1 wallet holds the voting power in the top 10%.
+Jan 23 07:14:01 pine-Z790-AORUS-ELITE-AX python[118876]: 4 wallets control the top 50% of voting power.
+Jan 23 07:14:01 pine-Z790-AORUS-ELITE-AX python[118876]: The concentration of voting power among just 4 wallets highlights a significant influence.
+Jan 23 07:14:01 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882401398790164808
+Jan 23 07:14:01 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_space_proposals_by_voters.png
+Jan 23 07:14:02 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882401400266649600
+Jan 23 07:14:02 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_space_proposals_by_voting_power.png
+Jan 23 07:14:02 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882401402846138368
+Jan 23 07:14:02 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882401398790164808 with text: 4/ Recent proposal at @nounsdao showed interesting dynamics.
+Jan 23 07:14:02 pine-Z790-AORUS-ELITE-AX python[118876]: Voter turnout rank was 28, placing it in the 96.30th percentile.
+Jan 23 07:14:02 pine-Z790-AORUS-ELITE-AX python[118876]: However, voting power rank was lower at 86, in the 88.36th percentile.
+Jan 23 07:14:02 pine-Z790-AORUS-ELITE-AX python[118876]: Balanced engagement with some discrepancy noted.
+Jan 23 07:14:03 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882401404695761381
+Jan 23 07:14:03 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882401404695761381: 5/ To be a part of the decision-making process. Cast your vote on the latest proposal by visiting the following link:
+Jan 23 07:14:03 pine-Z790-AORUS-ELITE-AX python[118876]: https://www.tally.xyz/explore
+Jan 23 07:14:03 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882401406146986377
+Jan 23 07:14:03 pine-Z790-AORUS-ELITE-AX python[118876]: #######################################################################################################################
+Jan 23 09:14:03 pine-Z790-AORUS-ELITE-AX python[118876]: #######################################################################################################################
+Jan 23 09:14:03 pine-Z790-AORUS-ELITE-AX python[118876]: run_tweet called at 2025-01-23 09:14:03
+Jan 23 09:14:14 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/Image_bank/final_output_image.png
+Jan 23 09:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882431656209813504
+Jan 23 09:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: Creating tweet with media: 1/ "Lil Eternal Rhythms at ETHDENVER 2025" is a new governance proposal from @lilnounsdao.
+Jan 23 09:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: The proposal is live from Jan 22nd - 25th.
+Jan 23 09:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: Tweet created successfully: 1882431659577917899
+Jan 23 09:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882431659577917899: 2/ This proposal brings the immersive **Lil Eternal Rhythms** to ETHDenver 2025.
+Jan 23 09:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: It’s expected to integrate cutting-edge tech into storytelling, enhancing audience engagement and promoting Lil Nouns through HDRI visual art and NFTs at a high-profile event.
+Jan 23 09:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882431661134008810
+Jan 23 09:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882431661134008810: 3/ To be a part of the decision-making process cast your vote on the latest proposal by visiting the following link:
+Jan 23 09:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: https://www.tally.xyz/explore
+Jan 23 09:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882431661922553978
+Jan 23 09:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: #######################################################################################################################
+Jan 23 11:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: #######################################################################################################################
+Jan 23 11:14:16 pine-Z790-AORUS-ELITE-AX python[118876]: run_tweet called at 2025-01-23 11:14:16
+Jan 23 11:14:21 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/Image_bank/final_output_image.png
+Jan 23 11:14:22 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882461882717528065
+Jan 23 11:14:22 pine-Z790-AORUS-ELITE-AX python[118876]: Creating tweet with media: 1/ "[Curve] Ownership DAO Vote ID: 945" proposal by @ConvexFinance is now live.
+Jan 23 11:14:22 pine-Z790-AORUS-ELITE-AX python[118876]: Review and participate from Jan 22nd - 25th.
+Jan 23 11:14:23 pine-Z790-AORUS-ELITE-AX python[118876]: Tweet created successfully: 1882461886563733603
+Jan 23 11:14:23 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882461886563733603: 2/ This proposal addresses the need for increased liquidity on Curve's platform.
+Jan 23 11:14:23 pine-Z790-AORUS-ELITE-AX python[118876]: It’s expected to enhance the DOLA/deUSD pool's visibility and performance, thereby supporting the Ethereum Chain’s decentralized finance ecosystem.
+Jan 23 11:14:23 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882461888237232276
+Jan 23 11:14:23 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882461888237232276: 3/ To be a part of the decision-making process cast your vote on the latest proposal by visiting the following link:
+Jan 23 11:14:23 pine-Z790-AORUS-ELITE-AX python[118876]: https://snapshot.box/#/s:cvx.eth/proposal/0x8acf3336bf18290b105cdc4d958800d67f32b3ca237e21dea60e2232ef059867
+Jan 23 11:14:23 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882461889055121779
+Jan 23 11:14:23 pine-Z790-AORUS-ELITE-AX python[118876]: #######################################################################################################################
+Jan 23 13:14:23 pine-Z790-AORUS-ELITE-AX python[118876]: #######################################################################################################################
+Jan 23 13:14:23 pine-Z790-AORUS-ELITE-AX python[118876]: run_tweet called at 2025-01-23 13:14:23
+Jan 23 13:15:02 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/Image_bank/final_output_image.png
+Jan 23 13:15:08 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882492275919384577
+Jan 23 13:15:08 pine-Z790-AORUS-ELITE-AX python[118876]: Creating tweet with media: Curve Ownership DAO Vote ID: 942 from @ConvexFinance is halfway through.
+Jan 23 13:15:08 pine-Z790-AORUS-ELITE-AX python[118876]:   
+Jan 23 13:15:08 pine-Z790-AORUS-ELITE-AX python[118876]: The proposal seeks to add gauges for frxUSD pools.
+Jan 23 13:15:09 pine-Z790-AORUS-ELITE-AX python[118876]: Tweet created successfully: 1882492279346036778
+Jan 23 13:15:09 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/hourly_total_voters_by_choice.png
+Jan 23 13:15:09 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882492281174757376
+Jan 23 13:15:09 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/hourly_total_voting_power_by_choice.png
+Jan 23 13:15:10 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882492282701582336
+Jan 23 13:15:10 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882492279346036778 with text: 2/ With a total of 6 voters, "yes" secured 5.76M votes while "N/A" received none.
+Jan 23 13:15:10 pine-Z790-AORUS-ELITE-AX python[118876]: "Yes" overwhelmingly dominated the voting outcome.
+Jan 23 13:15:10 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882492283938849033
+Jan 23 13:15:10 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/voters_by_wallet_voting_power_group.png
+Jan 23 13:15:10 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882492285490794496
+Jan 23 13:15:10 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/voting_power_by_wallet_voting_power_group.png
+Jan 23 13:15:11 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882492287248105472
+Jan 23 13:15:11 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882492283938849033 with text: 3/ Voting power distribution in @ConvexFinance shows concentration among a select few.
+Jan 23 13:15:11 pine-Z790-AORUS-ELITE-AX python[118876]: The top 10%, equivalent to just 1 wallet, holds significant influence.
+Jan 23 13:15:11 pine-Z790-AORUS-ELITE-AX python[118876]: One wallet controls the top 50% of voting power, highlighting an extreme concentration of influence.
+Jan 23 13:15:11 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882492288728760545
+Jan 23 13:15:11 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/space_proposals_by_voters.png
+Jan 23 13:15:11 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882492290280603648
+Jan 23 13:15:11 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/space_proposals_by_voting_power.png
+Jan 23 13:15:12 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882492291991932928
+Jan 23 13:15:12 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882492288728760545 with text: 4/ Comparing current proposal’s voting activity at @ConvexFinance:
+Jan 23 13:15:12 pine-Z790-AORUS-ELITE-AX python[118876]: Voting power rank is 851, in the 43.14th percentile.
+Jan 23 13:15:12 pine-Z790-AORUS-ELITE-AX python[118876]: Voter turnout rank is 1.20K, in the 19.8th percentile.
+Jan 23 13:15:12 pine-Z790-AORUS-ELITE-AX python[118876]: Engagement is below average with low voter turnout relative to voting power.
+Jan 23 13:15:12 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882492294047093108
+Jan 23 13:15:12 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882492294047093108: 5/ If you want to learn more about this @ConvexFinance proposal check out our @flipsidecrypto Dashboard:
+Jan 23 13:15:12 pine-Z790-AORUS-ELITE-AX python[118876]: https://flipsidecrypto.xyz/pine/snapshot-proposal-lookup-nFH10H
+Jan 23 13:15:12 pine-Z790-AORUS-ELITE-AX python[118876]: To participate in the vote go here: https://snapshot.box/#/s:cvx.eth/proposal/0xa93ab7cdcb3f82496d3adcf9fae9df68f68891144ead6e9d3bfff596b921cfe6
+Jan 23 13:15:13 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882492295347421455
+Jan 23 13:15:13 pine-Z790-AORUS-ELITE-AX python[118876]: #######################################################################################################################
+Jan 23 15:15:13 pine-Z790-AORUS-ELITE-AX python[118876]: #######################################################################################################################
+Jan 23 15:15:13 pine-Z790-AORUS-ELITE-AX python[118876]: run_tweet called at 2025-01-23 15:15:13
+Jan 23 15:16:22 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/Image_bank/final_output_image.png
+Jan 23 15:16:23 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882522788382085120
+Jan 23 15:16:23 pine-Z790-AORUS-ELITE-AX python[118876]: Creating tweet with media: 1/ "AIP-582: ApeChain, On-chain – ApeCoin DAO Governance Revamp" from @apecoin is halfway through.
+Jan 23 15:16:23 pine-Z790-AORUS-ELITE-AX python[118876]: The proposal involves $375K annually for the ApeCoin DAO treasury and growth.
+Jan 23 15:16:23 pine-Z790-AORUS-ELITE-AX python[118876]: It aims to put more decision-making on-chain, granting the ApeCoin DAO more autonomy.
+Jan 23 15:16:24 pine-Z790-AORUS-ELITE-AX python[118876]: Tweet created successfully: 1882522791687209138
+Jan 23 15:16:24 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/hourly_total_voters_by_choice.png
+Jan 23 15:16:24 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882522793708773376
+Jan 23 15:16:24 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/hourly_total_voting_power_by_choice.png
+Jan 23 15:16:24 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882522795835301888
+Jan 23 15:16:24 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882522791687209138 with text: 2/ There are 386 total voters.
+Jan 23 15:16:24 pine-Z790-AORUS-ELITE-AX python[118876]: "For" received 11.21M votes.
+Jan 23 15:16:24 pine-Z790-AORUS-ELITE-AX python[118876]: "Against" garnered 299.27K votes.
+Jan 23 15:16:24 pine-Z790-AORUS-ELITE-AX python[118876]: The "For" choice showed clear dominance with a significantly larger number of votes than "Against."
+Jan 23 15:16:25 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882522797009715382
+Jan 23 15:16:25 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/voters_by_wallet_voting_power_group.png
+Jan 23 15:16:25 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882522798733529088
+Jan 23 15:16:25 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/voting_power_by_wallet_voting_power_group.png
+Jan 23 15:16:26 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882522800314830848
+Jan 23 15:16:26 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882522797009715382 with text: 3/ Voting power distribution shows a significant concentration.
+Jan 23 15:16:26 pine-Z790-AORUS-ELITE-AX python[118876]: Despite 386 total voters, the top 10% is dominated by just 1 wallet.
+Jan 23 15:16:26 pine-Z790-AORUS-ELITE-AX python[118876]: Similarly, the top 50% of voting power is controlled by only 3 wallets, highlighting concentrated influence in @apecoin governance.
+Jan 23 15:16:26 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882522801443156092
+Jan 23 15:16:26 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/space_proposals_by_voters.png
+Jan 23 15:16:26 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882522803217317888
+Jan 23 15:16:26 pine-Z790-AORUS-ELITE-AX python[118876]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/space_proposals_by_voting_power.png
+Jan 23 15:16:27 pine-Z790-AORUS-ELITE-AX python[118876]: Media uploaded successfully: 1882522805691994112
+Jan 23 15:16:27 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882522801443156092 with text: 4/ Comparing @apecoin's voting activity for this proposal: Voting power ranks at 15th with a 95.64 percentile, while voter turnout is ranked at 90th with a 72.27 percentile.
+Jan 23 15:16:27 pine-Z790-AORUS-ELITE-AX python[118876]: There's a significant discrepancy between voter turnout and voting power engagement.
+Jan 23 15:16:27 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882522806987964464
+Jan 23 15:16:27 pine-Z790-AORUS-ELITE-AX python[118876]: Creating thread reply to 1882522806987964464: 5/ If you want to learn more about this @apecoin proposal check out our @flipsidecrypto Dashboard:
+Jan 23 15:16:27 pine-Z790-AORUS-ELITE-AX python[118876]: https://flipsidecrypto.xyz/pine/snapshot-proposal-lookup-nFH10H
+Jan 23 15:16:27 pine-Z790-AORUS-ELITE-AX python[118876]: To participate in the vote go here: https://snapshot.box/#/s:apecoin.eth/proposal/0x03f20c8df4bebd98948ee455510d1cc5af4f8941b033840acd8803fa4b4781e6
+Jan 23 15:16:27 pine-Z790-AORUS-ELITE-AX python[118876]: Thread reply created successfully: 1882522808225235371
+Jan 23 15:16:27 pine-Z790-AORUS-ELITE-AX python[118876]: #######################################################################################################################
