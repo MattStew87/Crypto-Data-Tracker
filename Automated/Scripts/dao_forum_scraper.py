@@ -5,6 +5,7 @@ from openai import OpenAI
 import uuid
 import os
 from dotenv import load_dotenv
+import time
 
 
 class DAOForumScraper:
@@ -20,6 +21,21 @@ class DAOForumScraper:
 
         # Ensure the Qdrant collection exists
         self.create_qdrant_collection()
+
+    def safe_request(self, method, url, retries=3, **kwargs):
+        """Wrapper for requests with retries and timeout handling."""
+        for attempt in range(retries):
+            try:
+                response = requests.request(method, url, timeout=10, **kwargs)
+                response.raise_for_status()
+                return response  # Return response if successful
+            except requests.Timeout:
+                print(f"Timeout error on attempt {attempt+1}/{retries} for {url}")
+            except requests.RequestException as e:
+                print(f"Request error on attempt {attempt+1}/{retries}: {e}")
+            time.sleep(1)  # Wait before retrying
+        return None  # Return None after all retries fail
+
 
     def create_qdrant_collection(self):
         """Ensure the collection exists in Qdrant."""
@@ -46,14 +62,12 @@ class DAOForumScraper:
         return embeddings
 
     def fetch_json(self, url):
-        """Fetch JSON data from a given URL."""
-        try:
-            response = requests.get(url)
-            if response.status_code == 200:
-                return response.json()
-        except Exception as e:
-            print(f"Error fetching {url}: {e}")
-        return None
+        """Fetch JSON data from a given URL with error handling."""
+        response = self.safe_request("GET", url)
+        if response:
+            return response.json()  # Return valid JSON response
+        return None  # Return None if request failed
+
 
     def fetch_all_categories(self, base_url):
         """Fetch all categories from the DAO forum."""
@@ -105,27 +119,28 @@ class DAOForumScraper:
             },
             "limit": 1
         }
-        try:
-            response = requests.post(url, json=query)
-            response.raise_for_status()
-            result = response.json()
-            points = result.get("result", {}).get("points", [])
+        response = self.safe_request("POST", url, json=query)
+        if response:
+            points = response.json().get("result", {}).get("points", [])
             return len(points) > 0
-        except requests.exceptions.RequestException as e:
-            print(f"Error checking record existence: {e}")
-            return False
+        return False
 
     def upload_to_qdrant(self, post, topic, dao, base_url):
         """Upload a post's metadata and embedding to Qdrant."""
         content = post.get("cooked", "").replace("\n", " ")
         combined_text = f"Topic: {topic['title']}\nAuthor: {post['username']}\nComment: {content}"
         embeddings = self.get_embedding(combined_text)
+        
+        if embeddings is None:
+            print(f"Skipping upload for {topic['title']} due to embedding error.")
+            return
+
         epoch_timestamp = self.iso_to_epoch_milliseconds(post.get("created_at", ""))
         vector_id = str(uuid.uuid4())
 
         if self.record_exists(dao, topic["id"], post["id"]):
-            print(f"Record already exists for DAO: {dao}, Topic ID: {topic['id']}, Comment ID: {post['id']}.")
-            return
+            print(f"Record already exists for DAO: {dao}, Topic ID: {topic['id']}, Comment ID: {post['id']}. Skipping...")
+            return  # Skip duplicate
 
         for idx, embedding in enumerate(embeddings):
             payload = {
@@ -145,7 +160,8 @@ class DAOForumScraper:
                     },
                 }]
             }
-            requests.put(f"{self.qdrant_host}/collections/{self.collection_name}/points", json=payload)
+            self.safe_request("PUT", f"{self.qdrant_host}/collections/{self.collection_name}/points", json=payload)
+            
 
     def process_topic(self, dao_name, base_url, topic):
         """Process a single topic."""
@@ -226,9 +242,14 @@ class DAOForumScraper:
         ]
 
         with ThreadPoolExecutor(max_workers=self.max_threads) as executor:
-            futures = [executor.submit(self.process_dao, dao["name"], dao["base_url"]) for dao in dao_list]
-            for future in as_completed(futures):
-                future.result()
+            futures = {executor.submit(self.process_dao, dao["name"], dao["base_url"]): dao for dao in dao_list}
+
+            for future in as_completed(futures):  # Process completed threads first
+                dao = futures[future]
+                try:
+                    future.result()  # Raises exceptions inside the thread
+                except Exception as e:
+                    print(f"Error processing {dao['name']}: {e}")  # Error is logged, but execution continues
 
 
 # **Usage**
