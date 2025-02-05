@@ -1,0 +1,226 @@
+Feb 05 08:28:39 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 08:28:39 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 08:28:39
+Feb 05 08:28:39 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887112325599007147
+Feb 05 08:28:39 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 08:28:39 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 08:28:39 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 08:43:39 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 08:43:39 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 08:43:39
+Feb 05 08:43:39 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887112325599007147
+Feb 05 08:43:39 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 08:43:39 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 08:43:39 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 08:58:39 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 08:58:39 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 08:58:39
+Feb 05 08:58:39 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887112325599007147
+Feb 05 08:58:39 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 08:58:39 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 08:58:40 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 09:13:40 pine-Z790-AORUS-ELITE-AX python[436000]: #######################################################################################################################
+Feb 05 09:13:40 pine-Z790-AORUS-ELITE-AX python[436000]: run_tweet called at 2025-02-05 09:13:40
+Feb 05 09:15:36 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/Image_bank/final_output_image.png
+Feb 05 09:15:37 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887143038775889920
+Feb 05 09:15:37 pine-Z790-AORUS-ELITE-AX python[436000]: Creating tweet with media: 1/ "12k to make a grassroots impact on the Magic The Gathering community" from @nounsdao has concluded.
+Feb 05 09:15:37 pine-Z790-AORUS-ELITE-AX python[436000]: "for" received 126 first-choice votes, leading at 72%.
+Feb 05 09:15:37 pine-Z790-AORUS-ELITE-AX python[436000]: The proposal passed with the winning option being "for."
+Feb 05 09:15:37 pine-Z790-AORUS-ELITE-AX python[436000]: Tweet created successfully: 1887143041963593946
+Feb 05 09:15:37 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_daily_total_voters_by_choice.png
+Feb 05 09:15:37 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887143043783958528
+Feb 05 09:15:37 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_daily_total_voting_power_by_choice.png
+Feb 05 09:15:38 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887143045457444864
+Feb 05 09:15:38 pine-Z790-AORUS-ELITE-AX python[436000]: Creating thread reply to 1887143041963593946 with text: 2/ Total voters: 44. Votes for "for": 126. Votes for "abstain": 38.
+Feb 05 09:15:38 pine-Z790-AORUS-ELITE-AX python[436000]: "for" showed dominance in this vote.
+Feb 05 09:15:38 pine-Z790-AORUS-ELITE-AX python[436000]: Thread reply created successfully: 1887143046640189691
+Feb 05 09:15:38 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_voters_by_wallet_voting_power_group.png
+Feb 05 09:15:38 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887143048078925824
+Feb 05 09:15:38 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_voting_power_by_wallet_voting_power_group.png
+Feb 05 09:15:39 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887143049613971457
+Feb 05 09:15:39 pine-Z790-AORUS-ELITE-AX python[436000]: Creating thread reply to 1887143046640189691 with text: 3/ In @nounsdao, a total of 44 voters participated.
+Feb 05 09:15:39 pine-Z790-AORUS-ELITE-AX python[436000]:   
+Feb 05 09:15:39 pine-Z790-AORUS-ELITE-AX python[436000]: The top 10% of voting power is concentrated in just 1 wallet.
+Feb 05 09:15:39 pine-Z790-AORUS-ELITE-AX python[436000]:   
+Feb 05 09:15:39 pine-Z790-AORUS-ELITE-AX python[436000]: The top 50% of voting power is controlled by only 4 wallets, highlighting a significant concentration of influence.
+Feb 05 09:15:39 pine-Z790-AORUS-ELITE-AX python[436000]: Thread reply created successfully: 1887143052327735467
+Feb 05 09:15:39 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_space_proposals_by_voters.png
+Feb 05 09:15:40 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887143053971918848
+Feb 05 09:15:40 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_space_proposals_by_voting_power.png
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887143055674703872
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: Creating thread reply to 1887143052327735467 with text: 4/ NounsDAO's recent proposal shows notable engagement.
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: Voting power ranks at 162, with a voter turnout rank of 128.
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: This places them in the top percentiles: 78.24% for voting power and 82.84% for voter participation.
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: Strong participation with a high turnout.
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: Thread reply created successfully: 1887143057780289670
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: Creating thread reply to 1887143057780289670: 5/ To be a part of the decision-making process. Cast your vote on the latest proposal by visiting the following link:
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: https://www.tally.xyz/explore
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: Thread reply created successfully: 1887143059059569147
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: Tweet data saved successfully: {'tweet_id': '1887143041963593946', 'proposal_title': '# 12k to make a grassroots impact on the Magic The Gathering community', 'dao_name': 'Nouns Dao'}
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: #######################################################################################################################
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 09:15:41
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887143041963593946
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 09:15:41 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 09:30:41 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 09:30:41 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 09:30:41
+Feb 05 09:30:41 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887143041963593946
+Feb 05 09:30:42 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 09:30:42 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 09:30:42 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 09:45:42 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 09:45:42 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 09:45:42
+Feb 05 09:45:42 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887143041963593946
+Feb 05 09:45:42 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 09:45:42 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 09:45:42 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 10:00:42 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 10:00:42 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 10:00:42
+Feb 05 10:00:42 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887143041963593946
+Feb 05 10:00:42 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 10:00:42 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 10:00:42 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 10:15:42 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 10:15:42 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 10:15:42
+Feb 05 10:15:42 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887143041963593946
+Feb 05 10:15:42 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 10:15:42 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 10:15:42 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 10:30:42 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 10:30:42 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 10:30:42
+Feb 05 10:30:42 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887143041963593946
+Feb 05 10:30:43 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 10:30:43 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 10:30:43 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 10:45:43 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 10:45:43 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 10:45:43
+Feb 05 10:45:43 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887143041963593946
+Feb 05 10:45:43 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 10:45:43 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 10:45:43 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 11:00:43 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 11:00:43 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 11:00:43
+Feb 05 11:00:43 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887143041963593946
+Feb 05 11:00:43 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 11:00:43 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 11:00:43 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 11:15:43 pine-Z790-AORUS-ELITE-AX python[436000]: #######################################################################################################################
+Feb 05 11:15:43 pine-Z790-AORUS-ELITE-AX python[436000]: run_tweet called at 2025-02-05 11:15:43
+Feb 05 11:16:37 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/Image_bank/final_output_image.png
+Feb 05 11:16:38 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887173494158299137
+Feb 05 11:16:38 pine-Z790-AORUS-ELITE-AX python[436000]: Creating tweet with media: 1/ Governance proposal "I don't believe it's fair for a Co-Founder (Esteban) to vote with his 8.5M VP!" from @decentraland is halfway through.
+Feb 05 11:16:38 pine-Z790-AORUS-ELITE-AX python[436000]: It questions the fairness of a co-founder controlling 8.5M voting power, potentially overriding community input.
+Feb 05 11:16:38 pine-Z790-AORUS-ELITE-AX python[436000]: Tweet created successfully: 1887173498235179055
+Feb 05 11:16:38 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/hourly_total_voters_by_choice.png
+Feb 05 11:16:39 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887173500382662656
+Feb 05 11:16:39 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/hourly_total_voting_power_by_choice.png
+Feb 05 11:16:39 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887173502299459586
+Feb 05 11:16:39 pine-Z790-AORUS-ELITE-AX python[436000]: Creating thread reply to 1887173498235179055 with text: 2/ 13 voters have cast their votes.
+Feb 05 11:16:39 pine-Z790-AORUS-ELITE-AX python[436000]: "Invalid question/options" received 834.71K votes.
+Feb 05 11:16:39 pine-Z790-AORUS-ELITE-AX python[436000]: "Yes" got 275.71K votes.
+Feb 05 11:16:39 pine-Z790-AORUS-ELITE-AX python[436000]: "Invalid question/options" shows clear dominance in the poll.
+Feb 05 11:16:40 pine-Z790-AORUS-ELITE-AX python[436000]: Thread reply created successfully: 1887173503574528005
+Feb 05 11:16:40 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/voters_by_wallet_voting_power_group.png
+Feb 05 11:16:40 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887173505445187591
+Feb 05 11:16:40 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/voting_power_by_wallet_voting_power_group.png
+Feb 05 11:16:41 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887173507080966144
+Feb 05 11:16:41 pine-Z790-AORUS-ELITE-AX python[436000]: Creating thread reply to 1887173503574528005 with text: 3/ Voting power in @decentraland is quite concentrated.
+Feb 05 11:16:41 pine-Z790-AORUS-ELITE-AX python[436000]: Just 1 wallet holds the top 10% of voting power among merely 13 total voters.
+Feb 05 11:16:41 pine-Z790-AORUS-ELITE-AX python[436000]: 2 wallets control the top 50%, pointing to significant concentration of influence.
+Feb 05 11:16:41 pine-Z790-AORUS-ELITE-AX python[436000]: Thread reply created successfully: 1887173509157175404
+Feb 05 11:16:41 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/space_proposals_by_voters.png
+Feb 05 11:16:41 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887173510851645445
+Feb 05 11:16:41 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/space_proposals_by_voting_power.png
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887173512579698688
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: Creating thread reply to 1887173509157175404 with text: 4/ Comparing voting activity for this proposal in @decentraland, it ranks 1.45K in voting power and 1.97K in voter turnout.
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: Voting power is at the 47.23 percentile, while voter turnout is at 28.35.
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: Engagement falls below average in both metrics.
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: Thread reply created successfully: 1887173513863156180
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: Creating thread reply to 1887173513863156180: 5/ If you want to learn more about this @decentraland proposal check out our @flipsidecrypto Dashboard:
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: https://flipsidecrypto.xyz/pine/snapshot-proposal-lookup-nFH10H
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: To participate in the vote go here: https://snapshot.box/#/s:snapshot.dcl.eth/proposal/0xa9ff6753efbca49eccaec3283d4c598982069392f0e13e4357098802c3fad617
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: Thread reply created successfully: 1887173515394076815
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: Tweet data saved successfully: {'tweet_id': '1887173498235179055', 'proposal_title': "I don't believe it's fair for a Co-Founder (Esteban) to vote with his 8.5M VP!", 'dao_name': 'snapshot.dcl.eth'}
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: #######################################################################################################################
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 11:16:42
+Feb 05 11:16:42 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887173498235179055
+Feb 05 11:16:43 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 11:16:43 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 11:16:43 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 11:31:43 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 11:31:43 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 11:31:43
+Feb 05 11:31:43 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887173498235179055
+Feb 05 11:31:43 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 11:31:43 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 11:31:43 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 11:46:43 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 11:46:43 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 11:46:43
+Feb 05 11:46:43 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887173498235179055
+Feb 05 11:46:43 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 11:46:43 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 11:46:43 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 12:01:43 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 12:01:43 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 12:01:43
+Feb 05 12:01:43 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887173498235179055
+Feb 05 12:01:44 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 12:01:44 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 12:01:44 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 12:16:44 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 12:16:44 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 12:16:44
+Feb 05 12:16:44 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887173498235179055
+Feb 05 12:16:44 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 12:16:44 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 12:16:44 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 12:31:44 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 12:31:44 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 12:31:44
+Feb 05 12:31:44 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887173498235179055
+Feb 05 12:31:44 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 12:31:44 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 12:31:44 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 12:46:44 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 12:46:44 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 12:46:44
+Feb 05 12:46:44 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887173498235179055
+Feb 05 12:46:45 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 12:46:45 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 12:46:45 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 13:01:45 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 13:01:45 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 13:01:45
+Feb 05 13:01:45 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887173498235179055
+Feb 05 13:01:45 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 13:01:45 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 13:01:45 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 13:16:45 pine-Z790-AORUS-ELITE-AX python[436000]: #######################################################################################################################
+Feb 05 13:16:45 pine-Z790-AORUS-ELITE-AX python[436000]: run_tweet called at 2025-02-05 13:16:45
+Feb 05 13:17:07 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/Image_bank/final_output_image.png
+Feb 05 13:17:09 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887203822918860800
+Feb 05 13:17:09 pine-Z790-AORUS-ELITE-AX python[436000]: Creating tweet with media: 1/ The governance proposal "Proposal for Third-Party Trading Bot Integration" from @DaxioGroup is halfway through.
+Feb 05 13:17:09 pine-Z790-AORUS-ELITE-AX python[436000]: It aims to partner with a third-party trading bot provider for platforms like Binance and Bybit.
+Feb 05 13:17:09 pine-Z790-AORUS-ELITE-AX python[436000]: Features include user incentives and profit-sharing.
+Feb 05 13:17:09 pine-Z790-AORUS-ELITE-AX python[436000]: Tweet created successfully: 1887203825955545211
+Feb 05 13:17:09 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_daily_total_voters_by_choice.png
+Feb 05 13:17:10 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887203827834642432
+Feb 05 13:17:10 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_daily_total_voting_power_by_choice.png
+Feb 05 13:17:10 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887203829877297153
+Feb 05 13:17:10 pine-Z790-AORUS-ELITE-AX python[436000]: Creating thread reply to 1887203825955545211 with text: 2/ Total voters: 14
+Feb 05 13:17:10 pine-Z790-AORUS-ELITE-AX python[436000]: Votes for "for": 332.11K
+Feb 05 13:17:10 pine-Z790-AORUS-ELITE-AX python[436000]: Votes for "against": 0
+Feb 05 13:17:10 pine-Z790-AORUS-ELITE-AX python[436000]: There's a clear choice dominance with "for" receiving significantly more votes.
+Feb 05 13:17:10 pine-Z790-AORUS-ELITE-AX python[436000]: Thread reply created successfully: 1887203831127138313
+Feb 05 13:17:10 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_voters_by_wallet_voting_power_group.png
+Feb 05 13:17:11 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887203832758779904
+Feb 05 13:17:11 pine-Z790-AORUS-ELITE-AX python[436000]: Uploading media: /home/pine/Documents/gov_bot/Crypto-Data-Tracker/Automated/Scripts/graphs/tally_voting_power_by_wallet_voting_power_group.png
+Feb 05 13:17:11 pine-Z790-AORUS-ELITE-AX python[436000]: Media uploaded successfully: 1887203834386059264
+Feb 05 13:17:11 pine-Z790-AORUS-ELITE-AX python[436000]: Creating thread reply to 1887203831127138313 with text: 3/ Among 14 total voters, just 1 wallet holds the top 10% of voting power, and 2 wallets make up the top 50%.
+Feb 05 13:17:11 pine-Z790-AORUS-ELITE-AX python[436000]: The top 50% of voting power is controlled by a mere 2 wallets, highlighting a significant concentration of influence.
+Feb 05 13:17:11 pine-Z790-AORUS-ELITE-AX python[436000]: Thread reply created successfully: 1887203835690561965
+Feb 05 13:17:11 pine-Z790-AORUS-ELITE-AX python[436000]: Creating thread reply to 1887203835690561965: 4/ To be a part of the decision-making process. Cast your vote on the latest proposal by visiting the following link:
+Feb 05 13:17:11 pine-Z790-AORUS-ELITE-AX python[436000]: https://www.tally.xyz/explore
+Feb 05 13:17:12 pine-Z790-AORUS-ELITE-AX python[436000]: Thread reply created successfully: 1887203836827152616
+Feb 05 13:17:12 pine-Z790-AORUS-ELITE-AX python[436000]: Tweet data saved successfully: {'tweet_id': '1887203825955545211', 'proposal_title': 'Proposal for Third-Party Trading Bot Integration', 'dao_name': 'DaxioDao'}
+Feb 05 13:17:12 pine-Z790-AORUS-ELITE-AX python[436000]: #######################################################################################################################
+Feb 05 13:17:12 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================
+Feb 05 13:17:12 pine-Z790-AORUS-ELITE-AX python[436000]: process_comments called at 2025-02-05 13:17:12
+Feb 05 13:17:12 pine-Z790-AORUS-ELITE-AX python[436000]: Fetching comments on tweet ID: 1887203825955545211
+Feb 05 13:17:12 pine-Z790-AORUS-ELITE-AX python[436000]: No comments found.
+Feb 05 13:17:12 pine-Z790-AORUS-ELITE-AX python[436000]: There are no comments to add
+Feb 05 13:17:12 pine-Z790-AORUS-ELITE-AX python[436000]: ===========================================================================================================

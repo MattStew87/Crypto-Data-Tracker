@@ -1,5 +1,15 @@
 {
+    "jupiter": {
+        "dao_name": "Jupiter",
+        "base_image": "./base_green.png",
+        "space_image": "./jupiter.png",
+        "part1_text": "Jupiter Proposal Live",
+        "part2_text": "Jupiter Proposal Metrics",
+        "part3_text": "Jupiter Proposal Wrap-up",
+        "twitter": "@JupiterExchange"
+    },
     "arbitrumfoundation.eth": {
+        "dao_name": "Arbitrum",
         "base_image": "./base_blue.png",
         "space_image": "./arbitrumfoundation.png",
         "part1_text": "Arbitrum Proposal Live",
@@ -8,6 +18,7 @@
         "twitter": "@arbitrum"
     },
     "aave.eth": {
+        "dao_name": "Aave",
         "base_image": "./base_purple.png",
         "space_image": "./aave.png",
         "part1_text": "Aave Proposal Live",
@@ -16,6 +27,7 @@
         "twitter": "@aave"
     },
     "ens.eth": {
+        "dao_name": "ENS",
         "base_image": "./base_blue.png",
         "space_image": "./ens.png",
         "part1_text": "ENS Proposal Live",
@@ -24,6 +36,7 @@
         "twitter": "@ensdomains"
     },
     "apecoin.eth": {
+        "dao_name": "Apecoin",
         "base_image": "./base_blue.png",
         "space_image": "./apecoin.png",
         "part1_text": "Apecoin Proposal Live",
@@ -32,6 +45,7 @@
         "twitter": "@apecoin"
     },
     "balancer.eth": {
+        "dao_name": "Balancer",
         "base_image": "./base_black.png",
         "space_image": "./balancer.png",
         "part1_text": "Balancer Proposal Live",
@@ -40,6 +54,7 @@
         "twitter": "@Balancer"
     },
     "lido-snapshot.eth": {
+        "dao_name": "Lido",
         "base_image": "./base_pink.png",
         "space_image": "./lido-snapshot.png",
         "part1_text": "Lido Proposal Live",
@@ -48,6 +63,7 @@
         "twitter": "@LidoFinance"
     },
     "cvx.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./cvx-modified.png",
         "part1_text": "Convex Proposal Live",
@@ -56,6 +72,7 @@
         "twitter": "@ConvexFinance"
     },
     "starknet.eth": {
+        "dao_name": "Starknet",
         "base_image": "./base_pink.png",
         "space_image": "./starknet.png",
         "part1_text": "Starknet Proposal Live",
@@ -64,6 +81,7 @@
         "twitter": "@StarknetFndn"
     },
     "safe.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./safe.png",
         "part1_text": "Safe Proposal Live",
@@ -72,6 +90,7 @@
         "twitter": "@safe"
     },
     "stgdao.eth": {
+        "dao_name": "Stargate",
         "base_image": "./base_black.png",
         "space_image": "./stgdao.png",
         "part1_text": "Stargate Proposal Live",
@@ -80,6 +99,7 @@
         "twitter": "@StargateFinance"
     },
     "uniswapgovernance.eth": {
+        "dao_name": "Uniswap",
         "base_image": "./base_pink.png",
         "space_image": "./uniswapgovernance.png",
         "part1_text": "Uniswap Proposal Live",
@@ -88,6 +108,7 @@
         "twitter": "@UniswapFND"
     },
     "gitcoindao.eth": {
+        "dao_name": "Gitcoin",
         "base_image": "./base_blue.png",
         "space_image": "./gitcoindao.png",
         "part1_text": "Gitcoin Proposal Live",
@@ -96,6 +117,7 @@
         "twitter": "@gitcoin"
     },
     "gmx.eth": {
+        "dao_name": "GMX",
         "base_image": "./base_blue.png",
         "space_image": "./gmx.png",
         "part1_text": "GMX Proposal Live",
@@ -104,6 +126,7 @@
         "twitter": "@GMX_IO"
     },
     "speraxdao.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./speraxdao.png",
         "part1_text": "Sperax Proposal Live",
@@ -112,6 +135,7 @@
         "twitter": "@SperaxUSD"
     },
     "shellprotocol.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "shellprotocol.png",
         "part1_text": "Shell Proposal Live",
@@ -120,6 +144,7 @@
         "twitter": "@ShellProtocol"
     },
     "sushigov.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_pink.png",
         "space_image": "./sushigov.png",
         "part1_text": "Sushi Proposal Live",
@@ -128,6 +153,7 @@
         "twitter": "@SushiSwap"
     },
     "radiantcapital.eth": {
+        "dao_name": "Radiant",
         "base_image": "./base_green.png",
         "space_image": "./radiantcapital.png",
         "part1_text": "Radiant Proposal Live",
@@ -136,6 +162,7 @@
         "twitter": "@RDNTCapital"
     },
     "beets.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./beets.png",
         "part1_text": "Beets Proposal Live",
@@ -144,6 +171,7 @@
         "twitter": "@beets_fi"
     },
     "hop.eth": {
+        "dao_name": "Hop",
         "base_image": "./base_pink.png",
         "space_image": "./hop.png",
         "part1_text": "Hop Proposal Live",
@@ -152,6 +180,7 @@
         "twitter": "@HopProtocol"
     },
     "frax.eth": {
+        "dao_name": "Frax",
         "base_image": "./base_black.png",
         "space_image": "./frax.png",
         "part1_text": "Frax Proposal Live",
@@ -160,6 +189,7 @@
         "twitter": "@fraxfinance"
     },
     "shapeshiftdao.eth": {
+        "dao_name": "Shapeshift",
         "base_image": "./base_blue.png",
         "space_image": "./shapeshiftdao.png",
         "part1_text": "ShapeShift Proposal Live",
@@ -168,6 +198,7 @@
         "twitter": "@ShapeShift"
     },
     "acrossprotocol.eth": {
+        "dao_name": "Across",
         "base_image": "./base_green.png",
         "space_image": "./acrossprotocol.png",
         "part1_text": "Across Proposal Live",
@@ -176,6 +207,7 @@
         "twitter": "@AcrossProtocol"
     },
     "rocketpool-dao.eth": {
+        "dao_name": "Rocketpool",
         "base_image": "./base_orange.png",
         "space_image": "./rocketpool-dao.png",
         "part1_text": "Rocketpool Proposal Live",
@@ -184,6 +216,7 @@
         "twitter": "@Rocket_Pool"
     },
     "comp-vote.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./comp-vote.png",
         "part1_text": "Comp Proposal Live",
@@ -192,6 +225,7 @@
         "twitter": "@compgovernance"
     },
     "devdao.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./devdao.png",
         "part1_text": "Devdao Proposal Live",
@@ -200,6 +234,7 @@
         "twitter": "@developer_dao"
     },
     "abracadabrabymerlinthemagician.eth": {
+        "dao_name": "Abracadabra",
         "base_image": "./base_purple.png",
         "space_image": "./abracadabrabymerlinthemagician-modified.png",
         "part1_text": "Abracadabra Proposal Live",
@@ -208,6 +243,7 @@
         "twitter": "@MIM_Spell"
     },
     "morpho.eth": {
+        "dao_name": "Morpho",
         "base_image": "./base_black.png",
         "space_image": "./morpho.png",
         "part1_text": "Morpho Proposal Live",
@@ -216,6 +252,7 @@
         "twitter": "@MorphoLabs"
     },
     "symbiosisdao.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "symbiosisdao-modified.png",
         "part1_text": "Symbiosis Proposal Live",
@@ -224,6 +261,7 @@
         "twitter": "@symbiosis_fi"
     },
     "vote.vitadao.eth": {
+        "dao_name": "VitaDAO",
         "base_image": "./base_yellow.png",
         "space_image": "./vote.vitadao.png",
         "part1_text": "VitaDAO Proposal Live",
@@ -232,6 +270,7 @@
         "twitter": "@vita_dao"
     },
     "stakewise.eth": {
+        "dao_name": "Stakewise",
         "base_image": "./base_black.png",
         "space_image": "./stakewise.png",
         "part1_text": "Stakewise Proposal Live",
@@ -240,6 +279,7 @@
         "twitter": "@stakewise"
     },
     "prismafinance.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./prismafinance.png",
         "part1_text": "PrismaFinance Proposal Live",
@@ -248,6 +288,7 @@
         "twitter": "@PrismaFi"
     },
     "metislayer2.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./metislayer2-modified.png",
         "part1_text": "Metis Proposal Live",
@@ -256,6 +297,7 @@
         "twitter": "@MetisL2"
     },
     "g-dao.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_orange.png",
         "space_image": "./g-dao-modified.png",
         "part1_text": "Galxe Proposal Live",
@@ -264,6 +306,7 @@
         "twitter": "@GalxeDAO"
     },
     "equilibriafi.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./equilibriafi-modified.png",
         "part1_text": "Equilibria Proposal Live",
@@ -272,6 +315,7 @@
         "twitter": "@Equilibriafi"
     },
     "beaverbuilder.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_purple.png",
         "space_image": "./beaverbuilder-modified.png",
         "part1_text": "Beaverbuilder Proposal Live",
@@ -280,6 +324,7 @@
         "twitter": "@beaver_builder"
     },
     "aavegotchi.eth": {
+        "dao_name": "Aave",
         "base_image": "./base_pink.png",
         "space_image": "./aavegotchi-modified.png",
         "part1_text": "Aavegotchi Proposal Live",
@@ -288,6 +333,7 @@
         "twitter": "@aavegotchi"
     },
     "moonwell-governance.eth": {
+        "dao_name": "Moonwell",
         "base_image": "./base_blue.png",
         "space_image": "./moonwell-governance-modified.png",
         "part1_text": "Moonwell Proposal Live",
@@ -296,6 +342,7 @@
         "twitter": "@MoonwellDeFi"
     },
     "worldlibertyfinancial.com": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./worldlibertyfinancial-modified.png",
         "part1_text": "World Liberty Proposal Live",
@@ -304,6 +351,7 @@
         "twitter": "@worldlibertyfi"
     },
     "etherfi-dao.eth": {
+        "dao_name": "Etherfi",
         "base_image": "./base_purple.png",
         "space_image": "./etherfi-dao-modified.png",
         "part1_text": "Ether.fi Proposal Live",
@@ -312,6 +360,7 @@
         "twitter": "@EtherFi"
     },
     "moxie.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_purple.png",
         "space_image": "./moxie-modified.png",
         "part1_text": "Moxie Proposal Live",
@@ -320,6 +369,7 @@
         "twitter": "@moxie_xyz"
     },
     "snapshot.dcl.eth": {
+        "dao_name": "Decentraland",
         "base_image": "./base_orange.png",
         "space_image": "./snapshot.dcl-modified.png",
         "part1_text": "Decentraland Proposal Live",
@@ -328,6 +378,7 @@
         "twitter": "@decentraland"
     },
     "sandboxdao.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./sandboxdao-modified.png",
         "part1_text": "Sandbox Proposal Live",
@@ -336,6 +387,7 @@
         "twitter": "@TheSandboxDAO"
     },
     "magicappstore.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_purple.png",
         "space_image": "./magicappstore-modified.png",
         "part1_text": "Magic Square Proposal Live",
@@ -344,6 +396,7 @@
         "twitter": "@MagicSquareio"
     },
     "metfi.io": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./metfi-modified.png",
         "part1_text": "Metfi Proposal Live",
@@ -352,6 +405,7 @@
         "twitter": "@MetFi_DAO"
     },
     "the-arena.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_orange.png",
         "space_image": "./the-arena-modified.png",
         "part1_text": "Arena Proposal Live",
@@ -360,6 +414,7 @@
         "twitter": "@TheArenaApp"
     },
     "dfkvote.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./dfkvote-modified.png",
         "part1_text": "DeFi Kingdoms Proposal Live",
@@ -368,6 +423,7 @@
         "twitter": "@DeFiKingdoms"
     },
     "polyhedragovernance.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./polyhedragovernance-modified.png",
         "part1_text": "Polyhedra Proposal Live",
@@ -376,6 +432,7 @@
         "twitter": "@PolyhedraZK"
     },
     "rdatadao.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_pink.png",
         "space_image": "./rdatadao-modified.png",
         "part1_text": "r/datadao Proposal Live",
@@ -384,6 +441,7 @@
         "twitter": "@rdatadao"
     },
     "mendifinance.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./mendifinance-modified.png",
         "part1_text": "Mendi Proposal Live",
@@ -392,6 +450,7 @@
         "twitter": "@MendiFinance"
     },
     "gracy.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_purple.png",
         "space_image": "./gracy-modified.png",
         "part1_text": "Gracy Proposal Live",
@@ -400,6 +459,7 @@
         "twitter": "@gracytoken"
     },
     "toshibase.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./toshibase-modified.png",
         "part1_text": "Toshi Proposal Live",
@@ -408,6 +468,7 @@
         "twitter": "@Toshi_base"
     },
     "magpiexyz.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./magpiexyz-modified.png",
         "part1_text": "Magpie Proposal Live",
@@ -416,6 +477,7 @@
         "twitter": "@magpiexyz_io"
     },
     "gyrodao.eth": {
+        "dao_name": "Gyroscope",
         "base_image": "./base_green.png",
         "space_image": "./gyrodao-modified.png",
         "part1_text": "Gyroscope Proposal Live",
@@ -424,6 +486,7 @@
         "twitter": "@GyroStable"
     },
     "cow.eth": {
+        "dao_name": "coW DAO",
         "base_image": "./base_pink.png",
         "space_image": "./cow-modified.png",
         "part1_text": "Cow Proposal Live",
@@ -432,6 +495,7 @@
         "twitter": "@CoWSwap"
     },
     "beefydao.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_pink.png",
         "space_image": "./beefydao-modified.png",
         "part1_text": "Beefy Proposal Live",
@@ -440,6 +504,7 @@
         "twitter": "@beefyfinance"
     },
     "latticegov.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_yellow.png",
         "space_image": "./latticegov-modified.png",
         "part1_text": "Lattice Gateway Proposal Live",
@@ -448,6 +513,7 @@
         "twitter": "@LatticeExchange"
     },
     "thegurudao.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./thegurudao-modified.png",
         "part1_text": "Guru Proposal Live",
@@ -456,6 +522,7 @@
         "twitter": "@xgurunetwork"
     },
     "mocana.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_pink.png",
         "space_image": "./mocana-modified.png",
         "part1_text": "Mocana Proposal Live",
@@ -464,6 +531,7 @@
         "twitter": "@Moca_Network"
     },
     "gameswiftdao.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./gameswiftdao-modified.png",
         "part1_text": "GameSwift Proposal Live",
@@ -472,6 +540,7 @@
         "twitter": "@GameSwift_io"
     },
     "bioxyz.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./bioxyz-modified.png",
         "part1_text": "Bioxyz Proposal Live",
@@ -480,6 +549,7 @@
         "twitter": "@bioprotocol"
     },
     "dao.spaceid.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./dao.spaceid-modified.png",
         "part1_text": "SPACE ID Proposal Live",
@@ -488,6 +558,7 @@
         "twitter": "@SpaceIDProtocol"
     },
     "gauges.aurafinance.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_purple.png",
         "space_image": "./gauges.aurafinance-modified.png",
         "part1_text": "Aura Proposal Live",
@@ -496,6 +567,7 @@
         "twitter": "@AuraFinance"
     },
     "wayfinderfoundation.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./wayfinderfoundation-modified.png",
         "part1_text": "Wayfinder Proposal Live",
@@ -504,6 +576,7 @@
         "twitter": "@AIWayfinder"
     },
     "degen-defi.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_pink.png",
         "space_image": "./degen-defi-modified.png",
         "part1_text": "ShitcoinClub Proposal Live",
@@ -512,6 +585,7 @@
         "twitter": "@ShitcoinClub_"
     },
     "madebyapesvote.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./madebyapesvote-modified.png",
         "part1_text": "BoredApeYC Proposal Live",
@@ -520,6 +594,7 @@
         "twitter": "@BoredApeYC"
     },
     "hyperlockfi.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_yellow.png",
         "space_image": "./hyperlockfi-modified.png",
         "part1_text": "Hyperlock Proposal Live",
@@ -528,6 +603,7 @@
         "twitter": "@hyperlockfi"
     },
     "1inch.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./1inch-modified.png",
         "part1_text": "1inch Proposal Live",
@@ -536,6 +612,7 @@
         "twitter": "@1inch"
     },
     "extradao.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_purple.png",
         "space_image": "./extradao-modified.png",
         "part1_text": "Extra Proposal Live",
@@ -544,6 +621,7 @@
         "twitter": "@ExtraFi_io"
     },
     "octantapp.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./octantapp-modified.png",
         "part1_text": "Octant Proposal Live",
@@ -552,6 +630,7 @@
         "twitter": "@OctantApp"
     },
     "xborg.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_orange.png",
         "space_image": "./xborg-modified.png",
         "part1_text": "XBorg Proposal Live",
@@ -560,6 +639,7 @@
         "twitter": "@XBorgHQ"
     },
     "somonowo.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_orange.png",
         "space_image": "./somonowo-modified.png",
         "part1_text": "SoMon Proposal Live",
@@ -568,6 +648,7 @@
         "twitter": "@SoMoNow"
     },
     "gearbox.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_orange.png",
         "space_image": "./gearbox-modified.png",
         "part1_text": "Gearbox Proposal Live",
@@ -576,6 +657,7 @@
         "twitter": "@GearboxProtocol"
     },
     "eventhorizongitcoin.eth": {
+        "dao_name": "Gitcoin",
         "base_image": "./base_orange.png",
         "space_image": "./eventhorizongitcoin-modified.png",
         "part1_text": "Event Horizon Proposal Live",
@@ -584,6 +666,7 @@
         "twitter": "@EventHorizonDAO"
     },
     "airdaofoundation.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./airdaofoundation-modified.png",
         "part1_text": "AirDAO Proposal Live",
@@ -592,6 +675,7 @@
         "twitter": "@airdao_io"
     },
     "jadeprotocol.eth": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./jadeprotocol-modified.png",
         "part1_text": "Jade Proposal Live",
@@ -600,6 +684,7 @@
         "twitter": "@JadeProtocol"
     },
     "gnosis.eth": {
+        "dao_name": "Gnosis",
         "base_image": "./base_orange.png",
         "space_image": "./gnosis-modified.png",
         "part1_text": "Gnosis Proposal Live",
@@ -608,6 +693,7 @@
         "twitter": "@GnosisDAO"
     },
     "Uniswap": {
+        "dao_name": "N/A",
         "base_image": "./base_pink.png",
         "space_image": "./tally_uniswap-modified.png",
         "part1_text": "Uniswap Proposal Live",
@@ -616,6 +702,7 @@
         "twitter": "@Uniswap"
     },
     "Arbitrum Core": {
+        "dao_name": "Arbitrum",
         "base_image": "./base_blue.png",
         "space_image": "./tally_arbitrum-modified.png",
         "part1_text": "Arbitrum Core Proposal Live",
@@ -624,6 +711,7 @@
         "twitter": "@arbitrum"
     },
     "Compound": {
+        "dao_name": "Compound",
         "base_image": "./base_green.png",
         "space_image": "./tally_compound-modified.png",
         "part1_text": "Compound Proposal Live",
@@ -632,6 +720,7 @@
         "twitter": "@compoundfinance"
     },
     "Dope Wars": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_dopewars-modified.png",
         "part1_text": "Dope Wars Proposal Live",
@@ -640,6 +729,7 @@
         "twitter": "@TheDopeWars"
     },
     "Lil Nouns": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_lilnouns-modified.png",
         "part1_text": "Lil Nouns Proposal Live",
@@ -648,6 +738,7 @@
         "twitter": "@lilnounsdao"
     },
     "Nouns Dao": {
+        "dao_name": "N/A",
         "base_image": "./base_yellow.png",
         "space_image": "./tally_nouns-modified.png",
         "part1_text": "Nouns Dao Proposal Live",
@@ -656,6 +747,7 @@
         "twitter": "@nounsdao"
     },
     "PoolTogether": {
+        "dao_name": "N/A",
         "base_image": "./base_purple.png",
         "space_image": "./tally_pooltogether-modified.png",
         "part1_text": "PoolTogether Proposal Live",
@@ -664,6 +756,7 @@
         "twitter": "@PoolTogether_"
     },
     "Rari Dao": {
+        "dao_name": "Rari",
         "base_image": "./base_orange.png",
         "space_image": "./tally_rariDao-modified.png",
         "part1_text": "Rari Dao Proposal Live",
@@ -672,6 +765,7 @@
         "twitter": "@rarifoundation"
     },
     "Unlock Dao": {
+        "dao_name": "N/A",
         "base_image": "./base_purple.png",
         "space_image": "./tally_unlockdao-modified.png",
         "part1_text": "Unlock Dao Proposal Live",
@@ -680,6 +774,7 @@
         "twitter": "@UnlockProtocol"
     },
     "InstaDapp": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_instadapp-modified.png",
         "part1_text": "InstaDapp Proposal Live",
@@ -688,6 +783,7 @@
         "twitter": "@Instadapp"
     },
     "Idle Dao": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_idleDao-modified.png",
         "part1_text": "Idle Dao Proposal Live",
@@ -696,6 +792,7 @@
         "twitter": "@idlefinance"
     },
     "Cryptex": {
+        "dao_name": "N/A",
         "base_image": "./base_purple.png",
         "space_image": "./tally_cryptex-modified.png",
         "part1_text": "Cryptex Proposal Live",
@@ -704,6 +801,7 @@
         "twitter": "@CryptexFinance"
     },
     "Optimism": {
+        "dao_name": "Optimism",
         "base_image": "./base_orange.png",
         "space_image": "./tally_optimism-modified.png",
         "part1_text": "Optimism Proposal Live",
@@ -712,6 +810,7 @@
         "twitter": "@Optimism"
     },
     "ZKsync": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_zksync-modified.png",
         "part1_text": "ZKsync Proposal Live",
@@ -720,6 +819,7 @@
         "twitter": "@zksync"
     },
     "Aave": {
+        "dao_name": "Aave",
         "base_image": "./base_purple.png",
         "space_image": "./tally_aave-modified.png",
         "part1_text": "Aave Proposal Live",
@@ -728,6 +828,7 @@
         "twitter": "@aave"
     },
     "ENS": {
+        "dao_name": "ENS",
         "base_image": "./base_blue.png",
         "space_image": "./tally_ens-modified.png",
         "part1_text": "ENS Proposal Live",
@@ -736,6 +837,7 @@
         "twitter": "@ensdomains"
     },
     "Gitcoin": {
+        "dao_name": "Gitcoin",
         "base_image": "./base_green.png",
         "space_image": "./tally_gitcoin-modified.png",
         "part1_text": "Gitcoin Proposal Live",
@@ -744,6 +846,7 @@
         "twitter": "@gitcoin"
     },
     "Hop": {
+        "dao_name": "Hop",
         "base_image": "./base_orange.png",
         "space_image": "./tally_hop-modified.png",
         "part1_text": "Hop Proposal Live",
@@ -752,6 +855,7 @@
         "twitter": "@HopProtocol"
     },
     "GMX": {
+        "dao_name": "GMX",
         "base_image": "./base_green.png",
         "space_image": "./gmx.png",
         "part1_text": "GMX Proposal Live",
@@ -760,6 +864,7 @@
         "twitter": "@GMX_IO"
     },
     "Realtoken": {
+        "dao_name": "N/A",
         "base_image": "./base_yellow.png",
         "space_image": "./tally_realtoken-modified.png",
         "part1_text": "Realtoken Proposal Live",
@@ -768,6 +873,7 @@
         "twitter": "@RealTokenDAO"
     },
     "Lisk": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_lisk-modified.png",
         "part1_text": "Lisk Proposal Live",
@@ -776,6 +882,7 @@
         "twitter": "@LiskHQ"
     },
     "Diva Staking": {
+        "dao_name": "N/A",
         "base_image": "./base_purple.png",
         "space_image": "./tally_divaStaking-modified.png",
         "part1_text": "Diva Staking Proposal Live",
@@ -784,6 +891,7 @@
         "twitter": "@divastaking"
     },
     "Open Dollar": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_openDollar-modified.png",
         "part1_text": "Open Dollar Proposal Live",
@@ -792,6 +900,7 @@
         "twitter": "@open_dollar"
     },
     "Fei": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./tally_fei-modified.png",
         "part1_text": "Fei Proposal Live",
@@ -800,6 +909,7 @@
         "twitter": "@feiprotocol"
     },
     "SpellsDao": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_spellsDao-modified.png",
         "part1_text": "SpellsDao Proposal Live",
@@ -808,6 +918,7 @@
         "twitter": "@spellsdao"
     },
     "Moonwell": {
+        "dao_name": "Moonwell",
         "base_image": "./base_blue.png",
         "space_image": "./tally_moonwell-modified.png",
         "part1_text": "Moonwell Proposal Live",
@@ -816,6 +927,7 @@
         "twitter": "@MoonwellDeFi"
     },
     "HAI": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./tally_HAI-modified.png",
         "part1_text": "HAI Proposal Live",
@@ -824,6 +936,7 @@
         "twitter": "@letsgethai"
     },
     "Ondo Dao": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_ondo-modified.png",
         "part1_text": "Ondo Dao Proposal Live",
@@ -832,6 +945,7 @@
         "twitter": "@OndoFoundation"
     },
     "Seamless": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_seamless-modified.png",
         "part1_text": "Seamless Proposal Live",
@@ -840,6 +954,7 @@
         "twitter": "@SeamlessFi"
     },
     "Euler": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_euler-modified.png",
         "part1_text": "Euler Proposal Live",
@@ -848,6 +963,7 @@
         "twitter": "@eulerfinance"
     },
     "Tevaera": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./tally_tevaera-modified.png",
         "part1_text": "Tevaera Proposal Live",
@@ -856,6 +972,7 @@
         "twitter": "@tevaera"
     },
     "Anvil": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_anvil-modified.png",
         "part1_text": "Anvil Proposal Live",
@@ -864,6 +981,7 @@
         "twitter": "@anvil_xyz"
     },
     "Yam Finance": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_yamfinance-modified.png",
         "part1_text": "Yam Finance Proposal Live",
@@ -872,6 +990,7 @@
         "twitter": "@YamFinance"
     },
     "Rari Capital": {
+        "dao_name": "Rari",
         "base_image": "./base_black.png",
         "space_image": "./tally_rariCapital-modified.png",
         "part1_text": "Rari Capital Proposal Live",
@@ -880,6 +999,7 @@
         "twitter": "@RariCapital"
     },
     "Mystiko": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_myStiko-modified.png",
         "part1_text": "Mystiko Proposal Live",
@@ -888,6 +1008,7 @@
         "twitter": "@MystikoNetwork"
     },
     "TrueFi": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_truefi-modified.png",
         "part1_text": "TrueFi Proposal Live",
@@ -896,6 +1017,7 @@
         "twitter": "@TrueFiDAO"
     },
     "Gas Dao": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_gasDao-modified.png",
         "part1_text": "Gas Dao Proposal Live",
@@ -904,6 +1026,7 @@
         "twitter": "@0xGasDAO"
     },
     "Indexed": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_indexed-modified.png",
         "part1_text": "Indexed Proposal Live",
@@ -912,6 +1035,7 @@
         "twitter": "@ndxfi"
     },
     "Tribe NopeDao": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./tally_tribeNopeDao-modified.png",
         "part1_text": "Tribe NopeDao Proposal Live",
@@ -920,6 +1044,7 @@
         "twitter": "@feiprotocol"
     },
     "Ampleforth": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_Ampleforth-modified.png",
         "part1_text": "Ampleforth Proposal Live",
@@ -928,6 +1053,7 @@
         "twitter": "@AmpleforthOrg"
     },
     "Inverse": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_inverse-modified.png",
         "part1_text": "Inverse Proposal Live",
@@ -936,6 +1062,7 @@
         "twitter": "@InverseFinance"
     },
     "MahaDao": {
+        "dao_name": "N/A",
         "base_image": "./base_orange.png",
         "space_image": "./tally_MahaDao-modified.png",
         "part1_text": "MahaDao Proposal Live",
@@ -944,6 +1071,7 @@
         "twitter": "@themahadao"
     },
     "Collab.Land": {
+        "dao_name": "N/A",
         "base_image": "./base_yellow.png",
         "space_image": "./tally_collabLand-modified.png",
         "part1_text": "Collab.Land Proposal Live",
@@ -952,6 +1080,7 @@
         "twitter": "@Collab_Land_"
     },
     "SoftDao": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_softDao-modified.png",
         "part1_text": "SoftDao Proposal Live",
@@ -960,6 +1089,7 @@
         "twitter": "@TokensoftInc"
     },
     "DaxioDao": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_DaxioDao-modified.png",
         "part1_text": "DaxioDao Proposal Live",
@@ -968,6 +1098,7 @@
         "twitter": "@DaxioGroup"
     },
     "Inedible": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./tally_inedible-modified.png",
         "part1_text": "Inedible Proposal Live",
@@ -976,6 +1107,7 @@
         "twitter": "@GoatTradingDex"
     },
     "BNB Chain": {
+        "dao_name": "N/A",
         "base_image": "./base_yellow.png",
         "space_image": "./tally_bnbChain-modified.png",
         "part1_text": "BNB Chain Proposal Live",
@@ -984,6 +1116,7 @@
         "twitter": "@BNBCHAIN"
     },
     "Hifi Dao": {
+        "dao_name": "N/A",
         "base_image": "./base_purple.png",
         "space_image": "./tally_HifiDao-modified.png",
         "part1_text": "Hifi Dao Proposal Live",
@@ -992,6 +1125,7 @@
         "twitter": "@HifiFinance"
     },
     "Increment": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_increment-modified.png",
         "part1_text": "Increment Proposal Live",
@@ -1000,6 +1134,7 @@
         "twitter": "@IncrementHQ"
     },
     "DIMO": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_DIMO-modified.png",
         "part1_text": "DIMO Proposal Live",
@@ -1008,6 +1143,7 @@
         "twitter": "@DIMO_Network"
     },
     "Sudoswap": {
+        "dao_name": "N/A",
         "base_image": "./base_purple.png",
         "space_image": "./tally_sudoswap-modified.png",
         "part1_text": "Sudoswap Proposal Live",
@@ -1016,6 +1152,7 @@
         "twitter": "@sudoswap"
     },
     "Public Nouns": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./tally_publicNouns-modified.png",
         "part1_text": "Public Nouns Proposal Live",
@@ -1024,6 +1161,7 @@
         "twitter": "@PublicNouns"
     },
     "Internet Token": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_internetToken-modified.png",
         "part1_text": "Internet Token Proposal Live",
@@ -1032,6 +1170,7 @@
         "twitter": "@internet_token"
     },
     "Gloom Governor": {
+        "dao_name": "N/A",
         "base_image": "./base_blue.png",
         "space_image": "./tally_gloomGovernor-modified.png",
         "part1_text": "Gloom Governor Proposal Live",
@@ -1040,6 +1179,7 @@
         "twitter": "@gloomtoken"
     },
     "Lucidao": {
+        "dao_name": "N/A",
         "base_image": "./base_black.png",
         "space_image": "./tally_lucidao-modified.png",
         "part1_text": "Lucidao Proposal Live",
@@ -1048,6 +1188,7 @@
         "twitter": "@Lucidao_"
     },
     "Radworks": {
+        "dao_name": "N/A",
         "base_image": "./base_green.png",
         "space_image": "./tally_radworks-modified.png",
         "part1_text": "Radworks Proposal Live",
@@ -1056,6 +1197,7 @@
         "twitter": "@radworks_"
     },
     "Blur": {
+        "dao_name": "N/A",
         "base_image": "./base_orange.png",
         "space_image": "./tally_blur-modified.png",
         "part1_text": "Blur Proposal Live",
@@ -1064,6 +1206,7 @@
         "twitter": "@blur_io"
     },
     "Arbitrum Treasury": {
+        "dao_name": "Arbitrum",
         "base_image": "./base_blue.png",
         "space_image": "./tally_arbitrum-modified.png",
         "part1_text": "Arbitrum Treasury Proposal Live",

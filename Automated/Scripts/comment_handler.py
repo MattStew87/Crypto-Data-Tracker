@@ -89,10 +89,9 @@ class CommentHandler:
             post_data = self.get_tweet_id() 
             
             for comment in comments:
-                reply = self.dao_twitter_responder.generate_response(comment[1], f"Response to {post_data['proposal_title']} from {post_data['dao_name']}")
+                reply = self.dao_twitter_responder.generate_response(comment[1], post_data['dao_name'], f"Response to {post_data['proposal_title']} from {post_data['space_id']} with Proposal Description: {post_data['proposal_description']}")
             
-                #self.twitter_handler.post_thread_reply(reply, comment[0])
-                
+                self.twitter_handler.post_thread_reply(reply, comment[0])
                 print(reply) 
                     
                     
@@ -101,7 +100,7 @@ class CommentHandler:
             print(f"Error fetching unresponded comments: {e}")
 
 
-    def set_tweet_id(self, tweet_id, proposal_title, dao_name):
+    def set_tweet_id(self, tweet_id, proposal_title, space_id, proposal_description, dao_name):
         """
         Overwrites the JSON file with the given tweet data.
         
@@ -113,6 +112,8 @@ class CommentHandler:
         data = {
             "tweet_id": tweet_id,
             "proposal_title": proposal_title,
+            "space_id": space_id,
+            "proposal_description": proposal_description,
             "dao_name": dao_name
         }
 

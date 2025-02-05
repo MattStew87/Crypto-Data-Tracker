@@ -28,7 +28,7 @@ class DAOTwitterResponder:
         response = self.client.embeddings.create(model="text-embedding-ada-002", input=text)
         return response.data[0].embedding
 
-    def query_similar_context(self, input_text, top_k=4, extra_context=""):
+    def query_similar_context(self, input_text, dao_name, top_k=4, extra_context=""):
         """Query Qdrant for the most similar governance discussions based on input text."""
         # Combine input text and extra context
         combined_text = f"{input_text}\n\nAdditional context: {extra_context}"
@@ -41,6 +41,7 @@ class DAOTwitterResponder:
 
         filter_condition = {
             "must": [
+                {"key": "dao_name", "match": {"value": dao_name}},
                 {"key": "timestamp", "range": {"gte": time_threshold}}
             ]
         }
@@ -73,11 +74,11 @@ class DAOTwitterResponder:
             print(f"Error querying Qdrant: {response.status_code}, {response.text}")
             return []
 
-    def generate_response(self, input_text, extra_context=""):
+    def generate_response(self, input_text, dao_name, extra_context=""):
         """Generate a concise response based on similar governance discussions."""
         try:
             # Retrieve similar discussions
-            similar_comments = self.query_similar_context(input_text, extra_context=extra_context)
+            similar_comments = self.query_similar_context(input_text, dao_name, extra_context=extra_context)
 
             # Format the context for GPT
             context = "\n\n".join(

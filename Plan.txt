@@ -22,35 +22,9 @@ OLD GIT COMMIT: b4056c66d4f0eafb589e72f5e828a30d0484fe7b
 
 TEST INPUTS: 
 --------------------------------------------------------------------------------------------------
-Columns: 
-{
-    'proposal_id': 'text',
-    'proposal_title': 'text',
-    'proposal_text': 'text',
-    'choices': 'text',
-    'created_at': 'TIMESTAMP',
-    'proposal_start_time': 'TIMESTAMP',
-    'proposal_end_time': 'TIMESTAMP',
-    'network': 'text',
-    'space_id': 'text',
-    'date_added': 'TIMESTAMP'
-}
+PLAN: 
 
-Update Query: 
 
-SELECT 
-proposal_id,
-proposal_title,
-proposal_text,
-choices,
-created_at,
-proposal_start_time,
-proposal_end_time,
-network,
-space_id,
-date_added
-FROM snapshot_gov_proposals
-WHERE date_added = CURRENT_DATE
-ORDER BY created_at DESC
+
 
 --------------------------------------------------------------------------------------------------

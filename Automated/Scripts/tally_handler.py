@@ -48,6 +48,7 @@ class TallyHandler:
         proposal_end_time = proposal['end_time']
         space_id = proposal['space_name']
         twitter_handle = self.spaces_data[space_id]["twitter"]
+        dao_name = self.spaces_data[space_id]["dao_name"]
 
         messages = []
 
@@ -132,7 +133,12 @@ class TallyHandler:
         messages.append(part_3_message)
 
         # Append space_id and messages to the result list
-        result = {"space_id": space_id, "messages": messages, 'proposal_title': proposal_title}
+        result = {"space_id": space_id, 
+                  "messages": messages, 
+                  'proposal_title': proposal_title,
+                  'proposal_description': proposal_text, 
+                  'dao_name': dao_name
+                }
 
         return result
     
@@ -147,6 +153,7 @@ class TallyHandler:
         governor_id = proposal['governor_id']
         decimals = proposal['decimals']
         twitter_handle = self.spaces_data[space_id]["twitter"]
+        dao_name = self.spaces_data[space_id]["dao_name"]
     
         prompt_data = self.tally_gov_data.prompt_stats(proposal_id, decimals, governor_id)
 
@@ -318,7 +325,9 @@ class TallyHandler:
             "messages": final_messages,
             "proposal_id": proposal_id,
             "decimals": decimals,
-            'proposal_title': proposal_title
+            'proposal_title': proposal_title,
+            'proposal_description': proposal_text, 
+            'dao_name': dao_name
         }        
 
         return result 
@@ -328,10 +337,12 @@ class TallyHandler:
         # Extract proposal data
         proposal_id = proposal['proposal_id']
         proposal_title = proposal['proposal_title']
+        proposal_text = proposal['proposal_description']
         space_id = proposal['space_name']
         governor_id = proposal['governor_id']
         decimals = proposal['decimals']
         twitter_handle = self.spaces_data[space_id]["twitter"]
+        dao_name = self.spaces_data[space_id]["dao_name"]
     
         prompt_data = self.tally_gov_data.prompt_stats(proposal_id, decimals, governor_id)
         
@@ -560,7 +571,9 @@ class TallyHandler:
             "proposal_id": proposal_id, 
             "governor_id": governor_id, 
             "decimals": decimals,
-            'proposal_title': proposal_title
+            'proposal_title': proposal_title,
+            'proposal_description': proposal_text, 
+            'dao_name': dao_name
         } 
     
         return result
@@ -573,6 +586,8 @@ class TallyHandler:
         space_id = proposal_message.get("space_id", "")
         messages = proposal_message.get("messages", "")
         proposal_title = proposal_message.get("proposal_title", "")
+        proposal_description = proposal_message.get("proposal_description", "")
+        dao_name = proposal_message.get("dao_name", "")
                     
         cover_image = self.generate_space_image(space_id, 1)
 
@@ -580,7 +595,7 @@ class TallyHandler:
         thread1_id = self.twitter_client.post_thread_reply(messages[1], orginal_post_id)
         self.twitter_client.post_thread_reply(messages[2], thread1_id)
 
-        self.comment_handler.set_tweet_id(orginal_post_id, proposal_title, space_id)
+        self.comment_handler.set_tweet_id(orginal_post_id, proposal_title, space_id, proposal_description, dao_name)
 
     
     def create_proposal_halftime(self, proposal):
@@ -592,6 +607,8 @@ class TallyHandler:
         proposal_id = halftime_message.get("proposal_id", "")
         decimals = halftime_message.get("decimals", "") 
         proposal_title = halftime_message.get("proposal_title", "")
+        proposal_description = halftime_message.get("proposal_description", "")
+        dao_name = halftime_message.get("dao_name", "")
                     
         cover_image = self.generate_space_image(space_id, 2)
         Tweet2_media = self.tally_gov_data.tally_daily_total_voting_power_by_choice(proposal_id, decimals)
@@ -602,7 +619,7 @@ class TallyHandler:
         thread2_id = self.twitter_client.post_thread_reply_with_media(messages[2], Tweet3_media, thread1_id)
         self.twitter_client.post_thread_reply(messages[3], thread2_id)
 
-        self.comment_handler.set_tweet_id(orginal_post_id, proposal_title, space_id)
+        self.comment_handler.set_tweet_id(orginal_post_id, proposal_title, space_id, proposal_description, dao_name)
     
     def create_proposal_final(self, proposal):
 
@@ -614,6 +631,8 @@ class TallyHandler:
         governor_id = final_message.get("governor_id", "")
         decimals = final_message.get("decimals", "") 
         proposal_title = final_message.get("proposal_title", "")
+        proposal_description = final_message.get("proposal_description", "")
+        dao_name = final_message.get("dao_name", "")
                     
         cover_image = self.generate_space_image(space_id, 3)
         Tweet2_media = self.tally_gov_data.tally_daily_total_voting_power_by_choice(proposal_id, decimals)
@@ -626,7 +645,7 @@ class TallyHandler:
         thread3_id = self.twitter_client.post_thread_reply_with_media(messages[3], Tweet4_media, thread2_id)
         self.twitter_client.post_thread_reply(messages[4], thread3_id)
 
-        self.comment_handler.set_tweet_id(orginal_post_id, proposal_title, space_id)
+        self.comment_handler.set_tweet_id(orginal_post_id, proposal_title, space_id, proposal_description, dao_name)
     
     
     
