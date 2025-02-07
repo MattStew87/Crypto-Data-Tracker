@@ -234,7 +234,7 @@
         "twitter": "@developer_dao"
     },
     "abracadabrabymerlinthemagician.eth": {
-        "dao_name": "Abracadabra",
+        "dao_name": "Abracadabra", 
         "base_image": "./base_purple.png",
         "space_image": "./abracadabrabymerlinthemagician-modified.png",
         "part1_text": "Abracadabra Proposal Live",

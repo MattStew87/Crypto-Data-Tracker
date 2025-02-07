@@ -128,9 +128,10 @@ if __name__ == "__main__":
 
     # Collect user input
     user_query = input("Enter your query: ")  # Tweet comment
-    extra_context = input("Enter extra context (e.g., 'response to PropXYZ from XYZDAO'): ")  # Extra metadata
+    #extra_context = input("Enter extra context (e.g., 'response to PropXYZ from XYZDAO'): ")  # Extra metadata
+    dao_name = input("Enter dao name:")
 
     # Generate and print response
-    response = responder.generate_response(user_query, extra_context)
+    response = responder.query_similar_context(user_query, dao_name)
     print(response)
 

@@ -29,7 +29,7 @@ class TallyData:
         query ($input: VotesInput!) {
             votes(input: $input) {
                 nodes {
-                    ... on Vote {
+                    ... on OnchainVote {
                         amount
                         type
                         block {
@@ -144,7 +144,7 @@ class TallyData:
         query ($input: VotesInput!) {
             votes(input: $input) {
                 nodes {
-                    ... on Vote {
+                    ... on OnchainVote {
                         amount
                     }
                 }
@@ -357,7 +357,7 @@ class TallyData:
         query ($input: VotesInput!) {
             votes(input: $input) {
                 nodes {
-                    ... on Vote {
+                    ... on OnchainVote {
                         amount
                     }
                 }
@@ -559,6 +559,117 @@ class TallyData:
             proposal_data["voter_percentile"] = 100 - (voter_turnout_rank - 1) / len(proposals_voter_turnout) * 100
 
         return proposal_data
+    
+
+    def tally_test(self, proposal_id, decimals):
+        url = "https://api.tally.xyz/query"
+        query = """
+        query ($input: VotesInput!) {
+            votes(input: $input) {
+                nodes {
+                    ... on OnchainVote {
+                        amount
+                        type
+                        block {
+                            timestamp
+                        }
+                    }
+                }
+                pageInfo {
+                    lastCursor
+                }
+            }
+        }
+        """
+
+        headers = {"Api-Key": self.tally_api_key}
+        after_cursor = None
+        daily_votes_by_amount = []  # List of tuples (date, type, total_amount)
+        daily_votes_by_count = []  # List of tuples (date, type, voter_count)
+        aggregated_amounts = defaultdict(lambda: defaultdict(int))  # {date: {type: total_amount}}
+        aggregated_counts = defaultdict(lambda: defaultdict(int))  # {date: {type: voter_count}}
+
+        while True:
+            time.sleep(1) 
+            variables = {
+                "input": {
+                    "filters": {
+                        "proposalId": proposal_id,
+                        "includePendingVotes": False  # Filter by proposal ID
+                    },
+                    "page": {
+                        "limit": 100,  # Adjust as needed for batch size
+                        "afterCursor": after_cursor  # Pagination cursor
+                    },
+                    "sort": {
+                        "isDescending": True,
+                        "sortBy": "id"  # Sort by proposal ID
+                    }
+                }
+            }
+
+            try:
+                response = requests.post(url, json={"query": query, "variables": variables}, headers=headers)
+                if response.status_code == 200:
+                    data = response.json()
+                    #print(data) 
+                    page = data.get("data", {}).get("votes", {})
+                    nodes = page.get("nodes", [])
+                    if not nodes:
+                        break
+
+                    for vote in nodes:
+                        amount = int(vote.get("amount", 0))
+                        decision = vote.get("type", "UNKNOWN")
+                        timestamp = vote.get("block", {}).get("timestamp")
+
+                        if timestamp:
+                            # Normalize to the date and aggregate
+                            date = datetime.fromisoformat(timestamp).date()
+                            aggregated_amounts[date][decision] += amount / (10**decimals)
+                            aggregated_counts[date][decision] += 1
+
+                    # Handle pagination
+                    after_cursor = page.get("pageInfo", {}).get("lastCursor")
+                    if not after_cursor:
+                        break
+                else:
+                    print(f"Query failed with status {response.status_code}: {response.text}")
+                    break
+            except Exception as e:
+                print(f"An error occurred: {e}")
+                break
+
+        # Convert aggregated data to tuples
+        for date, decisions in aggregated_amounts.items():
+            for decision, total_amount in decisions.items():
+                daily_votes_by_amount.append((date, decision, total_amount))
+
+        for date, decisions in aggregated_counts.items():
+            for decision, voter_count in decisions.items():
+                daily_votes_by_count.append((date, decision, voter_count))
+        
+        daily_votes_by_amount = sorted(daily_votes_by_amount, key=lambda x: x[0])
+        daily_votes_by_count = sorted(daily_votes_by_count, key=lambda x: x[0])
+
+        # Makes the data cumulative
+        def make_cumulative(data):
+            cumulative_data = []
+            cumulative_totals = defaultdict(int)
+
+            for date, decision, value in data:
+                cumulative_totals[decision] += value
+                cumulative_data.append((date, decision, cumulative_totals[decision]))
+
+            return cumulative_data
+
+        daily_votes_by_amount = make_cumulative(daily_votes_by_amount) 
+        daily_votes_by_count = make_cumulative(daily_votes_by_count) 
+
+        voter_file_path = self.graph_generator.create_grouped_line_graph(daily_votes_by_count, 'Date', 'Total Voters', 'Daily Total Voters by Choice', 'tally_daily_total_voters_by_choice')
+        voting_power_file_path = self.graph_generator.create_grouped_line_graph(daily_votes_by_amount, 'Date', 'Total Voting Power', 'Daily Total Voting Power by Choice', 'tally_daily_total_voting_power_by_choice')
+
+        return [voter_file_path, voting_power_file_path]
 
 
 
@@ -568,7 +679,6 @@ class TallyData:
 
 if __name__ == "__main__": 
     tally_data_client = TallyData() 
-    result = tally_data_client.prompt_stats('2499208639684806584', 18, 'eip155:42161:0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9')
-    print(f"Result: {result}")
-
+    result = tally_data_client.tally_test('2499208639684806584', 18)
+    print(result) 
 
