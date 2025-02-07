@@ -116,7 +116,7 @@ class DAOTwitterResponder:
             # Extract response text
             gpt_response = completion.choices[0].message.content
 
-            return f"{gpt_response}\n\nSources:\n{links}"
+            return f"{gpt_response}{f'\n\nSources:\n{links}' if links else ''}"
 
         except Exception as e:
             return f"An error occurred: {e}"

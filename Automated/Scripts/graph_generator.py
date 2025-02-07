@@ -167,7 +167,7 @@ class GraphGenerator:
         #    - Increase y to move logo higher, decrease y to move it lower.
         ab = AnnotationBbox(
             imagebox,
-            (0.005, 0.88),           # <--- Change these numbers to move logo around
+            (0.005, 0.87),           # <--- Change these numbers to move logo around
             xycoords='figure fraction',
             frameon=False,
             box_alignment=(0, 1)    # (0,1) aligns left edge & top edge of the image
@@ -227,7 +227,7 @@ class GraphGenerator:
         x = [point[0] for point in data]  # Assuming first column is X (category or date).
         y = [float(point[1]) for point in data]  # Assuming second column is Y (value).
 
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(8, 7))
         ax.set_facecolor('#f2efe9')
 
         ax.bar(x, y, color=self.calmColors[0], zorder=3)
@@ -237,8 +237,24 @@ class GraphGenerator:
         ax.grid(axis='y', zorder=1)  # Add horizontal grid lines for readability
         fig.autofmt_xdate()
 
+
         # Add logo
-        self.add_logo_to_figure(fig)
+        fig.subplots_adjust(top=0.8)
+        logo_img = Image.open(self.logo_path)
+        imagebox = OffsetImage(logo_img, zoom=0.12)  # Adjust zoom to resize
+
+        # 2) Adjust 'xy' and 'xycoords' to move the logo
+        #    - (0.01, 0.95) means x=0.01, y=0.95 in figure fraction coordinates.
+        #    - Increase x to move logo to the right, decrease x to move logo left.
+        #    - Increase y to move logo higher, decrease y to move it lower.
+        ab = AnnotationBbox(
+            imagebox,
+            (0.005, 0.72),           # <--- Change these numbers to move logo around
+            xycoords='figure fraction',
+            frameon=False,
+            box_alignment=(0, 1)    # (0,1) aligns left edge & top edge of the image
+        )
+        fig.add_artist(ab)
 
         return self.save_graph(fig, filename)
     

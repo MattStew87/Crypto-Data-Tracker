@@ -28,3 +28,19 @@ PLAN:
 
 
 --------------------------------------------------------------------------------------------------
+
+Stuff to add to TeamViewer: 
+
+
+- 
+
+
+
+
+--------------------------------------------------------------------------------------------------
+
+Steps to add Jupiter to TeamViewer 
+- Add jupiter_hanlder.py 
+- Add jupiter_data.py 
+- add logo for jupiter into Image_bank folder
+- add jupiter info into spaces.json
