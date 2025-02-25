@@ -20,7 +20,7 @@ class DAOForumScraper:
         self.max_threads = 5
 
         # Ensure the Qdrant collection exists
-        self.create_qdrant_collection()
+        # self.create_qdrant_collection()
 
     def safe_request(self, method, url, retries=3, **kwargs):
         """Wrapper for requests with retries and timeout handling."""

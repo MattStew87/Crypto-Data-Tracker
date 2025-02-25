@@ -14,5 +14,20 @@
             "date_added": "TIMESTAMP"
         },
         "primary_key": "proposal_id"
+    },
+    "metadao_gov_proposals": {
+        "update_query": "SELECT    tx_id,   block_timestamp,   DECODED_INSTRUCTION['accounts'][0]['pubkey'] as proposal_id,   DECODED_INSTRUCTION['accounts'][1]['pubkey'] as dao_id,    case when DECODED_INSTRUCTION['accounts'][1]['pubkey'] like 'ofvb3CPvEyRfD5az8PAqW6ATpPqVBeiB5zBnpPR5cgm' then 'Future DAO'     when DECODED_INSTRUCTION['accounts'][1]['pubkey'] like '9TKh2yav4WpSNkFV2cLybrWZETBWZBkQ6WB6qV9Nt9dJ' then 'Deans List DAO'     when DECODED_INSTRUCTION['accounts'][1]['pubkey'] like '5vVCYQHPd8o3pGejYWzKZtnUSdLjXzDZcjZQxiFumXXx' then 'Drift'     when DECODED_INSTRUCTION['accounts'][1]['pubkey'] like 'CNMZgxYsQpygk8CLN9Su1igwXX2kHtcawaNAGuBPv3G9' then 'Meta DAO'     when DECODED_INSTRUCTION['accounts'][1]['pubkey'] like '7XoddQu6HtEeHZowzCEwKiFJg4zR3BXUqMygvwPwSB1D' then 'ORE'    when DECODED_INSTRUCTION['accounts'][1]['pubkey'] like 'B3PDBD7NCsJyxSdSDFEK38oNKZMBrgkg46TuqqkgAwPp' then 'Jito'    when DECODED_INSTRUCTION['accounts'][1]['pubkey'] like '5n61x4BeVvvRMcYBMaorhu1MaZDViYw6HghE8gwLCvPR' then 'Sanctum'        else 'Other'   end as dao_name,   DECODED_INSTRUCTION['accounts'][7]['pubkey'] as fail_amm,   DECODED_INSTRUCTION['accounts'][4]['pubkey'] as pass_amm,   DECODED_INSTRUCTION['accounts'][2]['pubkey'] as usdc_vault,   DECODED_INSTRUCTION['accounts'][3]['pubkey'] as token_vault  from solana.core.ez_events_decoded where program_id like 'autoQP9RmUNkzzKRXsMkWicDVZ3h29vvyMDcAYjCxxg' and event_type like 'initializeProposal' and not dao_name LIKE 'Other' and block_timestamp > current_date - 2 order by block_timestamp DESC",
+        "columns": {
+            "tx_id": "text",
+            "block_timestamp": "TIMESTAMP",
+            "proposal_id": "text",
+            "dao_id": "text",
+            "dao_name": "text",
+            "fail_amm": "text",
+            "pass_amm": "text",
+            "usdc_vault": "text",
+            "token_vault": "text"
+        },
+        "primary_key": "proposal_id"
     }
 }

@@ -1213,6 +1213,62 @@
         "part2_text": "Arbitrum Treasury Proposal Metrics",
         "part3_text": "Arbitrum Treasury Proposal Wrap-up",
         "twitter": "@arbitrum"
+    },
+    "Future DAO": {
+        "base_image": "./base_purple.png",
+        "space_image": "./futuredao_logo.png",
+        "part1_text": "Future DAO Proposal Live",
+        "part2_text": "Future DAO Proposal Metrics",
+        "part3_text": "Future DAO Proposal Wrap-up",
+        "twitter": "@Future_Protocol"
+    },
+    "Sanctum": {
+        "base_image": "./base_blue.png",
+        "space_image": "./sanctum_logo.png",
+        "part1_text": "Sanctum Proposal Live",
+        "part2_text": "Sanctum Proposal Metrics",
+        "part3_text": "Sanctum Proposal Wrap-up",
+        "twitter": "@sanctumso"
+    },
+    "Jito": {
+        "base_image": "./base_black.png",
+        "space_image": "./jitodao_logo.png",
+        "part1_text": "Jito Proposal Live",
+        "part2_text": "Jito Proposal Metrics",
+        "part3_text": "Jito Proposal Wrap-up",
+        "twitter": "@jito_sol"
+    },
+    "Drift": {
+        "base_image": "./base_blue.png",
+        "space_image": "./drift_logo.png",
+        "part1_text": "Drift Proposal Live",
+        "part2_text": "Drift Proposal Metrics",
+        "part3_text": "Drift Proposal Wrap-up",
+        "twitter": "@DriftProtocol"
+    },
+    "Deans List DAO": {
+        "base_image": "./base_purple.png",
+        "space_image": "./deans_list_logo.png",
+        "part1_text": "Deans List DAO Proposal Live",
+        "part2_text": "Deans List DAO Proposal Metrics",
+        "part3_text": "Deans List DAO Proposal Wrap-up",
+        "twitter": "@deanslistDAO"
+    },
+    "Meta DAO": {
+        "base_image": "./base_orange.png",
+        "space_image": "./metadao_logo.png",
+        "part1_text": "MetaDAO Proposal Live",
+        "part2_text": "MetaDAO Proposal Metrics",
+        "part3_text": "MetaDAO Proposal Wrap-up",
+        "twitter": "@MetaDAOProject"
+    },
+    "ORE": {
+        "base_image": "./base_black.png",
+        "space_image": "./ore_logo.png",
+        "part1_text": "ORE Proposal Live",
+        "part2_text": "ORE Proposal Metrics",
+        "part3_text": "ORE Proposal Wrap-up",
+        "twitter": "@OREsupply"
     }
     
 }

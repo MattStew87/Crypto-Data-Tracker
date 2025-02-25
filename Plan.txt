@@ -1,7 +1,5 @@
 STEPS: 
 
-1. PUSH UPDATES (they have already been added and commited) 
-2. Fix logo placement on first graph 
 
 
 
